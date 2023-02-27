@@ -30,10 +30,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard',function(){
         return view('dashboard');
     });
-    Route::resource('permit',PermitController::class);
-    Route::resource('application',application::class);
-    Route::resource('permohan',permohanController::class);
-    Route::get('get-application-geom/{id}',[ApplicationGeom::class,'getGeom']);
+    Route::get('/',function(){
+        return view('dashboard');
+    });
+    
     
 });
 
