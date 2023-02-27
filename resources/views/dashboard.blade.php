@@ -20,7 +20,7 @@
 
 @section('content')
 
-    <div class="row bg-white my-2 mx-1 pl-1 pt-3">
+    <div class="row bg-white my-2 mx-1 pl-1 py-3">
        <h3>Good Afternoon,</h3>
        <p>Now it’s 2023-02-27 <span id="live-time"></span> Monday, welcome back to aero hostel management system</p> 
     </div>
