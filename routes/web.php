@@ -5,7 +5,7 @@ use App\Http\Controllers\ApplicationGeom;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
-
+use App\Http\Controllers\userDetail;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +33,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/',function(){
         return view('dashboard');
     });
+
+    Route::resource('user',userDetail::class);
     
     
 });
 
-Route::get('password-check/{val}',function($val){
-    return $val;
-});
+ 
 
 Route::group(['prefix' => '/'], function () {
     Route::get('', [RoutingController::class, 'index'])->name('root');

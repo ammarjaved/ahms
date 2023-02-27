@@ -374,19 +374,19 @@
                 <!-- End mobile menu toggle-->
             </li>
 
-            {{-- <li class="dropdown d-none d-xl-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <li class="dropdown d-none d-xl-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     Create New
                     <i class="mdi mdi-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    <a href="{{route('user.index')}}" class="dropdown-item">
                         <i class="fe-briefcase me-1"></i>
-                        <span>New Projects</span>
+                        <span>Personnel</span>
                     </a>
 
-                    <!-- item-->
+                    {{-- <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-user me-1"></i>
                         <span>Create Users</span>
@@ -410,10 +410,10 @@
                     <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-headphones me-1"></i>
                         <span>Help & Support</span>
-                    </a>
+                    </a> --}}
 
                 </div>
-            </li> --}}
+            </li>
 
             {{-- <li class="dropdown dropdown-mega d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
