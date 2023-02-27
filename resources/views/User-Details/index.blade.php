@@ -60,6 +60,7 @@
         td {
             padding: 10px 0px 0px 19px !important;
             font-size: 12px !important;
+            color: black;
         }
         .card.col-md-3.pr-2 {
     width: 24%;
@@ -79,11 +80,11 @@
     </div>
     <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
         <div class="row col-md-11">
-            <div class="col-md-3"><label for="name" class="px-2">Name </label><input type="text" name="name">
+            <div class="col-md-3"><label for="name" class="px-2 text-dark">Name </label><input type="text" name="name">
             </div>
-            <div class="col-md-3"><label for="nationality" class="px-2">Nationality </label><input type="text"
+            <div class="col-md-3"><label for="nationality" class="px-2 text-dark">Nationality </label><input type="text"
                     name="nationality"></div>
-            <div class="col-md-3"><label for="passport" class="px-2">Passport </label><input type="text"
+            <div class="col-md-3"><label for="passport" class="px-2 text-dark">Passport </label><input type="text"
                     name="passport"></div>
             <div class="col-md-3"></div>
         </div>
@@ -96,7 +97,7 @@
     <div class="card p-2 col-md-9 rounded-0">
         <div class="row text-end text-right p-2">
             <div class="col-md-12">
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Add New
                 </button>
             </div>
@@ -118,7 +119,7 @@
                         <td>{{ $user->nationality }}</td>
                         <td>{{ $user->gender }}</td>
                         <td>{{ $user->passport_no }}</td>
-                        <td class="text-center d-flex justify-content-center"><span class="px-4"><button type="button"
+                        <td class="text-center d-flex justify-content-center"><span class=""><button type="button"
                                     class="btn  btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                         class="mdi mdi-circle-edit-outline" style="color:black"></i></button></span><span>
                                 <form method="POST" action="{{ route('user.destroy', $user->id) }}">

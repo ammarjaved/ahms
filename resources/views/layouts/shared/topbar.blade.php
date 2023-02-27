@@ -331,7 +331,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="/application" class="logo logo-dark text-center">
+            <a href="/dashboard" class="logo logo-dark text-center">
                 <span class="logo-sm">
                     <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
@@ -342,7 +342,7 @@
                 </span>
             </a>
 
-            <a href="/application" class="logo logo-light text-center">
+            <a href="/dashboard" class="logo logo-light text-center">
                 <span class="logo-sm">
                     <img src="{{asset('images/main-logo-sm.png')}}" alt="" height="35">
                 </span>
