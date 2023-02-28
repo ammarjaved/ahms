@@ -15,7 +15,11 @@
             border: 1px solid #a9a7a79e;
             padding: 3px;
             border-radius: 4px;
+            width: 193px;
         }
+        .form-control:disabled {
+    background-color: #F2F3F5 !important;
+}
 
         input[type="text"]:focus {
             border-color: 1px solid green;
@@ -66,45 +70,37 @@
 
 
 @section('content')
-<!-- <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data"> -->
-                    <!-- <div class="modal-body  ">
 
-
-                        @csrf -->
-                <div class="container">
+                <div class="card p-3 mt-4" style="height">
                         <div class="row p-3">
                             <div class="col-md-5">
 
                                 <div class="row">
                                     <div class="col-md-5  "><label for="name">Name</label></div>
-                                    <div class="col-md-7 "> <input type="text" value="" name="name"></div>
+                                    <div class="col-md-5 "> <input   class="form-control" value="{{$data['user']->name}}" disabled></div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-5"><label for="gender">Gender</label></div>
                                     <div class="col-md-5">
-                                        <select name="gender" id="gender" class="form-select">
-                                            <option hidden value="">--- Select gender ---</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
+                                      <input class="form-control" value="{{$data['user']->gender}}" disabled>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="age">Age</label></div>
-                                    <div class="col-md-7"> <input type="number" max="3" name="age"></div>
+                                    <div class="col-md-5"> <input   class="form-control"   value="{{$data['user']->age}}" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="phone_no">Phone no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="phone_no"></div>
+                                    <div class="col-md-5"> <input  class="form-control"  value="{{$data['user']->phone_no}}" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="emergency_no">Emergency no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="emergency_no"></div>
+                                    <div class="col-md-5"> <input   class="form-control"  value="{{$data['user']->emergency_no}}" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="relegion">Religion</label></div>
-                                    <div class="col-md-7"> <input type="text" name="relegion"></div>
+                                    <div class="col-md-5"> <input   value="{{$data['user']->relegion}}" class="form-control" disabled></div>
                                 </div>
 
                             </div>
@@ -112,30 +108,34 @@
 
                                 <div class="row">
                                     <div class="col-md-5"><label for="nationality">Nationality</label></div>
-                                    <div class="col-md-7"> <input type="text" name="nationality"></div>
+                                    <div class="col-md-6"> <input   value="{{$data['user']->nationality}}" class="form-control"  disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_no">Passport no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="passport_no"></div>
+                                    <div class="col-md-6"> <input  value="{{$data['user']->passport_no}}" class="form-control" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa">Visa</label></div>
-                                    <div class="col-md-7"> <input type="text" name="visa"></div>
+                                    <div class="col-md-6"> <input  value="{{$data['user']->visa}}" class="form-control"  disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_expiry">Passport expiry</label></div>
-                                    <div class="col-md-6"> <input type="date" name="passport_expiry"
-                                            class="form-control"></div>
+                                    <div class="col-md-6"> <input   value="{{$data['user']->passport_expiry}}"  class="form-control"  disabled
+                                             ></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
-                                    <div class="col-md-6"> <input type="date" name="visa_expiry"
-                                            class="form-control"></div>
+                                    <div class="col-md-6"> <input   value="{{$data['user']->visa_expiry}}" class="form-control" disabled></div>
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
+                                @if (file_exists($data['user']->user_image))
+
+                                <img id="profile_image" src="{{$data['user']->user_image}}" />
+                                @else
                                 <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}" />
-                                <input type="file"  onchange="encodeImageFileAsURL(this)" name="userImage" style="color:transparent" class="p-5 py-2">
+                                {{-- <input type="file"  onchange="encodeImageFileAsURL(this)" name="userImage" style="color:transparent" class="p-5 py-2"> --}}
+                                @endif
                             </div>
                         </div>
 
@@ -166,17 +166,17 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-5"><label for="company">Company</label></div>
-                                            <div class="col-md-7"> <input type="text" name="company"></div>
+                                            <div class="col-md-5"> <input class="form-control"   value="{{$data['work_info']->work_info}}" disabled></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-5"><label for="work_contact">Work contact</label></div>
-                                            <div class="col-md-7"> <input type="text" name="work_contact"></div>
+                                            <div class="col-md-5"> <input class="form-control" {{$data['work_info']->work_info}} disabled></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5"><label for="person_incharge">Person incharge</label>
                                             </div>
-                                            <div class="col-md-7"> <input type="text" name="person_incharge"></div>
+                                            <div class="col-md-5"> <input class="form-control" {{$data['work_info']->work_info}} disabled></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -184,7 +184,7 @@
                                             <div class="col-md-3 text-end"><label for="work_address">Work Address</label>
                                             </div>
                                             <div class="col-md-7 ">
-                                                <textarea type="text" class="form-control" name="work_address" rows="5"></textarea>
+                                                <textarea  class="form-control"  rows="5" disabled>{{$data['work_info']->work_address}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -192,16 +192,16 @@
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
-                                    <div class="col-md-3"><label for="floor">Floor</label></div>
-                                    <div class="col-md-7"> <input type="text" name="floor"></div>
+                                    <div class="col-md-2"><label for="floor">Floor</label></div>
+                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->floor}} disabled></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3"><label for="room_no">Room no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="room_no"></div>
+                                    <div class="col-md-2"><label for="room_no">Room no</label></div>
+                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->room_no}} disabled></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3"><label for="bed_no">Bed no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="bed_no"></div>
+                                    <div class="col-md-2"><label for="bed_no">Bed no</label></div>
+                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->bed_no}} disabled></div>
                                 </div>
                             </div>
 
@@ -209,12 +209,12 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="permanent_address">Permanent Address</label></div>
                                     <div class="col-md-4">
-                                        <textarea name="permanent_address" class="form-control" id="permanent_address" cols="25" rows="5"></textarea>
+                                        <textarea   class="form-control" id="permanent_address" disabled cols="25" rows="5">{{$data['user']->permanent_address}}</textarea>
                                     </div>
 
                                     <div class="col-md-2"><label for="current_address">Current Address</label></div>
                                     <div class="col-md-4">
-                                        <textarea name="current_address" class="form-control" id="current_address" cols="25" rows="5"></textarea>
+                                        <textarea name="current_address" class="form-control" disabled id="current_address" cols="25" rows="5">{{$data['user']->current_address}}</textarea>
                                     </div>
                                 </div>
                             </div>

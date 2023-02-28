@@ -8,6 +8,7 @@ use App\Models\work_info;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use function GuzzleHttp\Promise\all;
 
@@ -28,10 +29,29 @@ class userDetail extends Controller
 
 
     public function personal($id)
-    {
+    {   
+       
 
+        // $users =  DB::table('personal_detail')
+        // ->join('work_info', 'personal_detail.id', '=', 'work_info.pd_id')
+        // ->join('room_info', 'personal_detail.id', '=', 'room_info.pd_id')
+        // ->select('*')
+        // ->get();
+
+
+        $data = [] ;
+         $user = user::find($id);
+         if(!$user)
+         {
+            return abort('404');
+         }
+         $data['user'] = $user;
+         $data['work_info'] = work_info::where('pd_id' , $user->id)->first();
+         $data['room_info'] = roomInfo::where('pd_id',$user->id)->first();
+
+            //   return $data;
        // $users = user::find($id);
-        return view('layouts.personal');
+        return view('layouts.personal',['data'=>$data]);
     }
 
     /**
@@ -62,13 +82,15 @@ class userDetail extends Controller
                 $img4_loccap            =   $file->getClientOriginalExtension() ;
                 $filename               =  'User-'.$request->name.'-'.  strtotime(now()) .'.' . $img4_loccap;
                                             $file->move($destinationPath, $filename);
-                $request['user_image']  =   public_path().'asset/images/Users'. $img4_loccap;
+                $request['user_image']  =   asset('/asset/images/Users/'). $img4_loccap;
             }
-            
+
+            $request['created_by']  =   Auth::user()->name;
+
             $userDetail             =   user::create($request->all());
 
             $request['pd_id']       =   $userDetail->id;
-            $request['created_by']  =   Auth::user()->name;
+            
 
             $roomInfor              =   roomInfo::create($request->all());
             $workInfor              =   work_info::create($request->all());
