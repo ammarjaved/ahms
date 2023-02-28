@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard');
     });
 
+    Route::get('/personal/{id}',[userDetail::class,'personal']);
+
     Route::resource('user',userDetail::class);
     
     

@@ -1,8 +1,6 @@
-@extends('layouts.vertical', ['page_title' => 'users'])
-
+@extends('layouts.vertical', ['page_title' => 'Personal Detail'])
 
 @section('css')
-    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .content-page {
 
@@ -62,118 +60,18 @@
             font-size: 12px !important;
             color: black;
         }
-        .card.col-md-3.pr-2 {
-    width: 24%;
-    margin-right: 1%;
-}   
+      
     </style>
 @endsection
 
+
 @section('content')
-    <div class="row">
-        <div class="col-12">
-        
-               
-                <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Users / users</h6>
-   
-        </div>
-    </div>
-    <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
-        <div class="row col-md-11">
-            <div class="col-md-3"><label for="name" class="px-2 text-dark">Name </label><input type="text" name="name">
-            </div>
-            <div class="col-md-3"><label for="nationality" class="px-2 text-dark">Nationality </label><input type="text"
-                    name="nationality"></div>
-            <div class="col-md-3"><label for="passport" class="px-2 text-dark">Passport </label><input type="text"
-                    name="passport"></div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-
-<div class="row px-2 bg-transparent ">
-    <!-- <div class="card col-md-3 pr-2">
-        asdhasjkh
-    </div> -->
-    <div class="card p-2 col-md-12 rounded-0">
-        <div class="row text-end text-right p-2">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add New
-                </button>
-            </div>
-        </div>
-        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100 dataTable no-footer dtr-inline">
-            <thead>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Nationality</th>
-                <th>Gender</th>
-                <th>Passport no</th>
-                <th class="text-center">Operations </th>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->phone_no }}</td>
-                        <td>{{ $user->nationality }}</td>
-                        <td>{{ $user->gender }}</td>
-                        <td>{{ $user->passport_no }}</td>
-                        <td class="text-center d-flex justify-content-center"><span class="">
-                        <button type="button"
-                            class="btn  btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                            class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
-
-                        <a  href="/personal/{{$user->id}}"
-                            class="btn  btn-sm" ><i
-                            class="mdi mdi-account-details" style="color:black"></i></a>                
-                                        
-                            </span><span>
-
-                        <form method="POST" action="{{ route('user.destroy', $user->id) }}">
-                                    {{ method_field('DELETE') }}
-                                    {{ csrf_field() }}
-                                    <button type="submit" onclick="return confirm('Are you sure')" class="btn  btn-sm"><i
-                                            class="mdi mdi-delete-outline" style="color:black"></i></button>
-                        </form>
-
-                            </span></td>
-                    </tr>
-                @endforeach
-            </tbody>
-
-        </table>
-
-    </div>
-</div>
-
-    {{-- <h1>sdfsdf</h1> --}}
-    {{-- 
-    <div id="dialog1" title="NEW" class="col-md-8">
+<!-- <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data"> -->
+                    <!-- <div class="modal-body  ">
 
 
-    </div> --}}
-
-
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header" style="background:  #EAEFF4">
-                    <h5 class="modal-title " id="exampleModalLabel">New</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body  ">
-
-
-                        @csrf
-
+                        @csrf -->
+                <div class="container">
                         <div class="row p-3">
                             <div class="col-md-5">
 
@@ -324,59 +222,18 @@
                         </div>
 
 
-                    </div>
-
+                </div>
+<!-- 
                     <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
                         <button type="submit" class="btn btn-sm  border-0 bg-made-green"
                             style="background :#90CF5F; color:white">Save changes</button>
                         <button type="button" class="btn btn-sm btn-white border-0 "
                             data-bs-dismiss="modal">Cancel</button>
-                    </div>
+                    </div> -->
 
-            </div>
+            <!-- </div>
 
-            </form>
-        </div>
-    @endsection
+            </form> -->
 
-
-    @section('script')
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-
-        <script>
-            $(function() {
-                $("#dialog1").dialog({
-                    autoOpen: false
-                });
-
-                $("#opener").click(function() {
-                    $("#dialog1").dialog('open');
-                });
-            });
-
-            function encodeImageFileAsURL(element) {
-                var file = element.files[0];
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                   // console.log('RESULT', reader.result)
-                   $("#profile_image").attr("src", reader.result);
-                   $("#profile_image").attr('height','162');
-                 $("#profile_image").attr('width','140');
-                }
-                reader.readAsDataURL(file);
-            }
-
-        </script>
-        <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
-        <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-        <!-- third party js ends -->
-
-        <!-- demo app -->
-        <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
-        <!-- end demo js-->
-    @endsection
+@endsection

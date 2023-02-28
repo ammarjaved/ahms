@@ -383,7 +383,7 @@
                     <!-- item-->
                     <a href="{{route('user.index')}}" class="dropdown-item">
                         <i class="fe-briefcase me-1"></i>
-                        <span>Personnel</span>
+                        <span>personal</span>
                     </a>
 
                     {{-- <!-- item-->

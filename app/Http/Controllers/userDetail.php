@@ -26,6 +26,14 @@ class userDetail extends Controller
         return view('User-Details.index',['users'=>$users]);
     }
 
+
+    public function personal($id)
+    {
+
+       // $users = user::find($id);
+        return view('layouts.personal');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
