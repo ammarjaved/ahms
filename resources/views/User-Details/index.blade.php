@@ -226,12 +226,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_expiry">Passport expiry</label></div>
-                                    <div class="col-md-6"> <input type=" " name="passport_expiry"
+                                    <div class="col-md-6"> <input type="date" id="passport_expiry" name="passport_expiry"
                                             class="form-control"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
-                                    <div class="col-md-6"> <input type=" " id="visa_expiry" name="visa_expiry"
+                                    <div class="col-md-6"> <input type="date" id="visa_expiry" name="visa_expiry"
                                             class="form-control"></div>
                                 </div>
                             </div>
@@ -401,7 +401,7 @@
                         $('#nationality').val(data['user'].nationality);
                         $('#passport_no').val(data['user'].passport_no);
                         $('#visa').val(data['user'].visa);
-                        $('#visa_expiry').val(data['user'].visa_expiry);
+                        
                         $('#company').val(data['work_info'].company);
                         $('#work_contact').val(data['work_info'].work_contact);
                         $('#work_address').val(data['work_info'].work_address);
@@ -411,19 +411,28 @@
                         $('#bed_no').val(data['room_info'].bed_no);
                         $('#permanent_address').val(data['user'].permanent_address);
                         $('#current_address').val(data['user'].current_address);
-                      
+                        
+                        // console.log(data['user'].visa_expiry)
+                        
+
+                            let day = data['user'].visa_expiry.split(" ");
+                            // console.log(day[0]);
+                            $('#visa_expiry').val(day[0]);
+
+                            let day_p = data['user'].visa_expiry.split(" ");
+                            $('#passport_expiry').val(day_p[0])
 
                         $.get(data['user'].user_img)
                         
-    .done(function() { 
-        $("#profile_image").attr("src", data['user'].user_image);
-        
+                        .done(function() { 
+                            $("#profile_image").attr("src", data['user'].user_image);
+                            
 
-    }).fail(function() { 
-        // console.log("SDfsd");
-        $("#profile_image").attr("src", 'assets/images/userImage.gif');
-       
-    })
+                        }).fail(function() { 
+                            // console.log("SDfsd");
+                            $("#profile_image").attr("src", 'assets/images/userImage.gif');
+                        
+                        })
 
                         $('#exampleModal').modal('show');
                       
