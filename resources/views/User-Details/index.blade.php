@@ -78,17 +78,17 @@
    
         </div>
     </div>
-    <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
+    {{-- <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
         <div class="row col-md-11">
-            <div class="col-md-3"><label for="name" class="px-2 text-dark">Name </label><input type="text" name="name">
+            <div class="col-md-3"><label for="name" class="px-2 text-dark">Name </label><input id="name_s" type="text" name="name">
             </div>
-            <div class="col-md-3"><label for="nationality" class="px-2 text-dark">Nationality </label><input type="text"
+            <div class="col-md-3"><label for="nationality" class="px-2 text-dark">Nationality </label><input id="nationality_s" type="text"
                     name="nationality"></div>
-            <div class="col-md-3"><label for="passport" class="px-2 text-dark">Passport </label><input type="text"
+            <div class="col-md-3"><label for="passport" class="px-2 text-dark">Passport </label><input id="passport_s" type="text"
                     name="passport"></div>
             <div class="col-md-3"></div>
         </div>
-    </div>
+    </div> --}}
 
 <div class="row px-2 bg-transparent ">
     <!-- <div class="card col-md-3 pr-2">
@@ -97,7 +97,7 @@
     <div class="card p-2 col-md-12 rounded-0">
         <div class="row text-end text-right p-2">
             <div class="col-md-12">
-                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
                     Add New
                 </button>
             </div>
@@ -120,8 +120,8 @@
                         <td>{{ $user->gender }}</td>
                         <td>{{ $user->passport_no }}</td>
                         <td class="text-center d-flex justify-content-center"><span class="">
-                        <button type="button"
-                            class="btn  btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                        <button type="button" onclick="getUser({{$user->id}})"
+                            class="btn  btn-sm" ><i
                             class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
 
                         <a  href="/personal/{{$user->id}}"
@@ -173,13 +173,13 @@
 
 
                         @csrf
-
+                        <input type="hidden" name="id" id="id">
                         <div class="row p-3">
                             <div class="col-md-5">
 
                                 <div class="row">
                                     <div class="col-md-5  "><label for="name">Name</label></div>
-                                    <div class="col-md-7 "> <input type="text" value="" name="name"></div>
+                                    <div class="col-md-7 "> <input type="text" id="name" value="" name="name"></div>
                                 </div>
 
                                 <div class="row">
@@ -194,19 +194,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="age">Age</label></div>
-                                    <div class="col-md-7"> <input type="number" max="3" name="age"></div>
+                                    <div class="col-md-7"> <input type="number" id="age"   name="age"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="phone_no">Phone no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="phone_no"></div>
+                                    <div class="col-md-7"> <input type="text" id="phone_no" name="phone_no"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="emergency_no">Emergency no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="emergency_no"></div>
+                                    <div class="col-md-7"> <input type="text" id="emergency_no" name="emergency_no"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="relegion">Religion</label></div>
-                                    <div class="col-md-7"> <input type="text" name="relegion"></div>
+                                    <div class="col-md-7"> <input type="text" id="relegion" name="relegion"></div>
                                 </div>
 
                             </div>
@@ -214,29 +214,29 @@
 
                                 <div class="row">
                                     <div class="col-md-5"><label for="nationality">Nationality</label></div>
-                                    <div class="col-md-7"> <input type="text" name="nationality"></div>
+                                    <div class="col-md-7"> <input type="text" id="nationality" name="nationality"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_no">Passport no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="passport_no"></div>
+                                    <div class="col-md-7"> <input type="text" name="passport_no" id="passport_no"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa">Visa</label></div>
-                                    <div class="col-md-7"> <input type="text" name="visa"></div>
+                                    <div class="col-md-7"> <input type="text" id="visa" name="visa"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_expiry">Passport expiry</label></div>
-                                    <div class="col-md-6"> <input type="date" name="passport_expiry"
+                                    <div class="col-md-6"> <input type=" " name="passport_expiry"
                                             class="form-control"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
-                                    <div class="col-md-6"> <input type="date" name="visa_expiry"
+                                    <div class="col-md-6"> <input type=" " id="visa_expiry" name="visa_expiry"
                                             class="form-control"></div>
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
-                                <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}" />
+                                <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}" height="162" width="140" />
                                 <input type="file"  onchange="encodeImageFileAsURL(this)" name="userImage" style="color:transparent" class="p-5 py-2">
                             </div>
                         </div>
@@ -268,17 +268,17 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-5"><label for="company">Company</label></div>
-                                            <div class="col-md-7"> <input type="text" name="company"></div>
+                                            <div class="col-md-7"> <input type="text" id="company" name="company"></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-5"><label for="work_contact">Work contact</label></div>
-                                            <div class="col-md-7"> <input type="text" name="work_contact"></div>
+                                            <div class="col-md-7"> <input type="text" id="work_contact" name="work_contact"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5"><label for="person_incharge">Person incharge</label>
                                             </div>
-                                            <div class="col-md-7"> <input type="text" name="person_incharge"></div>
+                                            <div class="col-md-7"> <input type="text" id="person_incharge" name="person_incharge"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -286,7 +286,7 @@
                                             <div class="col-md-3 text-end"><label for="work_address">Work Address</label>
                                             </div>
                                             <div class="col-md-7 ">
-                                                <textarea type="text" class="form-control" name="work_address" rows="5"></textarea>
+                                                <textarea type="text" class="form-control" id="work_address" name="work_address" rows="5"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -295,15 +295,15 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
                                     <div class="col-md-3"><label for="floor">Floor</label></div>
-                                    <div class="col-md-7"> <input type="text" name="floor"></div>
+                                    <div class="col-md-7"> <input type="text" id="floor" name="floor"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"><label for="room_no">Room no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="room_no"></div>
+                                    <div class="col-md-7"> <input type="text" id="room_no" name="room_no"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"><label for="bed_no">Bed no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="bed_no"></div>
+                                    <div class="col-md-7"> <input type="text" id="bed_no" name="bed_no"></div>
                                 </div>
                             </div>
 
@@ -358,6 +358,79 @@
                     $("#dialog1").dialog('open');
                 });
             });
+
+            function onpenModal(){
+                $('#id').val('');
+                        $('#name').val('');
+                        $('#gender').val('');
+                        $('#age').val('');
+                        $('#phone_no').val('');
+                        $('#emergency_no').val('');
+                        $('#relegion').val('');
+                        $('#nationality').val('');
+                        $('#passport_no').val('');
+                        $('#visa').val('');
+                        $('#visa_expiry').val('');
+                        $('#company').val('');
+                        $('#work_contact').val('');
+                        $('#work_address').val('');
+                        $('#person_incharge').val('');
+                        $('#floor').val('');
+                        $('#room_no').val('');
+                        $('#bed_no').val('');
+                        $('#permanent_address').val('');
+                        $('#current_address').val('');
+                        $("#profile_image").attr("src", 'assets/images/userImage.gif');
+                        $('#exampleModal').modal('show');
+            }
+
+            function getUser(id){
+                $.ajax({
+                    type: "GET",
+                    url:`user/${id}`,
+                    success: function(response) {
+                        // console.log(response);
+                        var data = response.data;
+                        $('#id').val(id);
+                        $('#name').val(data['user'].name);
+                        $('#gender').val(data['user'].gender);
+                        $('#age').val(data['user'].age);
+                        $('#phone_no').val(data['user'].phone_no);
+                        $('#emergency_no').val(data['user'].emergency_no);
+                        $('#relegion').val(data['user'].relegion);
+                        $('#nationality').val(data['user'].nationality);
+                        $('#passport_no').val(data['user'].passport_no);
+                        $('#visa').val(data['user'].visa);
+                        $('#visa_expiry').val(data['user'].visa_expiry);
+                        $('#company').val(data['work_info'].company);
+                        $('#work_contact').val(data['work_info'].work_contact);
+                        $('#work_address').val(data['work_info'].work_address);
+                        $('#person_incharge').val(data['work_info'].person_incharge);
+                        $('#floor').val(data['room_info'].floor);
+                        $('#room_no').val(data['room_info'].room_no);
+                        $('#bed_no').val(data['room_info'].bed_no);
+                        $('#permanent_address').val(data['user'].permanent_address);
+                        $('#current_address').val(data['user'].current_address);
+                      
+
+                        $.get(data['user'].user_img)
+                        
+    .done(function() { 
+        $("#profile_image").attr("src", data['user'].user_image);
+        
+
+    }).fail(function() { 
+        // console.log("SDfsd");
+        $("#profile_image").attr("src", 'assets/images/userImage.gif');
+       
+    })
+
+                        $('#exampleModal').modal('show');
+                      
+                        
+                    }
+                })
+            }
 
             function encodeImageFileAsURL(element) {
                 var file = element.files[0];

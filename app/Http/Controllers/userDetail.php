@@ -82,9 +82,10 @@ class userDetail extends Controller
                 $img4_loccap            =   $file->getClientOriginalExtension() ;
                 $filename               =  'User-'.$request->name.'-'.  strtotime(now()) .'.' . $img4_loccap;
                                             $file->move($destinationPath, $filename);
-                $request['user_image']  =   asset('/asset/images/Users/'). $img4_loccap;
+                $request['user_image']  =   '/asset/images/Users/'. $filename;
             }
 
+            if($request->id == ''){
             $request['created_by']  =   Auth::user()->name;
 
             $userDetail             =   user::create($request->all());
@@ -94,6 +95,15 @@ class userDetail extends Controller
 
             $roomInfor              =   roomInfo::create($request->all());
             $workInfor              =   work_info::create($request->all());
+
+            }
+                else{
+                    $userDetail             =   user::find($request->id)->update($request->all());
+                    $request['pd_id']       =   $userDetail->id;
+                    $roomInfor              =   roomInfo::where('pd_id',$request->id)->update($request->all());
+                    $workInfor              =   work_info::where('pd_id',$request->id)->update($request->all());
+                }
+
 
         }
         catch (Exception $e){
@@ -108,9 +118,19 @@ class userDetail extends Controller
      * @param  \App\Models\UserDetail  $userDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(UserDetail $userDetail)
+    public function show($id)
     {
-        //
+        $data = [] ;
+         $user = user::find($id);
+         if(!$user)
+         {
+            return response()->json(['data'=>'','status'=>'404']);
+         }
+         $data['user'] = $user;
+         $data['work_info'] = work_info::where('pd_id' , $user->id)->first();
+         $data['room_info'] = roomInfo::where('pd_id',$user->id)->first();
+
+         return response()->json(['data'=>$data,'status'=>'200']);
     }
 
     /**

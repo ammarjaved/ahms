@@ -120,18 +120,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_expiry">Passport expiry</label></div>
-                                    <div class="col-md-6"> <input   value="{{$data['user']->passport_expiry}}"  class="form-control"  disabled
+                                    <div class="col-md-6"> <input    value="{{$data['user']->passport_expiry}}"  class="form-control"  disabled
                                              ></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
-                                    <div class="col-md-6"> <input   value="{{$data['user']->visa_expiry}}" class="form-control" disabled></div>
+                                    <div class="col-md-6"> <input    value="{{$data['user']->visa_expiry}}" class="form-control" disabled></div>
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
-                                @if (file_exists($data['user']->user_image))
+                                @if (file_exists(public_path ().$data['user']->user_image))
 
-                                <img id="profile_image" src="{{$data['user']->user_image}}" />
+                                <img id="profile_image" src="{{URL::asset($data['user']->user_image)}}" height="162" width="140" />
                                 @else
                                 <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}" />
                                 {{-- <input type="file"  onchange="encodeImageFileAsURL(this)" name="userImage" style="color:transparent" class="p-5 py-2"> --}}
@@ -166,17 +166,17 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-5"><label for="company">Company</label></div>
-                                            <div class="col-md-5"> <input class="form-control"   value="{{$data['work_info']->work_info}}" disabled></div>
+                                            <div class="col-md-5"> <input class="form-control"   value="{{$data['work_info']->company}}" disabled></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-5"><label for="work_contact">Work contact</label></div>
-                                            <div class="col-md-5"> <input class="form-control" {{$data['work_info']->work_info}} disabled></div>
+                                            <div class="col-md-5"> <input class="form-control" value=" {{$data['work_info']->work_contact}}" disabled></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5"><label for="person_incharge">Person incharge</label>
                                             </div>
-                                            <div class="col-md-5"> <input class="form-control" {{$data['work_info']->work_info}} disabled></div>
+                                            <div class="col-md-5"> <input class="form-control" value="{{$data['work_info']->person_incharge}}" disabled></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -193,15 +193,15 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
                                     <div class="col-md-2"><label for="floor">Floor</label></div>
-                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->floor}} disabled></div>
+                                    <div class="col-md-2"> <input class="form-control" value="{{$data['room_info']->floor}}" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2"><label for="room_no">Room no</label></div>
-                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->room_no}} disabled></div>
+                                    <div class="col-md-2"> <input class="form-control" value=" {{$data['room_info']->room_no}}" disabled></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2"><label for="bed_no">Bed no</label></div>
-                                    <div class="col-md-2"> <input class="form-control" {{$data['room_info']->bed_no}} disabled></div>
+                                    <div class="col-md-2"> <input class="form-control" value=" {{$data['room_info']->bed_no}}" disabled></div>
                                 </div>
                             </div>
 
