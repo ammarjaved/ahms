@@ -376,22 +376,22 @@
 
             <li class="dropdown d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    Create New
+                    Main Menu
                     <i class="mdi mdi-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
                     <!-- item-->
                     <a href="{{route('user.index')}}" class="dropdown-item">
-                        <i class="fe-briefcase me-1"></i>
-                        <span>personal</span>
-                    </a>
-
-                    {{-- <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-user me-1"></i>
-                        <span>Create Users</span>
+                        <span>Manage Members</span>
                     </a>
 
+                    <!-- item-->
+                    <a href="/payment" class="dropdown-item">
+                        <i class="fas fa-money-check me-1"></i>
+                        <span>Manage Payment</span>
+                    </a>
+{{-- 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-bar-chart-line- me-1"></i>
