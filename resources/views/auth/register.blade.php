@@ -9,7 +9,7 @@
 </head>
 <style>
     body{
-        background-image: url('/assets/images/background.jpg') !important;
+        background-image: url('/assets/images/img_bg.png') !important;
         background-size: cover;
     }
     .card{
@@ -96,10 +96,6 @@
                                     <input class="form-control" type="email" name="email" id="emailaddress" required placeholder="Enter your email" autocomplete="off">
                                 </div>
 
-                                <div class="mb-3">
-                                    {{-- <label for="division" class="form-label">Division</label> --}}
-                                    <input class="form-control" type="text" name="division" id="division" required placeholder="Enter Your Division" autocomplete="off">
-                                </div>
 
                                 <div class="mb-3">
                                     {{-- <label for="phone" class="form-label">Phone</label> --}}
@@ -111,37 +107,10 @@
                                     <input class="form-control" type="text" name="address" id="address" required placeholder="Enter Your Address" autocomplete="off">
                                 </div>
 
-                               
-
-
                                 <div class="mb-3">
-                                    {{-- <label for="user_type" class="form-label" >select user type</label> --}}
-                                    <select name="user_type" id="user_type" class="form-select" onchange="selectUser()" required>
-                                        <option value="" hidden>Select user type</option>
-                                        <option value="dbkl">DBKL</option>
-                                        <option value="vendor">Vendor</option>
-                                    </select>
+                                    {{-- <label for="floors" class="form-label">No Of Floors</label> --}}
+                                    <input class="form-control" type="text" name="floors" id="floors" required placeholder="Enter No of Floors in Building" autocomplete="off">
                                 </div>
-
-                                <div class="mb-3" id="dbkl_user">
-                                    {{-- <label for="dbkl_user_type" class="form-label" id="">DBKL type</label> --}}
-                                    <select name="dbkl_user_type" id="dbkl_user_type" class="form-select">
-                                        <option value="" hidden>Select DBKL type </option>
-                                        <option value=" exective"> Exective</option>
-                                        <option value="technical">Technical</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-3" id="vendor_user">
-                                    {{-- <label for="vendor_user_type" class="form-label" id="">Vendor type</label> --}}
-                                    <select name="vendor_user_type" id="vendor_user_type" class="form-select" >
-                                        <option value="" hidden>Select Vendor type</option>
-                                        <option value="Tenaga National Berhad"> Tenaga National Berhad</option>
-                                        <option value="Telekom Malaysia Berhad">Telekom Malaysia Berhad</option>
-                                        <option value="Air Selangor Sdn Bhd">Air Selangor Sdn Bhd</option>
-                                    </select>
-                                </div>
-
                                 
 
                                 <div class="mb-3">
@@ -163,12 +132,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="mb-3">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-signup">
-                                        <label class="form-check-label" for="checkbox-signup">I accept <a href="javascript: void(0);" class="text-dark">Terms and Conditions</a></label>
-                                    </div>
-                                </div> --}}
+                               
                                 <div class="text-center d-grid">
                                     <button class="btn btn-success" type="submit"> Sign Up </button>
                                 </div>

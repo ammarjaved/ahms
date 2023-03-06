@@ -120,6 +120,13 @@
                         </div>
                     </form>
                 </div>
+
+
+            </div>
+            <div class="row mt-3">
+                        <div class="col-12 text-center">
+                          <p class="text-white-50">Don't have an account? <a href="/register" class="text-white ms-1"><b>Sign Up</b></a></p>
+                        </div> <!-- end col --> 
             </div>
         </div>
     </div>

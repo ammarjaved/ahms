@@ -36,33 +36,29 @@ class RegisteredUserController extends Controller
             'username' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'user_type' => 'required',
-            'division' => 'required',
             'phone' => 'required',
             'address' => 'required',
             'password' => 'required|string|confirmed|min:8',
+            'floors' => 'required',
         ]);
 
-        $dbkl  = '';
-        $vendor = '';
+        // $dbkl  = '';
+        // $vendor = '';
 
-        if($request->user_type == "dbkl"){
-            $dbkl = $request->dbkl_user_type;
-        }elseif ($request->user_type == "vendor"){
-            $vendor = $request->vendor_user_type;
-        }
+        // if($request->user_type == "dbkl"){
+        //     $dbkl = $request->dbkl_user_type;
+        // }elseif ($request->user_type == "vendor"){
+        //     $vendor = $request->vendor_user_type;
+        // }
 
         $user = User::create([
             'username' => $request->username,
             'name' => $request->name,
             'email' => $request->email,
-            'division' => $request->division,
             'phone' => $request->phone,
             'address' => $request->address,
-            'app_user_type' => $request->user_type,
-            'dbkl_user_type' => $dbkl,
-            'vendor_user_type' => $vendor,
             'password' => Hash::make($request->password),
+            'floors'=>$request->floors,
 
         ]);
 
