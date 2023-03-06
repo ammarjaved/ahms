@@ -7,6 +7,7 @@ use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\userDetail;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------

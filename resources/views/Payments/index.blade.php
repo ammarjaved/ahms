@@ -77,32 +77,20 @@
         <div class="col-12">
         
                
-                <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Users / users</h6>
+                <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Payment / members</h6>
    
         </div>
     </div>
-    {{-- <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
-        <div class="row col-md-11">
-            <div class="col-md-3"><label for="name" class="px-2 text-dark">Name </label><input id="name_s" type="text" name="name">
-            </div>
-            <div class="col-md-3"><label for="nationality" class="px-2 text-dark">Nationality </label><input id="nationality_s" type="text"
-                    name="nationality"></div>
-            <div class="col-md-3"><label for="passport" class="px-2 text-dark">Passport </label><input id="passport_s" type="text"
-                    name="passport"></div>
-            <div class="col-md-3"></div>
-        </div>
-    </div> --}}
+    
 
 <div class="row px-2 bg-transparent ">
-    <!-- <div class="card col-md-3 pr-2">
-        asdhasjkh
-    </div> -->
+    
     <div class="card p-2 col-md-12 rounded-0">
         <div class="row text-end text-right p-2">
             <div class="col-md-12">
-                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
+                {{-- <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
                     Add New
-                </button>
+                </button> --}}
             </div>
         </div>
         <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
@@ -123,17 +111,17 @@
                         <td>{{ $user->gender }}</td>
                         <td>{{ $user->passport_no }}</td>
                         <td class="text-center d-flex justify-content-center"><span class="">
-                        <button type="button" onclick="getUser({{$user->id}})"
+                        <button type="button" onclick=" "
                             class="btn  btn-sm" ><i
                             class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
 
-                        <a  href="/personal/{{$user->id}}"
+                        <a  href="#"
                             class="btn  btn-sm" ><i
                             class="mdi mdi-account-details" style="color:black"></i></a>                
                                         
                             </span><span>
 
-                        <form method="POST" action="{{ route('user.destroy', $user->id) }}">
+                        <form method="POST" action=" ">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
                                     <button type="submit" onclick="return confirm('Are you sure')" class="btn  btn-sm"><i
@@ -150,18 +138,7 @@
     </div>
 </div>
 
-    {{-- <h1>sdfsdf</h1> --}}
-    {{-- 
-    <div id="dialog1" title="NEW" class="col-md-8">
-
-
-    </div> --}}
-
-
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
+ 
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -351,134 +328,8 @@
 
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
-        <script>
-            $(function() {
-                $("#dialog1").dialog({
-                    autoOpen: false
-                });
-
-                $("#opener").click(function() {
-                    $("#dialog1").dialog('open');
-                });
-            });
-
-            function onpenModal(){
-                        $('#id').val('');
-                        $('#name').val('');
-                        $('#gender').val('');
-                        $('#age').val('');
-                        $('#phone_no').val('');
-                        $('#emergency_no').val('');
-                        $('#relegion').val('');
-                        $('#nationality').val('');
-                        $('#passport_no').val('');
-                        $('#visa').val('');
-                        $('#visa_expiry').val('');
-                        $('#company').val('');
-                        $('#work_contact').val('');
-                        $('#work_address').val('');
-                        $('#person_incharge').val('');
-                        $('#floor').val('');
-                        $('#room_no').val('');
-                        $('#bed_no').val('');
-                        $('#permanent_address').val('');
-                        $('#current_address').val('');
-                        $("#profile_image").attr("src", 'assets/images/userImage.gif');
-                        $('#exampleModal').modal('show');
-            }
-
-            function getUser(id){
-                $.ajax({
-                    type: "GET",
-                    url:`user/${id}`,
-                    success: function(response) {
-                        // console.log(response);
-                        var data = response.data;
-                        $('#id').val(id);
-                        $('#name').val(data['user'].name);
-                        $('#gender').val(data['user'].gender);
-                        $('#age').val(data['user'].age);
-                        $('#phone_no').val(data['user'].phone_no);
-                        $('#emergency_no').val(data['user'].emergency_no);
-                        $('#relegion').val(data['user'].relegion);
-                        $('#nationality').val(data['user'].nationality);
-                        $('#passport_no').val(data['user'].passport_no);
-                        $('#visa').val(data['user'].visa);
-                        
-                        $('#company').val(data['work_info'].company);
-                        $('#work_contact').val(data['work_info'].work_contact);
-                        $('#work_address').val(data['work_info'].work_address);
-                        $('#person_incharge').val(data['work_info'].person_incharge);
-                        $('#floor').val(data['room_info'].floor);
-                        $('#room_no').val(data['room_info'].room_no);
-                        $('#bed_no').val(data['room_info'].bed_no);
-                        $('#permanent_address').val(data['user'].permanent_address);
-                        $('#current_address').val(data['user'].current_address);
-                        
-                        // console.log(data['user'].visa_expiry)
-                        
-
-                            let day = data['user'].visa_expiry.split(" ");
-                            // console.log(day[0]);
-                            $('#visa_expiry').val(day[0]);
-
-                            let day_p = data['user'].visa_expiry.split(" ");
-                            $('#passport_expiry').val(day_p[0])
-
-                        $.get(data['user'].user_img)
-                        
-                        .done(function() { 
-                            $("#profile_image").attr("src", data['user'].user_image);
-                            
-
-                        }).fail(function() { 
-                            // console.log("SDfsd");
-                            $("#profile_image").attr("src", 'assets/images/userImage.gif');
-                        
-                        })
-
-                        $('#exampleModal').modal('show');
-                      
-                        
-                    }
-                })
-            }
-            
-            function submitFoam(){
-               
-                        
-                let ret = true;  
-                        
-                if(  $('#name').val() == ''){
-                    $('#name').addClass('is-invalid')
-
-                }
-                if ($('#gender').val('') == "") {
-                    
-                }
-                if ( $('#age').val('')== "") {
-                    
-                }
-                if ($('#phone_no').val('')) {
-                    
-                }
-                return false;
-            }
-
-
-            function encodeImageFileAsURL(element) {
-                var file = element.files[0];
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                   // console.log('RESULT', reader.result)
-                   $("#profile_image").attr("src", reader.result);
-                   $("#profile_image").attr('height','162');
-                 $("#profile_image").attr('width','140');
-                }
-                reader.readAsDataURL(file);
-            }
-
-        </script>
+  
+ 
         <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
         <!-- third party js ends -->
