@@ -88,9 +88,9 @@
     <div class="card p-2 col-md-12 rounded-0">
         <div class="row text-end text-right p-2">
             <div class="col-md-12">
-                {{-- <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
-                    Add New
-                </button> --}}
+                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
+                    Add Payment
+                </button>
             </div>
         </div>
         <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
