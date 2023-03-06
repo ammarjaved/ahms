@@ -112,13 +112,13 @@
 
 var center = [3.016603, 101.858382];
     $(document).ready(function(){
-        var map = L.map('map').setView(center, 11);
+        // var map = L.map('map').setView(center, 11);
 
-        // Set up the OSM layer
-        L.tileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18
-        }).addTo(map);
+        // // Set up the OSM layer
+        // L.tileLayer(
+        // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     maxZoom: 18
+        // }).addTo(map);
 
 
         noOfFloors()
