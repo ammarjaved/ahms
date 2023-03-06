@@ -20,17 +20,92 @@
 
 @section('content')
 
+    <div class="row d-flex justify-content-center p-2">
+      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: #F0652B; color:white">
+        <h4 class="text-center text-white">Total no of resident </h6>
+          <p class="text-center"> <span >65</span></p>
+      </div>
+
+      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: lightgreen">
+        <h4 class="text-center text-white">Total no of rooms </h6>
+          <p class="text-center"> <span >423</span></p>
+      </div>
+
+      <div class="col-md-3 py-2 tet-center card my-2 rounded-0" style="background-color: #8CBD00;">
+        <h4 class="text-center text-white">Total no of rooms occupied</h6>
+          <p class="text-center"> <span >12</span></p>
+      </div>
+
+      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: #82b5b2">
+        <h4 class="text-center text-white">Total remaining rooms </h6>
+          <p class="text-center"> <span >423</span></p>
+      </div>
+
+      <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: rgb(247, 189, 0)">
+        <h4 class="text-center text-white">No of people available </h6>
+          <p class="text-center"> <span >12</span></p>
+      </div>
+
+    
+
+      
+
+     
+     
+    </div>
     <div class="row bg-white my-2 mx-1 pl-1 py-3">
        <h3 id="greeting">Good Afternoon,</h3>
        <p>Now it’s <span id="date"></span>  <span id="live-time"></span> <span id="day"></span>, welcome back to aero hostel management system</p> 
     </div>
 
-
+    <div class="card p-3 mx-1">
+      <h3>Floor plan</h3>
+<div >
+      <div id="map"  style="width: 100%;height: 400px;"></div>
+    </div>
+    </div>
+    
 @endsection
 
 @section('script')
+<script src="{{ asset('assets/libs/ladda/ladda.min.js') }}"></script>
+    <!-- third party js ends -->
+
+    <!-- demo app -->
+    <script src="{{ asset('assets/js/pages/loading-btn.init.js') }}"></script>
+    <!-- end demo js-->
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="{{ URL::asset('map/draw/leaflet.draw.css')}}"/>
+       {{-- <link rel="stylesheet" href="{{ URL::asset('assets/src/leaflet.draw.css')}}"/>  --}}
+
+
+
+
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+
+    {{-- <script src="{{ URL::asset('map/draw/leaflet.draw-custom.js')}}"></script> --}}
+    <<script src="{{ URL::asset('assets/js/leaflet.draw.js')}}"></script>
+
+    <script src="{{ URL::asset('map/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js')}}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDBid44NzY6_Olyxu10cpexi_bO0F5bMI&libraries=places"></script>
+
 
 <script>
+
+
+var center = [3.016603, 101.858382];
+    $(document).ready(function(){
+        var map = L.map('map').setView(center, 11);
+
+        // Set up the OSM layer
+        L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
+      })
     function updateTime() {
         const now = new Date();
 
@@ -70,4 +145,8 @@ $('#greeting').html(greeting)
     
     setInterval(updateTime, 1000); // Update time every second
   </script>
+
+
+
+
 @endsection

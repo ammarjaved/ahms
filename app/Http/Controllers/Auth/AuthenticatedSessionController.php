@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         if ( auth()->attempt(['name' => $input['name'], 'password' => $input['password']])) {
 
             // return redirect()->route('dashboard');
-            return view('dashboard');
+            return redirect('/dashboard');
             }
             else{
                 throw ValidationException::withMessages([

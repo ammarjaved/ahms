@@ -66,6 +66,9 @@
     width: 24%;
     margin-right: 1%;
 }   
+.is-invalid{
+    border: 2px solid #ff00009c !important;
+}
     </style>
 @endsection
 
@@ -168,7 +171,7 @@
                     <h5 class="modal-title " id="exampleModalLabel">New</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('user.store') }}"   method="POST" enctype="multipart/form-data">
                     <div class="modal-body  ">
 
 
@@ -360,7 +363,7 @@
             });
 
             function onpenModal(){
-                $('#id').val('');
+                        $('#id').val('');
                         $('#name').val('');
                         $('#gender').val('');
                         $('#age').val('');
@@ -440,6 +443,28 @@
                     }
                 })
             }
+            
+            function submitFoam(){
+               
+                        
+                let ret = true;  
+                        
+                if(  $('#name').val() == ''){
+                    $('#name').addClass('is-invalid')
+
+                }
+                if ($('#gender').val('') == "") {
+                    
+                }
+                if ( $('#age').val('')== "") {
+                    
+                }
+                if ($('#phone_no').val('')) {
+                    
+                }
+                return false;
+            }
+
 
             function encodeImageFileAsURL(element) {
                 var file = element.files[0];
