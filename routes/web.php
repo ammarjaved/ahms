@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\application;
 use App\Http\Controllers\ApplicationGeom;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
@@ -30,9 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard',function(){
         return view('dashboard');
     });
-    Route::get('/',function(){
-        return view('dashboard');
-    });
+    Route::get('/',[DashboardController::class,'index']);
 
     Route::get('/personal/{id}',[userDetail::class,'personal']);
 

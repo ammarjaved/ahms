@@ -47,8 +47,8 @@
       </div>
 <div class="row px-4">
       <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: #41b369">
-        <h4 class="text-center text-white">Toatl No OF Floors</h6>
-          <p class="text-center"> <span >12</span></p>
+        <h4 class="text-center text-white">Total No OF Floors</h6>
+          <p class="text-center"> <span id="no_of_floors">{{Auth::user()->no_of_floors}}</span></p>
       </div>
     </div>
     
@@ -67,7 +67,7 @@
       <div class="row d-flex justify-content-between">
      <div class="col-md-2"> <h3>Floor plan</h3></div>
      <div class="col-md-2">
-     <select name="" class="form-select" id="">
+     <select name="" class="form-select" id="floors">
       <option value="" hidden>-- SELECT FLOOR --</option>
       <option value="">Floor 1</option>
       <option value="">Floor 1</option>
@@ -119,6 +119,9 @@ var center = [3.016603, 101.858382];
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18
         }).addTo(map);
+
+
+        noOfFloors()
       })
     function updateTime() {
         const now = new Date();
@@ -158,6 +161,19 @@ $('#greeting').html(greeting)
     }
     
     setInterval(updateTime, 1000); // Update time every second
+
+    function noOfFloors(){
+      let val = parseInt( $('#no_of_floors').html())
+      $('#floors').find('option').remove().end()
+      $('#floors').append(`<option value="" hidden>-- SELECT FLOOR --</option>`)
+      for (let index = 0; index < val; index++) {
+       
+        $('#floors').append(`<option value="${index+1}">Floor ${index+1}</option>`)
+        
+
+        
+      }
+    }
   </script>
 
 
