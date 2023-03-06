@@ -55,10 +55,10 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone_no' => $request->phone,
             'address' => $request->address,
             'password' => Hash::make($request->password),
-            'floors'=>$request->floors,
+            'no_of_floors'=>$request->floors,
 
         ]);
 
