@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/personal/{id}',[userDetail::class,'personal']);
 
     Route::resource('user',userDetail::class);
+    Route::resource('payment',PaymentController::class);
+
     
     
 });
