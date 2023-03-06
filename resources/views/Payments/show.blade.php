@@ -80,8 +80,9 @@
         <div class="col-12">
 
 
-            <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Payment /
-                members
+            <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif"><a href="/"
+                    class="text-dark">Aero</a> / <a href="{{ route('payment.index') }}" class="text-dark">Payment /
+                    Member</a> / payment history
             </h6>
 
         </div>
@@ -92,12 +93,12 @@
 
         <div class="card p-2 col-md-12 rounded-0">
             <div class="row text-end text-right p-2">
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
                         onclick="openPayment()">
                         Add Payment
                     </button>
-                </div>
+                </div> --}}
             </div>
             <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
                 role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
@@ -106,8 +107,9 @@
                     <th>Total Payed</th>
                     <th>Due Payment</th>
                     <th>Balance</th>
-
-                    <th class="text-center">Operations </th>
+                    <th>Created at</th>
+                    <th>Due Date</th>
+                    <th class="text-center">Detail </th>
                 </thead>
                 <tbody>
                     @foreach ($payments as $payment)
@@ -116,11 +118,16 @@
                             <td>{{ $payment->total_payed }}</td>
                             <td>{{ $payment->due_payment }}</td>
                             <td>{{ $payment->balance }}</td>
+                            <td>{{ $payment->created_at }}</td>
+                            <td>{{$payment->due_date}}</td>
+                            <td class="text-center d-flex justify-content-center">
+                                <span>
+                                    <button type="button" onclick="getUserPayment({{ $payment->id }})" class="btn  btn-sm"><i
+                                        class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
+                                </span>
+                                <span class="">
 
-                            <td class="text-center d-flex justify-content-center"><span class="">
-
-                                    <a href="/payment/{{ $payment->personal_detail_id_fk }}" class="btn  btn-sm"
-                                        title="Show all payments"><i class="mdi mdi-account-details"
+                                    <a href="#" onclick="openPayment()" class="btn  btn-sm"><i class=" fas fa-print"
                                             style="color:black"></i></a>
 
                                 </span><span>
@@ -138,6 +145,30 @@
     </div>
 
 
+    <div class="modal fade" id="staticBackdropDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header" style="background:  #EAEFF4">
+                    <h5 class="modal-title " id="exampleModalLabel">Payment Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+ 
+                <div class="modal-body  ">
+                 
+                </div>
+                <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+
+                    {{-- <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                            style="background :#90CF5F; color:white">Save changes</button> --}}
+                    <button type="button" class="btn btn-sm btn-white border-0 " data-bs-dismiss="modal">Close</button>
+                </div>
+         
+
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -145,41 +176,36 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header" style="background:  #EAEFF4">
-                    <h5 class="modal-title " id="exampleModalLabel">New</h5>
+                    <h5 class="modal-title " id="exampleModalLabel">Update Payment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('payment.store') }}" onsubmit="return submitFoam()" method="POST">
+                <form action="/payment/{{21}}" method="POST">
+                    @method('PATCH')
                     @csrf
-                    <div class="modal-body  ">
-                        <label for="selectMember">Select</label>
-                        <select name="id_fk" id="selectMember" onchange="getName()" class="form-select  ">
-                            <option value="" hidden>-- select member --</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                        <input type="hidden" name="name" id="name">
-                        <div class="row d-felx justify-content-between mt-2">
-                            <div class="col-md-5">
-                                <label for="due_payment">Due Payment</label>
-                                <input type="number" name="due_payment" id="due_payment" class="form-control">
-                            </div>
-                            <div class="col-md-5">
-                                <label for="due_date">Due Date</label>
-                                <input type="date" name="due_date" id="due_date" class="form-control">
-                            </div>
+                <div class="modal-body  ">
+                    <input type="hidden" name="id" id="id">
+                    <input type="" class="form-control" disabled name="" id="name">
+                    <div class="row d-felx justify-content-between mt-2">
+                        <div class="col-md-5">
+                            <label for="due_payment">Due Payment</label>
+                            <input type="number" name="due_payment" id="due_payment" class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="due_date">Due Date</label>
+                            <input type="date" name="due_date" id="due_date" class="form-control">
                         </div>
                     </div>
-                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
-                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                </div>
+                <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+
+                    <button type="submit" class="btn btn-sm  border-0 bg-made-green"
                             style="background :#90CF5F; color:white">Save changes</button>
-                        <button type="button" class="btn btn-sm btn-white border-0 "
-                            data-bs-dismiss="modal">Cancel</button>
-                    </div>
+                    <button type="button" class="btn btn-sm btn-white border-0 " data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
 
-                </form>
             </div>
         </div>
     </div>
@@ -197,31 +223,12 @@
 
     <script>
         function openPayment() {
-            $('#staticBackdrop').modal('show');
+            $('#staticBackdropDetail').modal('show');
         }
 
-        function submitFoam() {
 
-            let ret = true;
 
-            if ($('#selectMember').val() == "") {
-                $('#selectMember').addClass('is-invalid')
-                ret = false
-            }
-            if ($('#due_payment').val() == "") {
-                $('#due_payment').addClass('is-invalid')
-                ret = false
-            }
-            if ($('#due_date').val() == "") {
-                $('#due_date').addClass('is-invalid')
-                ret = false
-            }
-            return ret;
-        }
 
-        function getName() {
-            $('#name').val($('#selectMember :selected').text())
-        }
 
         function matchCustom(params, data) {
             // If there are no search terms, return all of the data
@@ -248,11 +255,30 @@
             // Return `null` if the term should not be displayed
             return null;
         }
-        $(document).ready(function() {
-            $(".js-example-matcher").select2({
-                matcher: matchCustom
-            });
-        })
+
+        function getUserPayment(id){
+
+            $.ajax({
+                    type: "GET",
+                    url: `/payment/${id}/edit`,
+                    success: function(response) {
+                        console.log(response)
+                       $('#name').val(response.data.name)
+              
+       
+           
+                $('#due_payment').val(response.data.due_payment)
+                let day = response.data.due_date.split(" ");
+          $('#due_date').val(day[0]) 
+
+                        $('#id').val(response.data.id)
+                        $('#staticBackdrop').modal('show');
+                    }
+
+            })
+        }
+
+       
     </script>
 
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>

@@ -43,7 +43,7 @@
 
       <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: lightgreen">
         <h4 class="text-center text-white">No Of People Available </h6>
-          <p class="text-center"> <span >12</span></p>
+          <p class="text-center"> <span >{{$avail}}</span></p>
       </div>
 <div class="row px-4">
       <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: #41b369">

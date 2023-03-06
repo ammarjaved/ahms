@@ -62,23 +62,25 @@
             font-size: 12px !important;
             color: black;
         }
+
         .card.col-md-3.pr-2 {
-    width: 24%;
-    margin-right: 1%;
-}   
-.is-invalid{
-    border: 2px solid #ff00009c !important;
-}
+            width: 24%;
+            margin-right: 1%;
+        }
+
+        .is-invalid {
+            border: 2px solid #ff00009c !important;
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-12">
-        
-               
-                <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Users / users</h6>
-   
+
+
+            <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Users / users</h6>
+
         </div>
     </div>
     {{-- <div class="card rounded-0 px-3 py-2 pt-3 bg-white">
@@ -93,62 +95,72 @@
         </div>
     </div> --}}
 
-<div class="row px-2 bg-transparent ">
-    <!-- <div class="card col-md-3 pr-2">
-        asdhasjkh
-    </div> -->
-    <div class="card p-2 col-md-12 rounded-0">
-        <div class="row text-end text-right p-2">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"  onclick="onpenModal()">
-                    Add New
-                </button>
+    <div class="row px-2 bg-transparent ">
+        <!-- <div class="card col-md-3 pr-2">
+                asdhasjkh
+            </div> -->
+        <div class="card p-2 col-md-12 rounded-0">
+            <div class="row text-end d-flex justify-content-end text-right p-2">
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
+                        onclick="onpenModal()">
+                        Add Member
+                    </button>
+                </div>
             </div>
+            <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
+                role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
+                <thead>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Nationality</th>
+                    <th>Gender</th>
+                    <th>Passport no</th>
+                    <th>Status</th>
+                    <th class="text-center">Operations </th>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->phone_no }}</td>
+                            <td>{{ $user->nationality }}</td>
+                            <td>{{ $user->gender }}</td>
+                            <td>{{ $user->passport_no }}</td>
+                            <td class="text-center">
+                                @if ($user->availability != '')
+                                    <span class="badge label-table bg-success">Active</span>
+                                @else
+                                    <span class="badge label-table bg-danger">InActive</span>
+                                @endif
+                            </td>
+                            <td class="text-center d-flex justify-content-center"><span class="">
+                                    <button type="button" onclick="getUser({{ $user->id }})" class="btn  btn-sm"><i
+                                            class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
+
+                                    <a href="/personal/{{ $user->id }}" class="btn  btn-sm"><i
+                                            class="mdi mdi-account-details" style="color:black"></i></a>
+
+                                </span><span>
+
+                                    <form method="POST" action="{{ route('user.destroy', $user->id) }}">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
+                                        <button type="submit" onclick="return confirm('Are you sure')"
+                                            class="btn  btn-sm"><i class="mdi mdi-delete-outline"
+                                                style="color:black"></i></button>
+                                    </form>
+
+                                </span></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+            </table>
+
         </div>
-        <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
-            <thead>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Nationality</th>
-                <th>Gender</th>
-                <th>Passport no</th>
-                <th class="text-center">Operations </th>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->phone_no }}</td>
-                        <td>{{ $user->nationality }}</td>
-                        <td>{{ $user->gender }}</td>
-                        <td>{{ $user->passport_no }}</td>
-                        <td class="text-center d-flex justify-content-center"><span class="">
-                        <button type="button" onclick="getUser({{$user->id}})"
-                            class="btn  btn-sm" ><i
-                            class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
-
-                        <a  href="/personal/{{$user->id}}"
-                            class="btn  btn-sm" ><i
-                            class="mdi mdi-account-details" style="color:black"></i></a>                
-                                        
-                            </span><span>
-
-                        <form method="POST" action="{{ route('user.destroy', $user->id) }}">
-                                    {{ method_field('DELETE') }}
-                                    {{ csrf_field() }}
-                                    <button type="submit" onclick="return confirm('Are you sure')" class="btn  btn-sm"><i
-                                            class="mdi mdi-delete-outline" style="color:black"></i></button>
-                        </form>
-
-                            </span></td>
-                    </tr>
-                @endforeach
-            </tbody>
-
-        </table>
-
     </div>
-</div>
 
     {{-- <h1>sdfsdf</h1> --}}
     {{-- 
@@ -163,15 +175,14 @@
 
     <!-- Modal -->
 
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header" style="background:  #EAEFF4">
                     <h5 class="modal-title " id="exampleModalLabel">New</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.store') }}"   method="POST" enctype="multipart/form-data">
+                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body  ">
 
 
@@ -182,7 +193,8 @@
 
                                 <div class="row">
                                     <div class="col-md-5  "><label for="name">Name</label></div>
-                                    <div class="col-md-7 "> <input type="text" id="name" value="" name="name"></div>
+                                    <div class="col-md-7 "> <input type="text" id="name" value=""
+                                            name="name"></div>
                                 </div>
 
                                 <div class="row">
@@ -197,7 +209,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="age">Age</label></div>
-                                    <div class="col-md-7"> <input type="number" id="age"   name="age"></div>
+                                    <div class="col-md-7"> <input type="number" id="age" name="age"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="phone_no">Phone no</label></div>
@@ -205,7 +217,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="emergency_no">Emergency no</label></div>
-                                    <div class="col-md-7"> <input type="text" id="emergency_no" name="emergency_no"></div>
+                                    <div class="col-md-7"> <input type="text" id="emergency_no" name="emergency_no">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="relegion">Religion</label></div>
@@ -217,11 +230,13 @@
 
                                 <div class="row">
                                     <div class="col-md-5"><label for="nationality">Nationality</label></div>
-                                    <div class="col-md-7"> <input type="text" id="nationality" name="nationality"></div>
+                                    <div class="col-md-7"> <input type="text" id="nationality" name="nationality">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_no">Passport no</label></div>
-                                    <div class="col-md-7"> <input type="text" name="passport_no" id="passport_no"></div>
+                                    <div class="col-md-7"> <input type="text" name="passport_no" id="passport_no">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa">Visa</label></div>
@@ -229,8 +244,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="passport_expiry">Passport expiry</label></div>
-                                    <div class="col-md-6"> <input type="date" id="passport_expiry" name="passport_expiry"
-                                            class="form-control"></div>
+                                    <div class="col-md-6"> <input type="date" id="passport_expiry"
+                                            name="passport_expiry" class="form-control"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
@@ -239,8 +254,10 @@
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
-                                <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}" height="162" width="140" />
-                                <input type="file"  onchange="encodeImageFileAsURL(this)" name="userImage" style="color:transparent" class="p-5 py-2">
+                                <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}"
+                                    height="162" width="140" />
+                                <input type="file" onchange="encodeImageFileAsURL(this)" name="userImage"
+                                    style="color:transparent" class="p-5 py-2">
                             </div>
                         </div>
 
@@ -271,17 +288,20 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-5"><label for="company">Company</label></div>
-                                            <div class="col-md-7"> <input type="text" id="company" name="company"></div>
+                                            <div class="col-md-7"> <input type="text" id="company" name="company">
+                                            </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-5"><label for="work_contact">Work contact</label></div>
-                                            <div class="col-md-7"> <input type="text" id="work_contact" name="work_contact"></div>
+                                            <div class="col-md-7"> <input type="text" id="work_contact"
+                                                    name="work_contact"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5"><label for="person_incharge">Person incharge</label>
                                             </div>
-                                            <div class="col-md-7"> <input type="text" id="person_incharge" name="person_incharge"></div>
+                                            <div class="col-md-7"> <input type="text" id="person_incharge"
+                                                    name="person_incharge"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -362,35 +382,36 @@
                 });
             });
 
-            function onpenModal(){
-                        $('#id').val('');
-                        $('#name').val('');
-                        $('#gender').val('');
-                        $('#age').val('');
-                        $('#phone_no').val('');
-                        $('#emergency_no').val('');
-                        $('#relegion').val('');
-                        $('#nationality').val('');
-                        $('#passport_no').val('');
-                        $('#visa').val('');
-                        $('#visa_expiry').val('');
-                        $('#company').val('');
-                        $('#work_contact').val('');
-                        $('#work_address').val('');
-                        $('#person_incharge').val('');
-                        $('#floor').val('');
-                        $('#room_no').val('');
-                        $('#bed_no').val('');
-                        $('#permanent_address').val('');
-                        $('#current_address').val('');
-                        $("#profile_image").attr("src", 'assets/images/userImage.gif');
-                        $('#exampleModal').modal('show');
+            function onpenModal() {
+                $('#id').val('');
+                $('#name').val('');
+                $('#gender').val('');
+                $('#age').val('');
+                $('#phone_no').val('');
+                $('#emergency_no').val('');
+                $('#relegion').val('');
+                $('#nationality').val('');
+                $('#passport_no').val('');
+                $('#visa').val('');
+                $('#visa_expiry').val('');
+                $('#company').val('');
+                $('#work_contact').val('');
+                $('#work_address').val('');
+                $('#person_incharge').val('');
+                $('#floor').val('');
+                $('#room_no').val('');
+                $('#bed_no').val('');
+                $('#permanent_address').val('');
+                $('#current_address').val('');
+                $("#profile_image").attr("src", 'assets/images/userImage.gif');
+                $('#exampleModal').modal('show');
             }
 
-            function getUser(id){
+
+            function getUser(id) {
                 $.ajax({
                     type: "GET",
-                    url:`user/${id}`,
+                    url: `user/${id}`,
                     success: function(response) {
                         // console.log(response);
                         var data = response.data;
@@ -404,7 +425,7 @@
                         $('#nationality').val(data['user'].nationality);
                         $('#passport_no').val(data['user'].passport_no);
                         $('#visa').val(data['user'].visa);
-                        
+
                         $('#company').val(data['work_info'].company);
                         $('#work_contact').val(data['work_info'].work_contact);
                         $('#work_address').val(data['work_info'].work_address);
@@ -414,53 +435,53 @@
                         $('#bed_no').val(data['room_info'].bed_no);
                         $('#permanent_address').val(data['user'].permanent_address);
                         $('#current_address').val(data['user'].current_address);
-                        
+
                         // console.log(data['user'].visa_expiry)
-                        
 
-                            let day = data['user'].visa_expiry.split(" ");
-                            // console.log(day[0]);
-                            $('#visa_expiry').val(day[0]);
 
-                            let day_p = data['user'].visa_expiry.split(" ");
-                            $('#passport_expiry').val(day_p[0])
+                        let day = data['user'].visa_expiry.split(" ");
+                        // console.log(day[0]);
+                        $('#visa_expiry').val(day[0]);
+
+                        let day_p = data['user'].visa_expiry.split(" ");
+                        $('#passport_expiry').val(day_p[0])
 
                         $.get(data['user'].user_img)
-                        
-                        .done(function() { 
-                            $("#profile_image").attr("src", data['user'].user_image);
-                            
 
-                        }).fail(function() { 
-                            // console.log("SDfsd");
-                            $("#profile_image").attr("src", 'assets/images/userImage.gif');
-                        
-                        })
+                            .done(function() {
+                                $("#profile_image").attr("src", data['user'].user_image);
+
+
+                            }).fail(function() {
+                                // console.log("SDfsd");
+                                $("#profile_image").attr("src", 'assets/images/userImage.gif');
+
+                            })
 
                         $('#exampleModal').modal('show');
-                      
-                        
+
+
                     }
                 })
             }
-            
-            function submitFoam(){
-               
-                        
-                let ret = true;  
-                        
-                if(  $('#name').val() == ''){
+
+            function submitFoam() {
+
+
+                let ret = true;
+
+                if ($('#name').val() == '') {
                     $('#name').addClass('is-invalid')
 
                 }
                 if ($('#gender').val('') == "") {
-                    
+
                 }
-                if ( $('#age').val('')== "") {
-                    
+                if ($('#age').val('') == "") {
+
                 }
                 if ($('#phone_no').val('')) {
-                    
+
                 }
                 return false;
             }
@@ -470,14 +491,13 @@
                 var file = element.files[0];
                 var reader = new FileReader();
                 reader.onloadend = function() {
-                   // console.log('RESULT', reader.result)
-                   $("#profile_image").attr("src", reader.result);
-                   $("#profile_image").attr('height','162');
-                 $("#profile_image").attr('width','140');
+                    // console.log('RESULT', reader.result)
+                    $("#profile_image").attr("src", reader.result);
+                    $("#profile_image").attr('height', '162');
+                    $("#profile_image").attr('width', '140');
                 }
                 reader.readAsDataURL(file);
             }
-
         </script>
         <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>

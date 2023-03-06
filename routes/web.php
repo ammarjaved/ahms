@@ -28,10 +28,8 @@ require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::view('dashboard',"dashboard");
-    Route::get('dashboard',function(){
-        return view('dashboard');
-    });
+    Route::get('dashboard',[DashboardController::class,'index']);
+    
     Route::get('/',[DashboardController::class,'index']);
 
     Route::get('/personal/{id}',[userDetail::class,'personal']);
@@ -45,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
  
 
-Route::group(['prefix' => '/'], function () {
+Route::group(['prefix' => '/asd'], function () {
     Route::get('', [RoutingController::class, 'index'])->name('root');
     Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
     Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');

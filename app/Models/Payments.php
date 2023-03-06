@@ -9,7 +9,7 @@ class Payments extends Model
 {
     use HasFactory;
     public $table = 'payments';
-
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'due_payment',
