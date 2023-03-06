@@ -15,6 +15,9 @@ class Payments extends Model
         'due_payment',
         'total_payed',
         'balance',
-        'created_by'
+        'created_by',
+        'due_date',
+        'payment_date',
+        'personal_detail_id_fk'
     ];
 }

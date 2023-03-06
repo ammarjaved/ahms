@@ -16,8 +16,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $users = UserDetail::all();
-        return view('Payments.index',['users'=>$users]);
+        $payments = Payments::all();
+        $user=UserDetail::all();
+        return view('Payments.index',['payment'=>$payments,'users'=>$user]);
     }
 
     /**
@@ -28,6 +29,7 @@ class PaymentController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -38,7 +40,16 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+        $app = Payments::create($request->all());
+
+         }catch(Exception $e){
+            return $e->getMessage();
+            return redirect()->route('payment.index')->with('message','something is worng try again later');
+        }
+        return redirect()->route('payment.index');
+
+
     }
 
     /**
