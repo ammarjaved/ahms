@@ -127,7 +127,7 @@
                                 </span>
                                 <span class="">
 
-                                    <a href="#" onclick="openPayment()" class="btn  btn-sm"><i class=" fas fa-print"
+                                    <a href="#" onclick="openPayment({{ $payment->id }})" class="btn  btn-sm"><i class=" fas fa-print"
                                             style="color:black"></i></a>
 
                                 </span><span>
@@ -156,7 +156,49 @@
                 </div>
  
                 <div class="modal-body  ">
-                 
+                    <h4 class="text-center">Payment Recipit</h4>
+                    <table class=" ">
+                        <tr>
+                            <th>Name</th>
+                            <td><span id="detailName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Created by</th>
+                            <td><span id="detailCreatedBy"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Balance</th>
+                            <td><span id="detailBalance"></span></td>
+                        </tr>
+                    </table>
+
+
+                    <h4>Payment summary </h4>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th> Total paid</th>
+                            <td><span id="detailTotalPaid"></span></td>
+                        </tr>
+                        <tr>
+                            <th> Due Amount</th>
+                            <td><span id="detailDueAmount"></span></td>
+                        </tr>
+                        <tr>
+                            <th> Payment Date</th>
+                            <td><span id="detailPaymentDate"></span></td>
+                        </tr>
+
+                        <tr>
+                            <th> Due Date</th>
+                            <td><span id="detailDueDate"></span></td>
+                        </tr>
+
+                        <tr>
+                            <th> Created at</th>
+                            <td><span id="detailCreatedAt"></span></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
@@ -222,8 +264,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script>
-        function openPayment() {
+        function openPayment(id) {
+            $.ajax({
+                    type: "GET",
+                    url: `/payment/${id}/edit`,
+                    success: function(response) {
+                        console.log(response)
+               $('#detailName').html(response.data.name)
+               $('#detailCreatedBy').html(response.data.created_by)
+               $('#detailBalance').html(response.data.balance)
+               $('#detailTotalPaid').html(response.data.total_payed)
+               $('#detailDueAmount').html(response.data.due_amount)
+               $('#detailPaymentDate').html(response.data.payment_date)
+               $('#detailDueDate').html(response.data.due_date)
+               $('#detailCreatedAt').html(response.data.created_at)
+
+           
+           
             $('#staticBackdropDetail').modal('show');
+                    }
+                    })
         }
 
 
