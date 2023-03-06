@@ -119,16 +119,17 @@
                             <td>{{ $payment->due_payment }}</td>
                             <td>{{ $payment->balance }}</td>
                             <td>{{ $payment->created_at }}</td>
-                            <td>{{$payment->due_date}}</td>
+                            <td>{{ $payment->due_date }}</td>
                             <td class="text-center d-flex justify-content-center">
                                 <span>
-                                    <button type="button" onclick="getUserPayment({{ $payment->id }})" class="btn  btn-sm"><i
-                                        class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
+                                    <button type="button" onclick="getUserPayment({{ $payment->id }})"
+                                        class="btn  btn-sm"><i class="mdi mdi-circle-edit-outline"
+                                            style="color:black"></i></button>
                                 </span>
                                 <span class="">
 
-                                    <a href="#" onclick="openPayment({{ $payment->id }})" class="btn  btn-sm"><i class=" fas fa-print"
-                                            style="color:black"></i></a>
+                                    <a href="#" onclick="openPayment({{ $payment->id }})" class="btn  btn-sm"><i
+                                            class=" fas fa-print" style="color:black"></i></a>
 
                                 </span><span>
 
@@ -154,7 +155,7 @@
                     <h5 class="modal-title " id="exampleModalLabel">Payment Detail</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
- 
+
                 <div class="modal-body  ">
                     <h4 class="text-center">Payment Recipit</h4>
                     <table class=" ">
@@ -206,7 +207,7 @@
                             style="background :#90CF5F; color:white">Save changes</button> --}}
                     <button type="button" class="btn btn-sm btn-white border-0 " data-bs-dismiss="modal">Close</button>
                 </div>
-         
+
 
             </div>
         </div>
@@ -222,31 +223,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="/payment/{{21}}" method="POST">
+                <form action="/payment/{{ 21 }}" method="POST">
                     @method('PATCH')
                     @csrf
-                <div class="modal-body  ">
-                    <input type="hidden" name="id" id="id">
-                    <input type="" class="form-control" disabled name="" id="name">
-                    <div class="row d-felx justify-content-between mt-2">
-                        <div class="col-md-5">
-                            <label for="due_payment">Due Payment</label>
-                            <input type="number" name="due_payment" id="due_payment" class="form-control">
+                    <div class="modal-body  ">
+                        <input type="hidden" name="id" id="id">
+                        <input type="" class="form-control" disabled name="" id="name">
+                        <div class="row d-felx justify-content-between mt-2">
+                            <div class="col-md-5">
+                                <label for="due_payment">Due Payment</label>
+                                <input type="number" name="due_payment" id="due_payment" class="form-control">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="due_date">Due Date</label>
+                                <input type="date" name="due_date" id="due_date" class="form-control">
+                            </div>
                         </div>
-                        <div class="col-md-5">
-                            <label for="due_date">Due Date</label>
-                            <input type="date" name="due_date" id="due_date" class="form-control">
-                        </div>
+
                     </div>
+                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
-                </div>
-                <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
-
-                    <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
                             style="background :#90CF5F; color:white">Save changes</button>
-                    <button type="button" class="btn btn-sm btn-white border-0 " data-bs-dismiss="modal">Close</button>
-                </div>
-            </form>
+                        <button type="button" class="btn btn-sm btn-white border-0 "
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
 
             </div>
         </div>
@@ -266,24 +268,24 @@
     <script>
         function openPayment(id) {
             $.ajax({
-                    type: "GET",
-                    url: `/payment/${id}/edit`,
-                    success: function(response) {
-                        console.log(response)
-               $('#detailName').html(response.data.name)
-               $('#detailCreatedBy').html(response.data.created_by)
-               $('#detailBalance').html(response.data.balance)
-               $('#detailTotalPaid').html(response.data.total_payed)
-               $('#detailDueAmount').html(response.data.due_amount)
-               $('#detailPaymentDate').html(response.data.payment_date)
-               $('#detailDueDate').html(response.data.due_date)
-               $('#detailCreatedAt').html(response.data.created_at)
+                type: "GET",
+                url: `/payment/${id}/edit`,
+                success: function(response) {
+                    console.log(response)
+                    $('#detailName').html(response.data.name)
+                    $('#detailCreatedBy').html(response.data.created_by)
+                    $('#detailBalance').html(response.data.balance)
+                    $('#detailTotalPaid').html(response.data.total_payed)
+                    $('#detailDueAmount').html(response.data.due_amount)
+                    $('#detailPaymentDate').html(response.data.payment_date)
+                    $('#detailDueDate').html(response.data.due_date)
+                    $('#detailCreatedAt').html(response.data.created_at)
 
-           
-           
-            $('#staticBackdropDetail').modal('show');
-                    }
-                    })
+
+
+                    $('#staticBackdropDetail').modal('show');
+                }
+            })
         }
 
 
@@ -316,29 +318,27 @@
             return null;
         }
 
-        function getUserPayment(id){
+        function getUserPayment(id) {
 
             $.ajax({
-                    type: "GET",
-                    url: `/payment/${id}/edit`,
-                    success: function(response) {
-                        console.log(response)
-                       $('#name').val(response.data.name)
-              
-       
-           
-                $('#due_payment').val(response.data.due_payment)
-                let day = response.data.due_date.split(" ");
-          $('#due_date').val(day[0]) 
+                type: "GET",
+                url: `/payment/${id}/edit`,
+                success: function(response) {
+                    console.log(response)
+                    $('#name').val(response.data.name)
 
-                        $('#id').val(response.data.id)
-                        $('#staticBackdrop').modal('show');
-                    }
+
+
+                    $('#due_payment').val(response.data.due_payment)
+                    let day = response.data.due_date.split(" ");
+                    $('#due_date').val(day[0])
+
+                    $('#id').val(response.data.id)
+                    $('#staticBackdrop').modal('show');
+                }
 
             })
         }
-
-       
     </script>
 
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
