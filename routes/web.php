@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\application;
 use App\Http\Controllers\ApplicationGeom;
+use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('user',userDetail::class);
     Route::resource('payment',PaymentController::class);
+
+    Route::get('/get-all-users',[AvailabilityController::class,'index']);
+
+    Route::get('/update-availability',[AvailabilityController::class,'update']);
 
     
     

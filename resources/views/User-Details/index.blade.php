@@ -129,10 +129,10 @@
                             <td>{{ $user->gender }}</td>
                             <td>{{ $user->passport_no }}</td>
                             <td class="text-center">
-                                @if ($user->availability != '')
-                                    <span class="badge label-table bg-success">Active</span>
+                                @if ($user->availability == 'available')
+                                    <span class="badge label-table bg-success">Available</span>
                                 @else
-                                    <span class="badge label-table bg-danger">InActive</span>
+                                    <span class="badge label-table bg-danger">Unavailable</span>
                                 @endif
                             </td>
                             <td class="text-center d-flex justify-content-center"><span class="">
