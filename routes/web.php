@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/update-availability',[AvailabilityController::class,'update']);
  
     Route::get('cctv',[CCTVController::class,'index']);
+    Route::post('genratePatments',[PaymentController::class,'genratePatments']);
+
  
     
     

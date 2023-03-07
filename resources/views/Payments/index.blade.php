@@ -95,7 +95,7 @@
                 <div class="col-md-12">
                     <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
                         onclick="openPayment()">
-                        Add Payment
+                        Generate Payments
                     </button>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                 role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
                 <thead>
                     <th>Name</th>
-                    <th>Due Payment</th>
-                    <th>Total Payed</th>
-                    <th>Total Not Payed Balance</th>
+                    <th>Rent Of Month</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
 
                     <th class="text-center">Operations </th>
                 </thead>
@@ -150,27 +150,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('payment.store') }}" onsubmit="return submitFoam()" method="POST">
+                <form action="genratePatments"  method="POST">
                     @csrf
                     <div class="modal-body  ">
-                        <label for="selectMember">Select</label>
+                        <!-- <label for="selectMember">Select</label>
                         <select name="id_fk" id="selectMember" onchange="getName()" class="form-select  ">
                             <option value="" hidden>-- select member --</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" name="name" id="name">
-                        <div class="row d-felx justify-content-between mt-2">
+                        <input type="hidden" name="name" id="name"> -->
+                        <!-- <div class="row d-felx justify-content-between mt-2">
                             <div class="col-md-5">
                                 <label for="due_payment">Due Payment</label>
                                 <input type="number" name="due_payment" id="due_payment" class="form-control">
+                            </div> -->
+                            <div class="col-md-5">
+                                <label for="due_date">Issue Date</label>
+                                <input type="date" name="issue_date" id="issue_date" class="form-control">
                             </div>
                             <div class="col-md-5">
                                 <label for="due_date">Due Date</label>
                                 <input type="date" name="due_date" id="due_date" class="form-control">
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </div>
                     <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
