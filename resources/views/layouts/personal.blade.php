@@ -127,6 +127,11 @@
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
                                     <div class="col-md-6"> <input    value="{{$data['user']->visa_expiry}}" class="form-control" disabled></div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-5"><label for="date_of_birth">Date of Birth</label></div>
+                                    <div class="col-md-6"> <input type="date" id="date_of_birth"  value="{{$data['user']->date_of_birth}}"  disabled
+                                            class="form-control"></div>
+                                </div>
                             </div>
                             <div class="col-md-3 text-center">
                                 @if (file_exists(public_path ().$data['user']->user_image))
@@ -202,6 +207,10 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="bed_no">Bed no</label></div>
                                     <div class="col-md-2"> <input class="form-control" value=" {{$data['room_info']->bed_no}}" disabled></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><label for="rent_per_month">Rent per Month</label></div>
+                                    <div class="col-md-7"> <input type="number" id="rent_per_month" value=" {{$data['room_info']->rent_per_month}}" disabled></div>
                                 </div>
                             </div>
 

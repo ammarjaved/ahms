@@ -254,7 +254,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-5"><label for="date_of_birth">Visa expiry</label></div>
+                                    <div class="col-md-5"><label for="date_of_birth">Date of Birth</label></div>
                                     <div class="col-md-6"> <input type="date" id="date_of_birth" name="date_of_birth"
                                             class="form-control"></div>
                                 </div>
@@ -410,6 +410,8 @@
                 $('#person_incharge').val('');
                 $('#floor').val('');
                 $('#room_no').val('');
+                $('#rent_per_month').val('');
+                $("#date_of_birth").val('');
                 $('#bed_no').val('');
                 $('#permanent_address').val('');
                 $('#current_address').val('');
@@ -445,6 +447,8 @@
                         $('#bed_no').val(data['room_info'].bed_no);
                         $('#permanent_address').val(data['user'].permanent_address);
                         $('#current_address').val(data['user'].current_address);
+                        $('#rent_per_month').val(data['user'].rent_per_month);
+                $("#date_of_birth").val(data['user']date_of_birth);
 
                         // console.log(data['user'].visa_expiry)
 
