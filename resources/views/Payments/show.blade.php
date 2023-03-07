@@ -107,7 +107,7 @@
                     <th>Total Payed</th>
                     <th>Due Payment</th>
                     <th>Balance</th>
-                    <th>Created at</th>
+                    <th>Issue date</th>
                     <th>Due Date</th>
                     <th class="text-center">Detail </th>
                 </thead>
@@ -118,14 +118,14 @@
                             <td>{{ $payment->total_payed }}</td>
                             <td>{{ $payment->due_payment }}</td>
                             <td>{{ $payment->balance }}</td>
-                            <td>{{ $payment->created_at }}</td>
-                            <td>{{ $payment->due_date }}</td>
+                            <td>{{ date('Y-m-d',strtotime($payment->created_at)) }}</td>
+                            <td>{{ date('Y-m-d',strtotime($payment->due_date)) }}</td>
                             <td class="text-center d-flex justify-content-center">
-                                <span>
+                                <!-- <span>
                                     <button type="button" onclick="getUserPayment({{ $payment->id }})"
                                         class="btn  btn-sm"><i class="mdi mdi-circle-edit-outline"
                                             style="color:black"></i></button>
-                                </span>
+                                </span> -->
                                 <span class="">
 
                                     <a href="#" onclick="openPayment({{ $payment->id }})" class="btn  btn-sm"><i
