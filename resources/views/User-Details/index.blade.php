@@ -176,7 +176,7 @@
     <!-- Modal -->
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header" style="background:  #EAEFF4">
                     <h5 class="modal-title " id="exampleModalLabel">New</h5>
@@ -250,6 +250,12 @@
                                 <div class="row">
                                     <div class="col-md-5"><label for="visa_expiry">Visa expiry</label></div>
                                     <div class="col-md-6"> <input type="date" id="visa_expiry" name="visa_expiry"
+                                            class="form-control"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5"><label for="date_of_birth">Visa expiry</label></div>
+                                    <div class="col-md-6"> <input type="date" id="date_of_birth" name="date_of_birth"
                                             class="form-control"></div>
                                 </div>
                             </div>
@@ -327,6 +333,10 @@
                                 <div class="row">
                                     <div class="col-md-3"><label for="bed_no">Bed no</label></div>
                                     <div class="col-md-7"> <input type="text" id="bed_no" name="bed_no"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><label for="rent_per_month">Rent per Month</label></div>
+                                    <div class="col-md-7"> <input type="number" id="rent_per_month" name="rent_per_month"></div>
                                 </div>
                             </div>
 

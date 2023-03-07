@@ -11,10 +11,11 @@ class DashboardController extends Controller
 
     public function index()
     {   
-     
-        $available  = UserDetail::where('availability','available')->count();
+        $data = [];
+        $data['available']  = UserDetail::where('availability','available')->count();
+        $data['resident']  = UserDetail::all()->count();
         
-       return view('dashboard',['avail'=>$available]);
+       return view('dashboard',['data'=>$data]);
     }
 }
 
