@@ -18,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payments::all();
+        $payments = DB::select("SELECT * FROM payments WHERE month = (select MAX(month)FROM payments where year = (select MAX(year) from payments))");
         $user = UserDetail::all();
         return view('Payments.index', ['payments' => $payments, 'users' => $user]);
     }
