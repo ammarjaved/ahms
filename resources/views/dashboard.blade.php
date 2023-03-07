@@ -45,8 +45,8 @@
         <h4 class="text-center text-white">No Of People Available </h6>
           <p class="text-center"> <span >{{$avail}}</span></p>
       </div>
-<div class="row px-4">
-      <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: #41b369">
+<div class="row  ">
+      <div class="col-md-2 py-2 tet-center card my-1  rounded-0" style="background-color: #41b369 ; margin-left: 20px" style="     ">
         <h4 class="text-center text-white">Total No OF Floors</h6>
           <p class="text-center"> <span id="no_of_floors">{{Auth::user()->no_of_floors}}</span></p>
       </div>
