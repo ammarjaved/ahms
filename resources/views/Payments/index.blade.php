@@ -103,9 +103,9 @@
                 role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
                 <thead>
                     <th>Name</th>
-                    <th>Total Payed</th>
                     <th>Due Payment</th>
-                    <th>Balance</th>
+                    <th>Total Payed</th>
+                    <th>Total Not Payed Balance</th>
 
                     <th class="text-center">Operations </th>
                 </thead>
@@ -113,8 +113,8 @@
                     @foreach ($payments as $payment)
                         <tr>
                             <td>{{ $payment->name }}</td>
-                            <td>{{ $payment->total_payed }}</td>
                             <td>{{ $payment->due_payment }}</td>
+                            <td>{{ $payment->total_payed }}</td>
                             <td>{{ $payment->balance }}</td>
 
                             <td class="text-center d-flex justify-content-center">
@@ -124,10 +124,10 @@
                                         title="Show all payments"><i class="mdi mdi-account-details"
                                             style="color:black"></i></a>
 
-                                </span><span>
-
-
                                 </span>
+                                <span style="cursor:pointer;" class="badge label-table bg-success" onclick="getUserPayment({{ $payment->id }})">make payment</span>
+                                
+
                             </td>
                         </tr>
                     @endforeach
@@ -184,6 +184,58 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header" style="background:  #EAEFF4">
+                    <h5 class="modal-title " id="exampleModalLabel">Make Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form action="/payment/{{ 21 }}" method="POST">
+                    @method('PATCH')
+                    @csrf
+                    <div class="modal-body  ">
+                        <input type="hidden" name="id" id="id1">
+                        <input type="text" class="form-control" disabled name="name" id="name1">
+                        <div class="row d-felx justify-content-between mt-2">
+                            <div class="col-md-5">
+                                <label for="due_payment">Due Payment</label>
+                                <input type="number" name="due_payment" id="due_payment1" class="form-control">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="total_payed">Total Deposit</label>
+                                <input type="number" name="total_payed" onkeyup="calculate_remainig()" id="total_payed" class="form-control">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="balance">Remaining</label>
+                                <input type="number" name="balance" id="balance" class="form-control">
+                            </div>
+                           
+                        </div>
+
+                    </div>
+                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+
+                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                            style="background :#90CF5F; color:white">Save changes</button>
+                        <button type="button" class="btn btn-sm btn-white border-0 "
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 
@@ -197,6 +249,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script>
+
+
+function calculate_remainig(){
+    var due=$('#due_payment1').val();
+    var payed=$('#total_payed').val();
+    var balance=parseInt(due)-parseInt(payed);
+    if(balance<0){
+        alert("wrong deposit entered")
+    }else{
+    $("#balance").val(balance);
+    }
+}    
+
+function getUserPayment(id) {
+
+$.ajax({
+    type: "GET",
+    url: `/payment/${id}/edit`,
+    success: function(response) {
+        console.log(response)
+        $('#name').val(response.data.name)
+
+
+
+        $('#due_payment1').val(response.data.due_payment)
+        let day = response.data.due_date.split(" ");
+        $('#due_date1').val(day[0]);
+        $('#name1').val(response.data.name);
+
+        $('#id1').val(response.data.id)
+        $('#staticBackdrop1').modal('show');
+    }
+
+})
+}    
+
+
         function openPayment() {
             $('#staticBackdrop').modal('show');
         }
