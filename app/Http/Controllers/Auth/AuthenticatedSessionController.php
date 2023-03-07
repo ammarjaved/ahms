@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         // return print_r($input);
         // exit();
 
-        if ( auth()->attempt(['name' => $input['name'], 'password' => $input['password']])) {
+        if ( auth()->attempt(['username' => $input['name'], 'password' => $input['password']])) {
 
             // return redirect()->route('dashboard');
             return redirect('/');

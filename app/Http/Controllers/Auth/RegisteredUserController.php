@@ -33,13 +33,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required',
             'address' => 'required',
             'password' => 'required|string|confirmed|min:8',
             'floors' => 'required',
+            'beds' => 'required',
         ]);
 
         // $dbkl  = '';
@@ -59,6 +60,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
             'password' => Hash::make($request->password),
             'no_of_floors'=>$request->floors,
+            'no_of_beds'=>$request->beds,
 
         ]);
 

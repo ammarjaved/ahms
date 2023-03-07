@@ -24,7 +24,8 @@ class User extends Authenticatable
         'phone_no',
         'address',
         'password',
-        'no_of_floors'
+        'no_of_floors',
+        'no_of_beds'
        
     ];
 

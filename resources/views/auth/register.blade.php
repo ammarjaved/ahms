@@ -111,6 +111,11 @@
                                     {{-- <label for="floors" class="form-label">No Of Floors</label> --}}
                                     <input class="form-control" type="text" name="floors" id="floors" required placeholder="Enter No of Floors in Building" autocomplete="off">
                                 </div>
+
+                                <div class="mb-3">
+                                    {{-- <label for="floors" class="form-label">No Of Beds</label> --}}
+                                    <input class="form-control" type="text" name="beds" id="beds" required placeholder="Enter No of beds" autocomplete="off">
+                                </div>
                                 
 
                                 <div class="mb-3">
