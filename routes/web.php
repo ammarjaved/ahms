@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\userDetail;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CCTVController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('user',userDetail::class);
     Route::resource('payment',PaymentController::class);
-
+ 
     Route::get('/get-all-users',[AvailabilityController::class,'index']);
 
     Route::get('/update-availability',[AvailabilityController::class,'update']);
-
+ 
+    Route::get('cctv',[CCTVController::class,'index']);
+ 
     
     
 });

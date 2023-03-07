@@ -117,7 +117,8 @@
                             <td>{{ $payment->due_payment }}</td>
                             <td>{{ $payment->balance }}</td>
 
-                            <td class="text-center d-flex justify-content-center"><span class="">
+                            <td class="text-center d-flex justify-content-center">
+                            <span class="">
 
                                     <a href="/payment/{{ $payment->personal_detail_id_fk }}" class="btn  btn-sm"
                                         title="Show all payments"><i class="mdi mdi-account-details"
