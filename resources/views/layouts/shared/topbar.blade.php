@@ -391,6 +391,14 @@
                         <i class="fas fa-money-check me-1"></i>
                         <span>Manage Payment</span>
                     </a>
+
+                     <!-- item-->
+                     <a href="/cctv" class="dropdown-item">
+                     <i class="fe-settings me-1"></i>
+                        <span>Manage CCTV</span>
+                    </a>
+
+
 {{-- 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
