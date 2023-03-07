@@ -27,18 +27,18 @@
       </div>
 
       <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: #8CBD00;">
-        <h4 class="text-center text-white">Total No Of Rooms </h6>
-          <p class="text-center"> <span >223</span></p>
+        <h4 class="text-center text-white">Total No Of Beds </h6>
+          <p class="text-center"> <span >{{Auth::user()->no_of_beds}}</span></p>
       </div>
 
       <div class="col-md-3 py-2 tet-center card my-2 rounded-0" style="background-color: #82b5b2">
-        <h4 class="text-center text-white">Total No Of Rooms Occupied</h6>
+        <h4 class="text-center text-white">Total No Of Beds Occupied</h6>
           <p class="text-center"> <span >12</span></p>
       </div>
 
       <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color:rgb(247, 189, 0) ">
-        <h4 class="text-center text-white">Total Remaining Rooms </h6>
-          <p class="text-center"> <span >211</span></p>
+        <h4 class="text-center text-white">Total Remaining Beds </h6>
+          <p class="text-center"> <span >{{Auth::user()->no_of_beds - 12}}</span></p>
       </div>
 
       <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: lightgreen">
