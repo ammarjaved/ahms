@@ -18,6 +18,7 @@ class Payments extends Model
         'created_by',
         'due_date',
         'payment_date',
-        'personal_detail_id_fk'
+        'personal_detail_id_fk',
+        'status'
     ];
 }

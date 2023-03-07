@@ -92,80 +92,118 @@
 
         <div class="card p-2 col-md-12 rounded-0">
             <div class="row text-end text-right p-2">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
-                        onclick="openPayment()">
-                        Generate Payments
-                    </button>
+                <div class="row">
+
+                    <div class="col-md-6 text-start">
+                        
+                            <form action="/search-payment" method="POST">
+                                @csrf
+                                <div class="row">
+                                <div class="col-md-4 text-start">
+                                    <label>Month</label>
+                                    <input type="text" name="month" id="" class="form-control">
+                                </div>
+                                <div class="col-md-4 text-start">
+                                    <label for="">Year</label>
+                                    <input type="text" name="year" id="" class="form-control">
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <button type="submit" class="btn btn-sm mt-1 btn-primary">Search</button>
+                                </div>
+                             </div>
+                            </form>
+                       
+                    </div>
+                        <div class="col-md-6">
+
+                            <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
+                                onclick="openPayment()">
+                                Generate Payments
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <table id="alternative-page-datatable"
+                    class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid"
+                    aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
+                    <thead>
+                        <th>Name</th>
+                        <th>Rent Of Month</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+
+                        <th class="text-center">Operations </th>
+                    </thead>
+                    <tbody>
+                        @foreach ($payments as $payment)
+                            <tr>
+                                <td id="">{{ $payment->name }}</td>
+                                <td>{{ $payment->due_payment }}</td>
+                                <td>{{ $payment->due_date }}</td>
+                                <td>
+                                    @if ($payment->status != '')
+                                        <span class="badge label-table bg-success">Paid</span>
+                                    @else
+                                        <span class="badge label-table bg-danger">Unpaid</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center d-flex justify-content-center">
+                                    <span class="">
+
+                                        <a href="/payment/{{ $payment->personal_detail_id_fk }}" class="btn  btn-sm"
+                                            title="Show all payments"><i class="mdi mdi-account-details"
+                                                style="color:black"></i></a>
+
+                                    </span>
+                                    @if ($payment->status == '')
+                                        <form action="/make-payment" onsubmit="return confirm('Are you sure ?')"
+                                            method="POST">
+
+                                            @csrf
+                                            <input type="hidden" name="id" id="" value="{{ $payment->id }}">
+                                            <button type="submit" class="btn btn-success btn-sm">make payment</button>
+
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+
             </div>
-            <table id="alternative-page-datatable" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
-                role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
-                <thead>
-                    <th>Name</th>
-                    <th>Rent Of Month</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-
-                    <th class="text-center">Operations </th>
-                </thead>
-                <tbody>
-                    @foreach ($payments as $payment)
-                        <tr>
-                            <td>{{ $payment->name }}</td>
-                            <td>{{ $payment->due_payment }}</td>
-                            <td>{{ $payment->total_payed }}</td>
-                            <td>{{ $payment->balance }}</td>
-
-                            <td class="text-center d-flex justify-content-center">
-                            <span class="">
-
-                                    <a href="/payment/{{ $payment->personal_detail_id_fk }}" class="btn  btn-sm"
-                                        title="Show all payments"><i class="mdi mdi-account-details"
-                                            style="color:black"></i></a>
-
-                                </span>
-                                <span style="cursor:pointer;" class="badge label-table bg-success" onclick="getUserPayment({{ $payment->id }})">make payment</span>
-                                
-
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-
         </div>
-    </div>
 
 
 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header" style="background:  #EAEFF4">
-                    <h5 class="modal-title " id="exampleModalLabel">New</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background:  #EAEFF4">
+                        <h5 class="modal-title " id="exampleModalLabel">New</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-                <form action="genratePatments"  method="POST">
-                    @csrf
-                    <div class="modal-body  ">
-                        <!-- <label for="selectMember">Select</label>
-                        <select name="id_fk" id="selectMember" onchange="getName()" class="form-select  ">
-                            <option value="" hidden>-- select member --</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                        <input type="hidden" name="name" id="name"> -->
-                        <!-- <div class="row d-felx justify-content-between mt-2">
-                            <div class="col-md-5">
-                                <label for="due_payment">Due Payment</label>
-                                <input type="number" name="due_payment" id="due_payment" class="form-control">
-                            </div> -->
+                    <form action="genratePatments" method="POST">
+                        @csrf
+                        <div class="modal-body  ">
+                            <!-- <label for="selectMember">Select</label>
+                            <select name="id_fk" id="selectMember" onchange="getName()" class="form-select  ">
+                                <option value="" hidden>-- select member --</option>
+                                @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+                            </select>
+                            <input type="hidden" name="name" id="name"> -->
+                            <!-- <div class="row d-felx justify-content-between mt-2">
+                                <div class="col-md-5">
+                                    <label for="due_payment">Due Payment</label>
+                                    <input type="number" name="due_payment" id="due_payment" class="form-control">
+                                </div> -->
                             <div class="col-md-5">
                                 <label for="due_date">Issue Date</label>
                                 <input type="date" name="issue_date" id="issue_date" class="form-control">
@@ -174,186 +212,225 @@
                                 <label for="due_date">Due Date</label>
                                 <input type="date" name="due_date" id="due_date" class="form-control">
                             </div>
-                        <!-- </div> -->
-                    </div>
-                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+                            <!-- </div> -->
+                        </div>
+                        <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
-                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
-                            style="background :#90CF5F; color:white">Save changes</button>
-                        <button type="button" class="btn btn-sm btn-white border-0 "
-                            data-bs-dismiss="modal">Cancel</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header" style="background:  #EAEFF4">
-                    <h5 class="modal-title " id="exampleModalLabel">Make Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <form action="/payment/{{ 21 }}" method="POST">
-                    @method('PATCH')
-                    @csrf
-                    <div class="modal-body  ">
-                        <input type="hidden" name="id" id="id1">
-                        <input type="text" class="form-control" disabled name="name" id="name1">
-                        <div class="row d-felx justify-content-between mt-2">
-                            <div class="col-md-5">
-                                <label for="due_payment">Due Payment</label>
-                                <input type="number" name="due_payment" id="due_payment1" class="form-control">
-                            </div>
-
-                            <div class="col-md-5">
-                                <label for="total_payed">Total Deposit</label>
-                                <input type="number" name="total_payed" onkeyup="calculate_remainig()" id="total_payed" class="form-control">
-                            </div>
-
-                            <div class="col-md-5">
-                                <label for="balance">Remaining</label>
-                                <input type="number" name="balance" id="balance" class="form-control">
-                            </div>
-                           
+                            <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                                style="background :#90CF5F; color:white">Save changes</button>
+                            <button type="button" class="btn btn-sm btn-white border-0 "
+                                data-bs-dismiss="modal">Cancel</button>
                         </div>
 
-                    </div>
-                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
-
-                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
-                            style="background :#90CF5F; color:white">Save changes</button>
-                        <button type="button" class="btn btn-sm btn-white border-0 "
-                            data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
 
-@endsection
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:  #EAEFF4">
+                            <h5 class="modal-title " id="exampleModalLabel">Make Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <form action="/make-payment" method="POST">
+
+                            @csrf
+                            <div class="modal-body  ">
+                                Are you sure you?
+                                <input type="hidden" name="id" id="make-payment">
+                            </div>
 
 
-@section('script')
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+                            <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
 
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+                                <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                                    style="background :#90CF5F; color:white">Save changes</button>
+                                <button type="button" class="btn btn-sm btn-white border-0 "
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+                    </div>
+                </div>
+            </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        </div>
 
-    <script>
+        <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background:  #EAEFF4">
+                        <h5 class="modal-title " id="exampleModalLabel">Make Payment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form action="/payment/{{ 21 }}" method="POST">
+                        @method('PATCH')
+                        @csrf
+                        <div class="modal-body  ">
+                            <input type="hidden" name="id" id="id1">
+                            <input type="text" class="form-control" disabled name="name" id="name1">
+                            <div class="row d-felx justify-content-between mt-2">
+                                <div class="col-md-5">
+                                    <label for="due_payment">Due Payment</label>
+                                    <input type="number" name="due_payment" id="due_payment1" class="form-control">
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label for="total_payed">Total Deposit</label>
+                                    <input type="number" name="total_payed" onkeyup="calculate_remainig()"
+                                        id="total_payed" class="form-control">
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label for="balance">Remaining</label>
+                                    <input type="number" name="balance" id="balance" class="form-control">
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+
+                            <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                                style="background :#90CF5F; color:white">Save changes</button>
+                            <button type="button" class="btn btn-sm btn-white border-0 "
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    @endsection
 
 
-function calculate_remainig(){
-    var due=$('#due_payment1').val();
-    var payed=$('#total_payed').val();
-    var balance=parseInt(due)-parseInt(payed);
-    if(balance<0){
-        alert("wrong deposit entered")
-    }else{
-    $("#balance").val(balance);
-    }
-}    
+    @section('script')
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
-function getUserPayment(id) {
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
-$.ajax({
-    type: "GET",
-    url: `/payment/${id}/edit`,
-    success: function(response) {
-        console.log(response)
-        $('#name').val(response.data.name)
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-
-        $('#due_payment1').val(response.data.due_payment)
-        let day = response.data.due_date.split(" ");
-        $('#due_date1').val(day[0]);
-        $('#name1').val(response.data.name);
-
-        $('#id1').val(response.data.id)
-        $('#staticBackdrop1').modal('show');
-    }
-
-})
-}    
-
-
-        function openPayment() {
-            $('#staticBackdrop').modal('show');
-        }
-
-        function submitFoam() {
-
-            let ret = true;
-
-            if ($('#selectMember').val() == "") {
-                $('#selectMember').addClass('is-invalid')
-                ret = false
+        <script>
+            function calculate_remainig() {
+                var due = $('#due_payment1').val();
+                var payed = $('#total_payed').val();
+                var balance = parseInt(due) - parseInt(payed);
+                if (balance < 0) {
+                    alert("wrong deposit entered")
+                } else {
+                    $("#balance").val(balance);
+                }
             }
-            if ($('#due_payment').val() == "") {
-                $('#due_payment').addClass('is-invalid')
-                ret = false
-            }
-            if ($('#due_date').val() == "") {
-                $('#due_date').addClass('is-invalid')
-                ret = false
-            }
-            return ret;
-        }
 
-        function getName() {
-            $('#name').val($('#selectMember :selected').text())
-        }
+            // function getUserPayment(id) {
 
-        function matchCustom(params, data) {
-            // If there are no search terms, return all of the data
-            if ($.trim(params.term) === '') {
-                return data;
+            // $.ajax({
+            //     type: "GET",
+            //     url: `/payment/${id}/edit`,
+            //     success: function(response) {
+            //         console.log(response)
+            //         $('#name').val(response.data.name)
+
+
+
+            //         $('#due_payment1').val(response.data.due_payment)
+            //         let day = response.data.due_date.split(" ");
+            //         $('#due_date1').val(day[0]);
+            //         $('#name1').val(response.data.name);
+
+            //         $('#id1').val(response.data.id)
+            //         $('#staticBackdrop1').modal('show');
+            //     }
+
+            // })
+            // }    
+
+
+            function getUserPayment(params) {
+
+                $('#payment_user').val(params);
+                $('#exampleModalCenter').modal('show')
+
             }
 
-            // Do not display the item if there is no 'text' property
-            if (typeof data.text === 'undefined') {
+
+            function openPayment() {
+                $('#staticBackdrop').modal('show');
+            }
+
+            function submitFoam() {
+
+                let ret = true;
+
+                if ($('#selectMember').val() == "") {
+                    $('#selectMember').addClass('is-invalid')
+                    ret = false
+                }
+                if ($('#due_payment').val() == "") {
+                    $('#due_payment').addClass('is-invalid')
+                    ret = false
+                }
+                if ($('#due_date').val() == "") {
+                    $('#due_date').addClass('is-invalid')
+                    ret = false
+                }
+                return ret;
+            }
+
+            function getName() {
+                $('#name').val($('#selectMember :selected').text())
+            }
+
+            function matchCustom(params, data) {
+                // If there are no search terms, return all of the data
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+
+                // Do not display the item if there is no 'text' property
+                if (typeof data.text === 'undefined') {
+                    return null;
+                }
+
+                // `params.term` should be the term that is used for searching
+                // `data.text` is the text that is displayed for the data object
+                if (data.text.indexOf(params.term) > -1) {
+                    var modifiedData = $.extend({}, data, true);
+                    modifiedData.text += ' (matched)';
+
+                    // You can return modified objects from here
+                    // This includes matching the `children` how you want in nested data sets
+                    return modifiedData;
+                }
+
+                // Return `null` if the term should not be displayed
                 return null;
             }
+            $(document).ready(function() {
+                $(".js-example-matcher").select2({
+                    matcher: matchCustom
+                });
+            })
+        </script>
 
-            // `params.term` should be the term that is used for searching
-            // `data.text` is the text that is displayed for the data object
-            if (data.text.indexOf(params.term) > -1) {
-                var modifiedData = $.extend({}, data, true);
-                modifiedData.text += ' (matched)';
+        <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+        <!-- third party js ends -->
 
-                // You can return modified objects from here
-                // This includes matching the `children` how you want in nested data sets
-                return modifiedData;
-            }
-
-            // Return `null` if the term should not be displayed
-            return null;
-        }
-        $(document).ready(function() {
-            $(".js-example-matcher").select2({
-                matcher: matchCustom
-            });
-        })
-    </script>
-
-    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- third party js ends -->
-
-    <!-- demo app -->
-    <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
-    <!-- end demo js-->
-@endsection
+        <!-- demo app -->
+        <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+        <!-- end demo js-->
+    @endsection

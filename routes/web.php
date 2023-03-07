@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('cctv',[CCTVController::class,'index']);
     Route::post('genratePatments',[PaymentController::class,'genratePatments']);
 
+    Route::post('/make-payment',[PaymentController::class,'makePayment']);
+
+    
+    Route::post('/search-payment',[PaymentController::class,'searchPayment']);
+
  
     
     

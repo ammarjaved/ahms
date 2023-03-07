@@ -115,6 +115,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    {{-- <form action="/search-payment" method="POST">
+                                        @csrf
+                                         <input type="hidden" name="month" id="month">
+                                         <input type="hidden" name="year" id="year">
+                                          <a  class="btn " type="submit">  <p class="text-center"><i class="mdi mdi-format-list-text"></i></p> <span class="text-white">Show </span></a>
+                                 </form> --}}
                                    
                                     <a href="{{ route('application.index') }}">  <p class="text-center"><i class="mdi mdi-format-list-text"></i></p> <span class="text-white">Show </span></a>
                                 </li>

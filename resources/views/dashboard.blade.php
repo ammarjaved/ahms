@@ -127,7 +127,7 @@ var center = [3.016603, 101.858382];
         const now = new Date();
 
 // get the local date as a string
-const date = now.toLocaleDateString();
+const date = now.toLocaleMonthString();
 
 // get the local time as a string
 const time = now.toLocaleTimeString();
