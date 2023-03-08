@@ -80,7 +80,7 @@
         <div class="col-12">
 
 
-            <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif">Aero / Payment /
+            <h6 class="page-title" style="font-size: 12px; font-family:Arial, Helvetica, sans-serif"><a href="/" class="text-dark"> Aero </a>/ Payment /
                 members
             </h6>
 
@@ -101,11 +101,33 @@
                                 <div class="row">
                                 <div class="col-md-4 text-start">
                                     <label>Month</label>
-                                    <input type="text" name="month" id="" class="form-control">
+                                    <select name="month" id="" class="form-select">
+                                        <option value="" hidden>Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    {{-- <input type="text" name="month" id="" class="form-control"> --}}
                                 </div>
                                 <div class="col-md-4 text-start">
                                     <label for="">Year</label>
-                                    <input type="text" name="year" id="" class="form-control">
+                                    <select name="year" id="" class="form-select">
+                                        <option value="" hidden>Select Year</option>
+
+                                        @foreach ($years as $year)
+                                            <option  value="{{$year->year}}">{{$year->year}}</option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text" name="year" id="" class="form-control"> --}}
                                 </div>
                                 <div class="col-md-4 mt-2">
                                     <button type="submit" class="btn btn-sm mt-1 btn-primary">Search</button>
@@ -138,8 +160,8 @@
                         @foreach ($payments as $payment)
                             <tr>
                                 <td id="">{{ $payment->name }}</td>
-                                <td>{{ $payment->due_payment }}</td>
-                                <td>{{ $payment->due_date }}</td>
+                                <td>{{ $payment->due_payment }} RM</td>
+                                <td>{{ date('Y-m-d',strtotime($payment->due_date)) }}</td>
                                 <td>
                                     @if ($payment->status != '')
                                         <span class="badge label-table bg-success">Paid</span>

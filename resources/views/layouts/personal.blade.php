@@ -163,6 +163,12 @@
                                     aria-selected="false">Address</button>
                             </li>
 
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#balacne"
+                                    type="button" role="tab" aria-controls="balacne"
+                                    aria-selected="false">Balance</button>
+                            </li>
+
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -227,7 +233,35 @@
                                     </div>
                                 </div>
                             </div>
+                            @if ($data['balance'])
+                         
+                            <div class="tab-pane fade" id="balacne" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="">Balance</label></div>
+                                    <div class="col-md-2"><input value="{{$data['balance']->balance == null ? "00" : $data['balance']->balance}} RM" type="text" disabled class="form-control"></div>
+                                    <div class="col-md-2"><strong>RM</strong></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"><label for="">Last Update</label></div>
+                                    <div class="col-md-2"><input type="text" value="{{$data['balance']->updated_at}}" disabled class="form-control"></div>
+                                </div>
+                            </div>
 
+                            @else
+                            <div class="tab-pane fade" id="balacne" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-2"><label for="">Balance</label></div>
+                                    <div class="col-md-2"><input value="00 " type="text" disabled class="form-control"></div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"><label for="">Last Update</label></div>
+                                    <div class="col-md-2"><input type="text" value="00-00-0000" disabled class="form-control"></div>
+                                </div>
+                            </div>
+                                
+                      @endif             
+ 
                         </div>
 
 
