@@ -164,7 +164,7 @@
                 "coordinates": [178, -42.79999923706055]
             },
             "properties": {
-                "Detail": "Mr Ammar not available",
+                "Detail": "Mr Ammar  available",
                 "Color": "green"
             }
         }, {
@@ -184,7 +184,7 @@
                 "coordinates": [240, -166.79999923706055]
             },
             "properties": {
-                "Detail": "Mr Rizwan not available",
+                "Detail": "Mr Rizwan available",
                 "Color": "green"
             }
         }],
