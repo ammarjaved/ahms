@@ -105,7 +105,7 @@
                 <thead>
                     <th>Name</th>
                   
-                    <th>Due Payment</th>
+                    <th>Rent Of Month</th>
                     
                     <th>Issue date</th>
                     <th>Status</th>
@@ -182,13 +182,14 @@
 
                     <table class="table table-bordered">
                         <tr>
-                            <th> Total paid</th>
-                            <td><span id="detailTotalPaid"></span></td>
-                        </tr>
-                        <tr>
-                            <th> Due Amount</th>
+                            <th> Rent Of Month</th>
                             <td><span id="detailDueAmount"></span></td>
                         </tr>
+                        <tr>
+                            <th> Total paid</th>
+                            <td><span id="detailTotalPaid"></span> RM</td>
+                        </tr>
+                      
                         {{-- <tr>
                             <th> Payment Date</th>
                             <td><span id="detailPaymentDate"></span></td>

@@ -24,34 +24,29 @@ class userDetail extends Controller
         //
 
         $users = user::all();
-        return view('User-Details.index',['users'=>$users]);
+        return view('User-Details.index', ['users' => $users]);
     }
 
-
     public function personal($id)
-    {   
-       
-
+    {
         // $users =  DB::table('personal_detail')
         // ->join('work_info', 'personal_detail.id', '=', 'work_info.pd_id')
         // ->join('room_info', 'personal_detail.id', '=', 'room_info.pd_id')
         // ->select('*')
         // ->get();
 
-
-        $data = [] ;
-         $user = user::find($id);
-         if(!$user)
-         {
+        $data = [];
+        $user = user::find($id);
+        if (!$user) {
             return abort('404');
-         }
-         $data['user'] = $user;
-         $data['work_info'] = work_info::where('pd_id' , $user->id)->first();
-         $data['room_info'] = roomInfo::where('pd_id',$user->id)->first();
+        }
+        $data['user'] = $user;
+        $data['work_info'] = work_info::where('pd_id', $user->id)->first();
+        $data['room_info'] = roomInfo::where('pd_id', $user->id)->first();
 
-            //   return $data;
-       // $users = user::find($id);
-        return view('layouts.personal',['data'=>$data]);
+        //   return $data;
+        // $users = user::find($id);
+        return view('layouts.personal', ['data' => $data]);
     }
 
     /**
@@ -74,40 +69,38 @@ class userDetail extends Controller
     {
         //
         // return $request->all();
-        $destinationPath        =   'asset/images/Users';
-        try{
-
-            if($request->userImage != ""){
-                $file                   =   $request->file('userImage');                
-                $img4_loccap            =   $file->getClientOriginalExtension() ;
-                $filename               =  'User-'.$request->name.'-'.  strtotime(now()) .'.' . $img4_loccap;
-                                            $file->move($destinationPath, $filename);
-                $request['user_image']  =   '/asset/images/Users/'. $filename;
+        $destinationPath = 'asset/images/Users';
+        try {
+            if ($request->userImage != '') {
+                $file = $request->file('userImage');
+                $img4_loccap = $file->getClientOriginalExtension();
+                $filename = 'User-' . $request->name . '-' . strtotime(now()) . '.' . $img4_loccap;
+                $file->move($destinationPath, $filename);
+                $request['user_image'] = '/asset/images/Users/' . $filename;
             }
 
-            if($request->id == ''){
-            $request['created_by']  =   Auth::user()->name;
+            if ($request->id == '') {
+                $request['created_by'] = Auth::user()->name;
 
-            $userDetail             =   user::create($request->all());
+                $userDetail = user::create($request->all());
 
-            $request['pd_id']       =   $userDetail->id;
-            
+                $request['pd_id'] = $userDetail->id;
 
-            $roomInfor              =   roomInfo::create($request->all());
-            $workInfor              =   work_info::create($request->all());
+                $roomInfor = roomInfo::create($request->all());
+                $workInfor = work_info::create($request->all());
+            } else {
+                $userDetail = user::find($request->id)->update($request->all());
 
+                $workInfor = work_info::where('pd_id', $request->id)->update(['company' => $request->company, 'work_address' => $request->work_address, 'work_contact' => $request->work_contact, 'person_incharge' => $request->person_incharge]);
+
+                $roomInfor = roomInfo::where('pd_id', $request->id)->update(['floor' => $request->floor, 'room_no' => $request->room_no, 'bed_no' => $request->bed_no]);
+                
             }
-                else{
-                    $userDetail             =   user::find($request->id)->update($request->all());
-                    $request['pd_id']       =   $userDetail->id;
-                    $roomInfor              =   roomInfo::where('pd_id',$request->id)->update($request->all());
-                    $workInfor              =   work_info::where('pd_id',$request->id)->update($request->all());
-                }
-
-
-        }
-        catch (Exception $e){
-           return  redirect()->route('user.index')->with('message','Something is worng try again later');
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return redirect()
+                ->route('user.index')
+                ->with('message', 'Something is worng try again later');
         }
         return redirect()->route('user.index');
     }
@@ -120,17 +113,16 @@ class userDetail extends Controller
      */
     public function show($id)
     {
-        $data = [] ;
-         $user = user::find($id);
-         if(!$user)
-         {
-            return response()->json(['data'=>'','status'=>'404']);
-         }
-         $data['user'] = $user;
-         $data['work_info'] = work_info::where('pd_id' , $user->id)->first();
-         $data['room_info'] = roomInfo::where('pd_id',$user->id)->first();
+        $data = [];
+        $user = user::find($id);
+        if (!$user) {
+            return response()->json(['data' => '', 'status' => '404']);
+        }
+        $data['user'] = $user;
+        $data['work_info'] = work_info::where('pd_id', $user->id)->first();
+        $data['room_info'] = roomInfo::where('pd_id', $user->id)->first();
 
-         return response()->json(['data'=>$data,'status'=>'200']);
+        return response()->json(['data' => $data, 'status' => '200']);
     }
 
     /**
@@ -162,24 +154,23 @@ class userDetail extends Controller
      * @param  \App\Models\UserDetail  $userDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         // return $id;
         $userDetail = user::find($id);
-        if($userDetail){
-
-            $workInfo =  work_info::where('pd_id',$userDetail->id);
-            if($workInfo){
+        if ($userDetail) {
+            $workInfo = work_info::where('pd_id', $userDetail->id);
+            if ($workInfo) {
                 $workInfo->delete();
             }
 
-            $roomInfo = roomInfo::where('pd_id',$userDetail->id);
-            if($roomInfo){
+            $roomInfo = roomInfo::where('pd_id', $userDetail->id);
+            if ($roomInfo) {
                 $workInfo->delete();
             }
             $userDetail->delete();
         }
         // return
-       return redirect()->route('user.index');
+        return redirect()->route('user.index');
     }
 }

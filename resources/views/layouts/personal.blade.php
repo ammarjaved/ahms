@@ -209,8 +209,8 @@
                                     <div class="col-md-2"> <input class="form-control" value=" {{$data['room_info']->bed_no}}" disabled></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3"><label for="rent_per_month">Rent per Month</label></div>
-                                    <div class="col-md-7"> <input type="number" id="rent_per_month" value=" {{$data['room_info']->rent_per_month}}" disabled></div>
+                                    <div class="col-md-2"><label for="rent_per_month">Rent per Month</label></div>
+                                    <div class="col-md-2"> <input class="form-control" value=" {{$data['room_info']->rent_per_month}}" disabled></div>
                                 </div>
                             </div>
 

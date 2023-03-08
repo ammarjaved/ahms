@@ -136,8 +136,7 @@
                                 @endif
                             </td>
                             <td class="text-center d-flex justify-content-center"><span class="">
-                                    <button type="button" onclick="getUser({{ $user->id }})" class="btn  btn-sm"><i
-                                            class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
+                                    <button type="button"   onclick="getUser(14)" class="btn  btn-sm"><i class="mdi mdi-circle-edit-outline" style="color:black"></i></button>
 
                                     <a href="/personal/{{ $user->id }}" class="btn  btn-sm"><i
                                             class="mdi mdi-account-details" style="color:black"></i></a>
@@ -448,7 +447,7 @@
                         $('#permanent_address').val(data['user'].permanent_address);
                         $('#current_address').val(data['user'].current_address);
                         $('#rent_per_month').val(data['user'].rent_per_month);
-                $("#date_of_birth").val(data['user']date_of_birth);
+                     $("#date_of_birth").val(data['user'].date_of_birth);
 
                         // console.log(data['user'].visa_expiry)
 

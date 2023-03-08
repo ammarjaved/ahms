@@ -21,36 +21,36 @@
 @section('content')
 
     <div class="row d-flex justify-content-center p-2">
-      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: #F0652B; color:white">
-        <h4 class="text-center text-white">Total No Of Resident </h6>
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #F0652B; color:white">
+        <h4 class="text-center text-white">Total No Of Residents </h6>
           <p class="text-center"> <span >{{ $data['resident']}}</span></p>
       </div>
 
-      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color: #8CBD00;">
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #8CBD00;">
         <h4 class="text-center text-white">Total No Of Beds </h6>
           <p class="text-center"> <span >{{Auth::user()->no_of_beds}}</span></p>
       </div>
 
-      <div class="col-md-3 py-2 tet-center card my-2 rounded-0" style="background-color: #82b5b2">
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #82b5b2">
         <h4 class="text-center text-white">Total No Of Beds Occupied</h6>
           <p class="text-center"> <span >12</span></p>
       </div>
 
-      <div class="col-md-2 py-2 tet-center card m-2 rounded-0" style="background-color:rgb(247, 189, 0) ">
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color:rgb(247, 189, 0) ">
         <h4 class="text-center text-white">Total Remaining Beds </h6>
           <p class="text-center"> <span >{{Auth::user()->no_of_beds - 12}}</span></p>
       </div>
 
-      <div class="col-md-2 py-2 tet-center card my-2 rounded-0" style="background-color: lightgreen">
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: lightgreen">
         <h4 class="text-center text-white">No Of People Available </h6>
           <p class="text-center"> <span >{{$data['available']}}</span></p>
       </div>
-<div class="row  ">
-      <div class="col-md-2 py-2 tet-center card my-1  rounded-0" style="background-color: #41b369 ; margin-left: 20px" style="     ">
+
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #41b369 ; margin-left: 20px" style="     ">
         <h4 class="text-center text-white">Total No OF Floors</h6>
           <p class="text-center"> <span id="no_of_floors">{{Auth::user()->no_of_floors}}</span></p>
       </div>
-    </div>
+   
     
 
       
@@ -60,12 +60,12 @@
     </div>
     <div class="row bg-white my-2 mx-1 pl-1 py-3">
        <h3 id="greeting">Good Afternoon,</h3>
-       <p>Now it’s <span id="date"></span>  <span id="live-time"></span> <span id="day"></span>, welcome back to aero hostel management system</p> 
+       <p>Now it’s <span id="date"></span>  <span id="live-time"></span> <span id="day"></span>, Welcome Back to Aero Hostel Management System</p> 
     </div>
 
     <div class="card p-3 mx-1">
       <div class="row d-flex justify-content-between">
-     <div class="col-md-2"> <h3>Floor plan</h3></div>
+     <div class="col-md-2"> <h3>Floor Plan</h3></div>
      <div class="col-md-2">
      <select name="" class="form-select" id="floors">
       <option value="" hidden>-- SELECT FLOOR --</option>
@@ -127,7 +127,7 @@ var center = [3.016603, 101.858382];
         const now = new Date();
 
 // get the local date as a string
-const date = now.toLocaleMonthString();
+const date = now.toLocaleDateString();
 
 // get the local time as a string
 const time = now.toLocaleTimeString();
