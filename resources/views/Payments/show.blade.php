@@ -104,22 +104,26 @@
                 role="grid" aria-describedby="alternative-page-datatable_info" style="width: 1008px;">
                 <thead>
                     <th>Name</th>
-                    <th>Total Payed</th>
+                  
                     <th>Due Payment</th>
-                    <th>Balance</th>
+                    
                     <th>Issue date</th>
-                    <th>Due Date</th>
+                    <th>Status</th>
                     <th class="text-center">Detail </th>
                 </thead>
                 <tbody>
                     @foreach ($payments as $payment)
                         <tr>
                             <td>{{ $payment->name }}</td>
-                            <td>{{ $payment->total_payed }}</td>
+                            
                             <td>{{ $payment->due_payment }}</td>
-                            <td>{{ $payment->balance }}</td>
+                           
                             <td>{{ date('Y-m-d',strtotime($payment->created_at)) }}</td>
-                            <td>{{ date('Y-m-d',strtotime($payment->due_date)) }}</td>
+                            <td> @if ($payment->status != '')
+                                <span class="badge label-table bg-success">Paid</span>
+                            @else
+                                <span class="badge label-table bg-danger">Unpaid</span>
+                            @endif</td>
                             <td class="text-center d-flex justify-content-center">
                                 <!-- <span>
                                     <button type="button" onclick="getUserPayment({{ $payment->id }})"
@@ -168,8 +172,8 @@
                             <td><span id="detailCreatedBy"></span></td>
                         </tr>
                         <tr>
-                            <th>Balance</th>
-                            <td><span id="detailBalance"></span></td>
+                            <th>Status</th>
+                            <td><span id="status"></span></td>
                         </tr>
                     </table>
 
@@ -185,10 +189,10 @@
                             <th> Due Amount</th>
                             <td><span id="detailDueAmount"></span></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <th> Payment Date</th>
                             <td><span id="detailPaymentDate"></span></td>
-                        </tr>
+                        </tr> --}}
 
                         <tr>
                             <th> Due Date</th>
@@ -196,7 +200,9 @@
                         </tr>
 
                         <tr>
-                            <th> Created at</th>
+                            <th> Issue Date
+
+                            </th>
                             <td><span id="detailCreatedAt"></span></td>
                         </tr>
                     </table>
@@ -271,17 +277,26 @@
                 type: "GET",
                 url: `/payment/${id}/edit`,
                 success: function(response) {
-                    console.log(response)
+                    // console.log(response)
                     $('#detailName').html(response.data.name)
                     $('#detailCreatedBy').html(response.data.created_by)
-                    $('#detailBalance').html(response.data.balance)
-                    $('#detailTotalPaid').html(response.data.total_payed)
-                    $('#detailDueAmount').html(response.data.due_amount)
-                    $('#detailPaymentDate').html(response.data.payment_date)
-                    $('#detailDueDate').html(response.data.due_date)
-                    $('#detailCreatedAt').html(response.data.created_at)
+                    if (response.data.status == ""){
+                        $('#status').html("Unpaid")
+                    }else{
+                        $('#status').html("Paid")
+                    }
+                    
+                    $('#detailTotalPaid').html(response.data.due_payment)
+                    $('#detailDueAmount').html(response.data.due_payment)
+                 
+                   
+          
+                    let day = response.data.due_date.split(" ");
+                    $('#detailDueDate').html(day[0])
+                
 
-
+                    let day1 = response.data.created_at.split(" ");
+                    $('#detailCreatedAt').html(day1[0])
 
                     $('#staticBackdropDetail').modal('show');
                 }
