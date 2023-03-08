@@ -110,15 +110,114 @@
 <script>
 
 
-var center = [3.016603, 101.858382];
+//var center = [0,0];
     $(document).ready(function(){
-        // var map = L.map('map').setView(center, 11);
+        var map = L.map('map', {
+    minZoom: 1,
+    maxZoom: 4,
+    center: [0, 0],
+    zoom: 0,
+    crs: L.CRS.Simple,
+    attributionControl: false
+})
+        //.setView(center, 11);
 
-        // // Set up the OSM layer
+
+      var w = 1280 * 2,
+          h = 806 * 2,
+          url='http://localhost:8000/assets/images/E78.png';
+
+      // calculate the edges of the image, in coordinate space
+      var southWest = map.unproject([0, h], map.getMaxZoom()-1);
+      var northEast = map.unproject([w, 0], map.getMaxZoom()-1);
+      var bounds = new L.LatLngBounds(southWest, northEast);
+
+      // add the image overlay,
+      // so that it covers the entire map
+      L.imageOverlay(url, bounds).addTo(map);
+
+      map.setMaxBounds(bounds);
+
+    
         // L.tileLayer(
         // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         //     maxZoom: 18
         // }).addTo(map);
+
+
+        var geojson = {
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [31, -41.79999923706055]
+            },
+            "properties": {
+                "Detail": "Mr Ariifien not available",
+                "Color": "red"
+            }
+        }, {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [178, -42.79999923706055]
+            },
+            "properties": {
+                "Detail": "Mr Ammar not available",
+                "Color": "green"
+            }
+        }, {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [50.5 ,-168.29999923706055]
+            },
+            "properties": {
+                "Detail": "Mr Abdul not available",
+                "Color": "red"
+            }
+        }, {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [240, -166.79999923706055]
+            },
+            "properties": {
+                "Detail": "Mr Rizwan not available",
+                "Color": "green"
+            }
+        }],
+        "name": "Points",
+        "keyField": "map"
+    };
+
+    var geojsonLayer = L.geoJson(geojson, {
+        style: function(feature) {
+            return {color: feature.properties.Color};
+        },
+        pointToLayer: function(feature, latlng) {
+            return new L.CircleMarker(latlng, {radius: 5, fillOpacity: 0.85});
+        },
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.Detail);
+        }
+    });
+
+    map.addLayer(geojsonLayer);
+
+
+
+//      map.on('click', addMarker);
+
+//   function addMarker(e){
+
+//     var newMarker = new L.CircleMarker(e.latlng, {radius: 5, fillOpacity: 0.85,color:'green'}).addTo(map);
+//     console.log(e.latlng);
+
+//     newMarker.bindPopup("<b>New Room</b><br>Adventures await");
+// }
+
 
 
         noOfFloors()
