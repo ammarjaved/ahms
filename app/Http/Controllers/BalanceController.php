@@ -52,7 +52,7 @@ class BalanceController extends Controller
 ;            return redirect()->back()->with('message', "Something is worng try gain later");
         }
 
-        return redirect()->route('user.index');
+        return redirect()->route('utility.index');
     }
 
     /**
