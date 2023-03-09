@@ -18,9 +18,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        $years = DB::select("select distinct year from payments");
         $payments = DB::select("SELECT * FROM payments WHERE month = (select MAX(month)FROM payments where year = (select MAX(year) from payments))");
         $user = UserDetail::all();
-        return view('Payments.index', ['payments' => $payments, 'users' => $user]);
+        return view('Payments.index', ['payments' => $payments, 'users' => $user,'years'=>$years]);
     }
 
     /**
@@ -151,9 +152,19 @@ class PaymentController extends Controller
 
     public function searchPayment(Request $request)
     {
+         
+         $years = DB::select("select distinct year from payments");
+        if($request->month != "" && $request->year != ""){
+       
         $payments = DB::select(  "SELECT * FROM payments WHERE month   =$request->month  and year = $request->year");
-
+        }elseif($request->month != ""){
+            $payments = DB::select(  "SELECT * FROM payments WHERE month   =$request->month  ");
+        }elseif($request->year != ""){
+            $payments = DB::select(  "SELECT * FROM payments WHERE  year = $request->year");
+        }else{
+            $payments = DB::select("SELECT * FROM payments WHERE month = (select MAX(month)FROM payments where year = (select MAX(year) from payments))");
+        }
         $user = UserDetail::all();
-        return view('Payments.index', ['payments' => $payments, 'users' => $user]);
+        return view('Payments.index', ['payments' => $payments, 'users' => $user,'years'=>$years]);
     }
 }

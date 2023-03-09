@@ -3,6 +3,7 @@
 use App\Http\Controllers\application;
 use App\Http\Controllers\ApplicationGeom;
 use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +11,7 @@ use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\userDetail;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CCTVController;
-
+use App\Http\Controllers\UtilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,11 +53,21 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::post('/search-payment',[PaymentController::class,'searchPayment']);
 
+
+  /// Manage Balacne 
+    Route::resource('manage-balance',BalanceController::class);
+
+
+    /// Utility
+
+ 
+
+
  
     
     
 });
-
+Route::resource('/utility',UtilityController::class);
  
 
 Route::group(['prefix' => '/asd'], function () {

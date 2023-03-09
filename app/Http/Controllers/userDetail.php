@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BalanceModel;
 use App\Models\roomInfo;
 use App\Models\UserDetail as user;
 use App\Models\work_info;
@@ -22,7 +23,7 @@ class userDetail extends Controller
     public function index()
     {
         //
-
+        
         $users = user::all();
         return view('User-Details.index', ['users' => $users]);
     }
@@ -43,6 +44,12 @@ class userDetail extends Controller
         $data['user'] = $user;
         $data['work_info'] = work_info::where('pd_id', $user->id)->first();
         $data['room_info'] = roomInfo::where('pd_id', $user->id)->first();
+        $data['balance'] = BalanceModel::where('personal_detail_id_fk', $user->id)->first();
+        // if(!$data['balance']){
+        //     $data['balance']['balance'] = "0";
+        //     $data['balance']['updated_at'] = "00-00-0000";
+        // }
+        
 
         //   return $data;
         // $users = user::find($id);
@@ -169,6 +176,10 @@ class userDetail extends Controller
                 $workInfo->delete();
             }
             $userDetail->delete();
+            DB::select("DELETE FROM payments where personal_detail_id_fk = $id");
+            DB::select("DELETE FROM member_account where personal_detail_id_fk = $id");
+            DB::select("DELETE FROM utility_usage where pd_id = $id");
+           
         }
         // return
         return redirect()->route('user.index');

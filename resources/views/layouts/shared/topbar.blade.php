@@ -399,6 +399,10 @@
                      <i class="fe-settings me-1"></i>
                         <span>Manage CCTV</span>
                     </a>
+                    <a href="{{route ('utility.index')}}" class="dropdown-item">
+                        <i class=" fas fa-cash-register me-1"></i>
+                           <span>Manage Utility</span>
+                       </a>
 
 
 {{-- 

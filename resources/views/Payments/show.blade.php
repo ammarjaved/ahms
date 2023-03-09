@@ -116,7 +116,7 @@
                         <tr>
                             <td>{{ $payment->name }}</td>
                             
-                            <td>{{ $payment->due_payment }}</td>
+                            <td>{{ $payment->due_payment }} RM</td>
                            
                             <td>{{ date('Y-m-d',strtotime($payment->created_at)) }}</td>
                             <td> @if ($payment->status != '')

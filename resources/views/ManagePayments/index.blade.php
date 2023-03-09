@@ -101,12 +101,7 @@
             </div> -->
         <div class="card p-2 col-md-12 rounded-0">
             <div class="row text-end d-flex justify-content-end text-right p-2">
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-sm bg-primary rounded-0" style="  color:white"
-                        onclick="onpenModal()">
-                        Add Balance
-                    </button>
-                </div>
+
                 <div class="col-md-2">
                     <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
                         onclick="onpenModal()">
@@ -174,52 +169,10 @@
     </div> --}}
 
 
-    <!-- Modal balance -->
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  ">
-            <div class="modal-content">
-                <div class="modal-header" style="background:  #EAEFF4">
-                    <h5 class="modal-title " id="exampleModalLabel">New</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{route('manage-balance.store')}}" method="post" onsubmit="return submimtBalance()">
-                @csrf
-             
-                <div class="modal-body  ">
-                    <input name="name_member" type="hidden" id="name_member">
-                    <label for="userID">Select User</label>
-                    <span class="text-danger" id="er_userID"></span>
-                    <select name="userID" id="userID" class="form-select" onchange="getName()">
-                        <option value="" hidden>-- SELECT  USER --</option>
-
-                        @foreach ($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                        @endforeach
-                    </select>
-
-                    <label for="addBalacne">Add Balance</label>
-                    <span class="text-danger" id="er_balacne"></span>
-                    <input type="number" class="form-control" name="balance" id="balacne">
-                </div>
-          
-
-            <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
-
-                <button type="submit" class="btn btn-sm  border-0 bg-made-green"
-                    style="background :#90CF5F; color:white">Save changes</button>
-                <button type="button" class="btn btn-sm btn-white border-0 "
-                    data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </form>
-              </div>
-        </div>
-    </div>
-
+    <!-- Button trigger modal -->
 
 
     <!-- Modal -->
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -546,26 +499,6 @@
                 return false;
             }
 
-            function getName(){
-                
-                let name = $( "#userID option:selected" ).text();
-                $('#name_member').val(name)
-            }
-
-            function submimtBalance(){
-                let ret = true;
-
-                if($('#name_member').val() == ""){
-                    $('#er_name_member').html('Select User')
-                    ret = false
-                }
-
-                if($('#balacne').val() == ""){
-                    $('#er_balacne').html('This feild is required')
-                    ret = false
-                }
-                return ret;
-            }
 
             function encodeImageFileAsURL(element) {
                 var file = element.files[0];

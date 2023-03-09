@@ -4,7 +4,7 @@
 <head>
     @include('layouts.shared/title-meta', ['title' => $page_title])
 
-    @include('layouts.shared/head-css', ["mode" => $mode ?? '', "demo" => $demo ?? ''])
+    @include('layouts.shared/head-css', ['mode' => $mode ?? '', 'demo' => $demo ?? ''])
 
 
     <link rel="stylesheet" href="{{ URL::asset('dist/css/lightbox.min.css') }}">
@@ -12,15 +12,17 @@
     <script src="{{ URL::asset('dist/js/lightbox-plus-jquery.min.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 
- 
 
-    
-   
+
+
+
 
 </head>
 
 
-<body class="loading" data-layout='{"mode": "{{$theme ?? "light" }}", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "{{$theme ?? "light" }}", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}' @yield('body-extra')>
+<body class="loading"
+    data-layout='{"mode": "{{ $theme ?? 'light' }}", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "{{ $theme ?? 'light' }}", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'
+    @yield('body-extra')>
     <!-- Begin page -->
 
     <div id="preloader">
@@ -30,7 +32,7 @@
     </div>
     <div id="wrapper">
         @include('layouts.shared/topbar')
-{{-- 
+        {{-- 
         @include('layouts.shared/left-sidebar') --}}
 
         <!-- ============================================================== -->
@@ -58,7 +60,7 @@
 
     @include('layouts.shared/footer-script')
 
-    
+
 
 </body>
 
