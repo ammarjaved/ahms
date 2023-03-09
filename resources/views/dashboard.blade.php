@@ -125,7 +125,7 @@
 
       var w = 1280 * 2,
           h = 806 * 2,
-          url='http://localhost:8000/assets/images/E78.png';
+          url='http://121.121.232.54:8089/assets/images/E78.png';
 
       // calculate the edges of the image, in coordinate space
       var southWest = map.unproject([0, h], map.getMaxZoom()-1);
