@@ -31,8 +31,11 @@
         </div>
     </div>
     <div id="wrapper">
-        @include('layouts.shared/topbar')
+        @if (Auth::check())
+              @include('layouts.shared/topbar')
 
+        @endif
+      
 
         <div class="container  ">
 
@@ -87,7 +90,7 @@
                 <li class="nav-item" role="presentation" style="width:50%">
                     <button class="nav-link active form-control" id="home-tab" data-bs-toggle="tab"
                         data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                        aria-selected="true">User Balance</button>
+                        aria-selected="true">User Balance Detail</button>
                 </li>
                 <li class="nav-item " role="presentation "style="width:50%">
                     <button class="nav-link form-control" id="profile-tab" data-bs-toggle="tab"
