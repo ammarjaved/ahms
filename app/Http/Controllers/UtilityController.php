@@ -22,9 +22,10 @@ class UtilityController extends Controller
     {
         //
 
-        $user = UserDetail::all();
-      
-        return view('Utility.index',['users'=>$user]);
+        $user = DB::table('personal_detail')->leftJoin('member_account','member_account.personal_detail_id_fk','=','personal_detail.id') ->select('personal_detail.*', 'member_account.balance','member_account.updated_at')->get();
+        $utility =  DB::table('personal_detail')->join('utility_usage', 'utility_usage.pd_id','personal_detail.id')->join('utility','utility.id','utility_usage.utility_id')->get();
+    // return $user;
+        return view('Utility.index',['users'=>$user,'utility'=>$utility]);
     }
 
     /**
@@ -91,6 +92,8 @@ class UtilityController extends Controller
     public function show($id)
     {
         //
+
+    
     }
 
     /**

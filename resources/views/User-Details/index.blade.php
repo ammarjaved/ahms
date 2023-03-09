@@ -101,12 +101,12 @@
             </div> -->
         <div class="card p-2 col-md-12 rounded-0">
             <div class="row text-end d-flex justify-content-end text-right p-2">
-                <div class="col-md-2">
+                {{-- <div class="col-md-2">
                     <button type="button" class="btn btn-sm bg-primary rounded-0" style="  color:white"
                         onclick="onpenModal()">
                         Add Balance
                     </button>
-                </div>
+                </div> --}}
                 <div class="col-md-2">
                     <button type="button" class="btn btn-sm rounded-0" style="background: #90CF5F; color:white"
                         onclick="onpenModal()">
