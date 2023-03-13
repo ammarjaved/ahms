@@ -21,33 +21,35 @@
 @section('content')
 
     <div class="row d-flex justify-content-center p-2">
-      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #F0652B; color:white">
-        <h4 class="text-center text-white">Total No Of Residents </h6>
-          <p class="text-center"> <span >{{ $data['resident']}}</span></p>
-      </div>
 
-      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #8CBD00;">
-        <h4 class="text-center text-white">Total No Of Beds </h6>
+    <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #8CBD00;">
+        <h4 class="text-center text-white">TOTAL NO OF BEDS </h6>
           <p class="text-center"> <span >{{Auth::user()->no_of_beds}}</span></p>
       </div>
 
       <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #82b5b2">
-        <h4 class="text-center text-white">Total No Of Beds Occupied</h6>
+        <h4 class="text-center text-white">TOTAL NO OF BEDS OCCUPIED</h6>
           <p class="text-center"> <span >12</span></p>
       </div>
 
       <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color:rgb(247, 189, 0) ">
-        <h4 class="text-center text-white">Total Remaining Beds </h6>
+        <h4 class="text-center text-white">TOTAL NO OF REMAINING BEDS </h6>
           <p class="text-center"> <span >{{Auth::user()->no_of_beds - 12}}</span></p>
       </div>
 
+      <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #F0652B; color:white">
+        <h4 class="text-center text-white">TOTAL NO OF RESIDENTS </h6>
+          <p class="text-center"> <span >{{ $data['resident']}}</span></p>
+      </div>
+
+
       <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: lightgreen">
-        <h4 class="text-center text-white">No Of People Available </h6>
+        <h4 class="text-center text-white">TOTAL RESIDENT IN </h6>
           <p class="text-center"> <span >{{$data['available']}}</span></p>
       </div>
 
       <div class="col-md-3 py-2 tet-center card m-2 rounded-0" style="background-color: #41b369 ; margin-left: 20px" style="     ">
-        <h4 class="text-center text-white">Total No OF Floors</h6>
+        <h4 class="text-center text-white">TOTAL RESIDENT OUT</h6>
           <p class="text-center"> <span id="no_of_floors">{{Auth::user()->no_of_floors}}</span></p>
       </div>
    
