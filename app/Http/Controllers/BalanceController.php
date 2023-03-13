@@ -41,10 +41,24 @@ class BalanceController extends Controller
         try{
             $balance = BalanceModel::where('personal_detail_id_fk',$request->userID)->first();
             if($balance){
-                $balance->update(['name_member'=>$request->name_member, 'balance'=>$request->balance , 'personal_detail_id_fk'=>$request->userID]);
+               
+                if($request->check=='add'){
+                $totaladd=$balance->balance+$request->balance;
+                $balance->update(['name_member'=>$request->name_member, 'balance'=>$totaladd , 'personal_detail_id_fk'=>$request->userID]);
+                }else{
+                   // echo $balance->balance;
+                    
+                    if($balance->balance>=$request->balance){
+                    $totaladd=$balance->balance-$request->balance;
+                    //  echo $totaladd;
+                    // exit();
+                    $balance->update(['name_member'=>$request->name_member, 'balance'=>$totaladd , 'personal_detail_id_fk'=>$request->userID]);
+                }else{
+                    return redirect()->back()->with('message', "Cannot make payment balance is low");
+                }  
+                }
             }else{
 
-            
         BalanceModel::create(['name_member'=>$request->name_member, 'balance'=>$request->balance , 'personal_detail_id_fk'=>$request->userID]);
             }
         }catch(Exception $e){

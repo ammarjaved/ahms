@@ -111,6 +111,14 @@
                             </button>
                         </div>
 
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-sm bg-primary rounded-0" style="  color:white"
+                                onclick="$('#BalanceModal1').modal('show')">
+                                Make Payment
+                            </button>
+                        </div>
+
+
                     </div>
                     <table id="alternative-page-datatable"
                         class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" role="grid"
@@ -230,6 +238,7 @@
                         <label for="addBalacne">Add Balance</label>
                         <span class="text-danger" id="er_balacne"></span>
                         <input type="number" class="form-control" name="balance" id="balacne">
+                        <input type="text" class="form-control" name="check" id="check" value="add" hidden>
                     </div>
 
 
@@ -244,6 +253,50 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="BalanceModal1" tabindex="-1" aria-labelledby="BalanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog  ">
+            <div class="modal-content">
+                <div class="modal-header" style="background:  #EAEFF4">
+                    <h5 class="modal-title " id="exampleModalLabel">Make Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('manage-balance.store') }}" method="post"
+                  >
+                    @csrf
+
+                    <div class="modal-body  ">
+                        <input name="name_member" type="hidden" id="name_member">
+                        <label for="userID">Select User</label>
+                        <span class="text-danger" id="er_userID"></span>
+                        <select name="userID" id="userID" class="form-select" onchange="getName()">
+                            <option value="" hidden>-- SELECT USER --</option>
+
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+
+                        <label for="addBalacne">Add Amount</label>
+                        <span class="text-danger" id="er_balacne"></span>
+                        <input type="number" class="form-control" name="balance" id="balacne">
+                        <input type="text" class="form-control" name="check" id="check" value="remove" hidden>
+                    </div>
+
+
+                    <div class="modal-footer p-1" style="background:#EAEFF4; justify-content:center">
+
+                        <button type="submit" class="btn btn-sm  border-0 bg-made-green"
+                            style="background :#90CF5F; color:white">Save changes</button>
+                        <button type="button" class="btn btn-sm btn-white border-0 "
+                            data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 
 
