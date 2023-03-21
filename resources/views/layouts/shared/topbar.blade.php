@@ -356,15 +356,15 @@
         </div>
 
         <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
-            @if (!request()->is('agency/create'))
+            {{-- @if (!request()->is('agency/create'))
                 <li>
                     <button class="button-menu-mobile waves-effect waves-light">
                         <i class="fe-menu"></i>
                     </button>
                 </li>
-            @endif
+            @endif --}}
             @if (!Auth::guest())
-                <li>
+                {{-- <li>
                     <!-- Mobile menu toggle (Horizontal Layout)-->
                     <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                         <div class="lines">
@@ -374,9 +374,9 @@
                         </div>
                     </a>
                     <!-- End mobile menu toggle-->
-                </li>
+                </li> --}}
 
-                <li class="dropdown d-none d-xl-block">
+                <li class="dropdown d-none d-xl-block" style="display:block !important">
                     <a class="nav-link dropdown-toggle waves-effect waves-light text-dark" data-bs-toggle="dropdown"
                         href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         Main Menu
