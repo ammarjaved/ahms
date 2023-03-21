@@ -11,6 +11,7 @@ use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\userDetail;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CCTVController;
+use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\UtilityController;
 
 /*
@@ -58,21 +59,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('manage-balance',BalanceController::class);
 
 
+
+ 
+ 
+ 
+    
+    
+});
     /// Utility
-
- 
-
-
- 
-    
-    
-});
 Route::resource('/utility',UtilityController::class);
- 
 
-Route::group(['prefix' => '/asd'], function () {
-    Route::get('', [RoutingController::class, 'index'])->name('root');
-    Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
-    Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');
-    Route::get('{any}', [RoutingController::class, 'root'])->name('any');
-});
+
+ // Check in or out
+
+ Route::get('aero-hostel-management-system',[CheckInController::class,'index']);
+Route::get('/user/check-in/{id}',[CheckInController::class,'checkIn']);
+
+ 

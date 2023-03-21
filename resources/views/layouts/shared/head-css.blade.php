@@ -89,3 +89,10 @@
 @endif
 @endif
 @endif
+
+<style>
+     .content-page {
+
+margin-left: 0px !important;
+}
+</style>
