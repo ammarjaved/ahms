@@ -257,6 +257,12 @@
                                     <div class="col-md-5 "> <input type="text" id="last_name" value="" class="required form-control"
                                             name="last_name"></div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-5  "><label for="email">email *</label></div>
+                                    <div class="col-md-5 "> <input type="email" id="email" value="" class="required form-control"
+                                            name="email"></div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="gender">Gender *</label></div>
                                     <div class="col-md-5">
@@ -481,6 +487,7 @@
                 $('#age').val('');
                 $('#phone_no').val('');
                 $('#emergency_no').val('');
+                $('#email').val('');
                 $('#relegion').val('');
                 $('#nationality').val('');
                 $('#passport_no').val('');
@@ -514,9 +521,10 @@
                         var data = response.data;
                         $('#id').val(id);
                         $('#name').val(data['user'].name);
-                        $('#last_name').val(data['user'].name);
+                        $('#last_name').val(data['user'].last_name);
                         $('#gender').val(data['user'].gender);
                         $('#age').val(data['user'].age);
+                        $('#email').val(data['user'].email);
                         $('#phone_no').val(data['user'].phone_no);
                         $('#emergency_no').val(data['user'].emergency_no);
                         $('#relegion').val(data['user'].relegion);

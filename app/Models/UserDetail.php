@@ -14,7 +14,7 @@ class UserDetail extends Model
 
     protected $fillable = [
         'name',
-        'permanent_address', 'current_address',  'gender',  'age' ,'phone_no', 'emergency_no', 'relegion', 'nationality',
+        'permanent_address', 'current_address',  'gender',  'age' ,'phone_no', 'emergency_no', 'relegion', 'nationality', 'email',
          'passport_no' ,'visa', 'created_by', 'passport_expiry' ,'visa_expiry','user_image', 'date_of_birth', 'rent_per_month','hire_date','license_plate','last_name'
     ];
 }

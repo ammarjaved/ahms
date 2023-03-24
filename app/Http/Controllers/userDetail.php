@@ -74,50 +74,7 @@ class userDetail extends Controller
     public function store(Request $request)
     {
         // return $request->userImage_base64;
-        $data = "{\"pin\": \"1234\",
-            \n\"deptCode\": \"1\",
-            \n\"name\": \"$request->name\",
-            \n\"lastName\": \"$request->last_name\",
-            \n\"gender\": \"$request->gender\",
-            \n\"birthday\": \"$request->date_of_birth\",
-            \n\"carPlate\": \"$request->license_plate\",
-            \n\"isDisabled\": false,
-            \n\"isSendMail\": false,
-            \n\"personPwd\": \"123456\",
-            \n\"cardNo\": \"123456789\",
-            \n\"certNumber\": 123456,
-            \n\"ssn\": \"111111\",
-            \n\"supplyCards\": \"987643\",
-            \n\"email\": \"$request->email\",
-           \n\"accEndTime\": \"2019-07-14 08:56:00\",
-           \n\"accStartTime\": \"2018-07-14 08:56:00\",
-           \n\"mobilePhone\": \"$request->phone_no\",
-           \n\"hireDate\": \"$request->hire_date\",
-         
-            \n\"accLevelIds\": \"access level group ids\"\n}";
-//   \n\"personPhoto\": \"$request->userImage_base64\",
-     
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_URL, 'https://zkbiocvs.zkteco.com/api/person/add?access_token=A3A073EAC2E44EF5D42F207602CA777358FE9E854B4AE76EFD80AF2A650C5D56');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-        $headers = [];
-        $headers[] = 'Content-Type: application/json';
-        //$headers[] = 'Cookie: SESSION=NWU2NGVlYWYtZjZlOS00NWYyLTkzMmQtOWU2OGIyZjljMzUy';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        $res = json_decode($result);
         
-        // print_r($result);
-        if (curl_errno($ch) || $res->code != 0) {
-            return redirect()->route('user.index')->with('error','Something is worng try again later');
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
         // return;
         // $this->apiCreate($request);
 
@@ -133,23 +90,77 @@ class userDetail extends Controller
                 $file->move($destinationPath, $filename);
                 $request['user_image'] = '/asset/images/Users/' . $filename;
             }
-
+$id = "";
             if ($request->id == '') {
                 $request['created_by'] = Auth::user()->name;
 
                 $userDetail = user::create($request->all());
-
+               
                 $request['pd_id'] = $userDetail->id;
-
+                $id = $userDetail->id;
                 $roomInfor = roomInfo::create($request->all());
                 $workInfor = work_info::create($request->all());
             } else {
+                $id = $request->id;
                 $userDetail = user::find($request->id)->update($request->all());
+
+                
 
                 $workInfor = work_info::where('pd_id', $request->id)->update(['company' => $request->company, 'work_address' => $request->work_address, 'work_contact' => $request->work_contact, 'person_incharge' => $request->person_incharge]);
 
                 $roomInfor = roomInfo::where('pd_id', $request->id)->update(['floor' => $request->floor, 'room_no' => $request->room_no, 'bed_no' => $request->bed_no]);
+
+
             }
+
+
+
+            $data = "{\"pin\": \"$id\",
+                \n\"deptCode\": \"1\",
+                \n\"name\": \"$request->name\",
+                \n\"lastName\": \"$request->last_name\",
+                \n\"gender\": \"$request->gender\",
+                \n\"birthday\": \"$request->date_of_birth\",
+                \n\"carPlate\": \"$request->license_plate\",
+                \n\"isDisabled\": false,
+                \n\"isSendMail\": false,
+               
+               
+                \n\"ssn\": \"111111\",
+                
+                \n\"email\": \"$request->email\",
+               \n\"accEndTime\": \"2019-07-14 08:56:00\",
+               \n\"accStartTime\": \"2018-07-14 08:56:00\",
+               \n\"mobilePhone\": \"$request->phone_no\",
+               \n\"hireDate\": \"$request->hire_date\",
+             
+                \n\"accLevelIds\": \"access level group ids\"\n}";
+    //   \n\"personPhoto\": \"$request->userImage_base64\", \n\"personPwd\": \"123456\",
+    // \n\"cardNo\": \"123456789\",\n\"supplyCards\": \"987643\",
+    // \n\"certNumber\": 123456,
+         
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_URL, 'https://zkbiocvs.zkteco.com/api/person/add?access_token=A3A073EAC2E44EF5D42F207602CA777358FE9E854B4AE76EFD80AF2A650C5D56');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    
+            $headers = [];
+            $headers[] = 'Content-Type: application/json';
+            //$headers[] = 'Cookie: SESSION=NWU2NGVlYWYtZjZlOS00NWYyLTkzMmQtOWU2OGIyZjljMzUy';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
+            $result = curl_exec($ch);
+            $res = json_decode($result);
+            
+            print_r($result);
+            if (curl_errno($ch) || $res->code != 0) {
+                // return redirect()->route('user.index')->with('error','Something is worng try again later');
+                echo 'Error:' . curl_error($ch);
+            }
+            curl_close($ch);
+            // return;
         } catch (Exception $e) {
             return $e->getMessage();
             return redirect()
