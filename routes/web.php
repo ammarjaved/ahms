@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     /// Utility
 Route::resource('/utility',UtilityController::class);
 
-
+Route::get('api-test',[userDetail::class,'apiTest']);
  // Check in or out
 
  Route::get('aero-hostel-management-system',[CheckInController::class,'index']);

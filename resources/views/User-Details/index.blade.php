@@ -68,9 +68,7 @@
             margin-right: 1%;
         }
 
-        .is-invalid {
-            border: 2px solid #ff00009c !important;
-        }
+      
     </style>
 @endsection
 
@@ -100,6 +98,18 @@
                 asdhasjkh
             </div> -->
         <div class="card p-2 col-md-12 rounded-0">
+            @if (Session::has('error'))
+            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                <strong>{{ Session::get('error') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+        @endif
+        @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{Session::get('message') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
             <div class="row text-end d-flex justify-content-end text-right p-2">
                 {{-- <div class="col-md-2">
                     <button type="button" class="btn btn-sm bg-primary rounded-0" style="  color:white"
@@ -228,7 +238,7 @@
                     <h5 class="modal-title " id="exampleModalLabel">New</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return submitFoam()">
                     <div class="modal-body  ">
 
 
@@ -238,28 +248,32 @@
                             <div class="col-md-5">
 
                                 <div class="row">
-                                    <div class="col-md-5  "><label for="name">Name</label></div>
-                                    <div class="col-md-7 "> <input type="text" id="name" value=""
+                                    <div class="col-md-5  "><label for="name">Name *</label></div>
+                                    <div class="col-md-5 "> <input type="text" id="name" value="" class="required form-control"
                                             name="name"></div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-md-5"><label for="gender">Gender</label></div>
+                                    <div class="col-md-5  "><label for="last_name">Last Name *</label></div>
+                                    <div class="col-md-5 "> <input type="text" id="last_name" value="" class="required form-control"
+                                            name="last_name"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><label for="gender">Gender *</label></div>
                                     <div class="col-md-5">
-                                        <select name="gender" id="gender" class="form-select">
+                                        <select name="gender" id="gender" class="form-select required" >
                                             <option hidden value="">--- Select gender ---</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="M">Male</option>
+                                            <option value="F">Female</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5"><label for="age">Age</label></div>
-                                    <div class="col-md-7"> <input type="number" id="age" name="age"></div>
+                                    <div class="col-md-5"><label for="age">Age *</label></div>
+                                    <div class="col-md-5"> <input type="number" id="age" name="age" class="required form-control"></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5"><label for="phone_no">Phone no</label></div>
-                                    <div class="col-md-7"> <input type="text" id="phone_no" name="phone_no"></div>
+                                    <div class="col-md-5"><label for="phone_no">Phone no *</label></div>
+                                    <div class="col-md-5"> <input type="text" id="phone_no" name="phone_no" class="required form-control"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5"><label for="emergency_no">Emergency no</label></div>
@@ -270,13 +284,14 @@
                                     <div class="col-md-5"><label for="relegion">Religion</label></div>
                                     <div class="col-md-7"> <input type="text" id="relegion" name="relegion"></div>
                                 </div>
+                                
 
                             </div>
                             <div class="col-md-4">
 
                                 <div class="row">
                                     <div class="col-md-5"><label for="nationality">Nationality</label></div>
-                                    <div class="col-md-7"> <input type="text" id="nationality" name="nationality">
+                                    <div class="col-md-5"> <input type="text" id="nationality" name="nationality">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -300,16 +315,21 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-5"><label for="date_of_birth">Date of Birth</label></div>
+                                    <div class="col-md-5"><label for="date_of_birth">Date of Birth *</label></div>
                                     <div class="col-md-6"> <input type="date" id="date_of_birth" name="date_of_birth"
-                                            class="form-control"></div>
+                                            class="form-control required"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><label for="hire_date">Hire Date *</label></div>
+                                    <div class="col-md-6"> <input type="date" id="hire_date" name="hire_date" class="form-control required"></div>
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
                                 <img id="profile_image" src="{{ URL::asset('assets/images/userImage.gif') }}"
                                     height="162" width="140" />
                                 <input type="file" onchange="encodeImageFileAsURL(this)" name="userImage"
-                                    style="color:transparent" class="p-5 py-2">
+                                    style="color:transparent" class="p-5 py-2" accept="image/*">
+                                    <input type="hidden" name="userImage_base64" id="userImage_base64">
                             </div>
                         </div>
 
@@ -330,6 +350,12 @@
                                 <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address"
                                     type="button" role="tab" aria-controls="address"
                                     aria-selected="false">Address</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="plate-tab" data-bs-toggle="tab" data-bs-target="#plate"
+                                    type="button" role="tab" aria-controls="plate"
+                                    aria-selected="false">Plate Register</button>
                             </li>
 
                         </ul>
@@ -400,6 +426,16 @@
                                 </div>
                             </div>
 
+                            <div class="tab-pane fade" id="plate" role="tabpanel" aria-labelledby="plate-tab">
+                                <div class="row mb-5">
+                                    <div class="col-md-2"><label for="license_plate">License Plate</label></div>
+                                    <div class="col-md-2">
+                                        <input name="license_plate" class="form-control"  id="license_plate">
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -461,6 +497,9 @@
                 $('#bed_no').val('');
                 $('#permanent_address').val('');
                 $('#current_address').val('');
+                $('#hire_date').val('');
+                $('#license_plate').val('');
+                $('#last_name').val('');
                 $("#profile_image").attr("src", 'assets/images/userImage.gif');
                 $('#exampleModal').modal('show');
             }
@@ -475,6 +514,7 @@
                         var data = response.data;
                         $('#id').val(id);
                         $('#name').val(data['user'].name);
+                        $('#last_name').val(data['user'].name);
                         $('#gender').val(data['user'].gender);
                         $('#age').val(data['user'].age);
                         $('#phone_no').val(data['user'].phone_no);
@@ -483,7 +523,7 @@
                         $('#nationality').val(data['user'].nationality);
                         $('#passport_no').val(data['user'].passport_no);
                         $('#visa').val(data['user'].visa);
-
+                        $('#license_plate').val(data['user'].license_plate)
                         $('#company').val(data['work_info'].company);
                         $('#work_contact').val(data['work_info'].work_contact);
                         $('#work_address').val(data['work_info'].work_address);
@@ -493,6 +533,7 @@
                         $('#bed_no').val(data['room_info'].bed_no);
                         $('#permanent_address').val(data['user'].permanent_address);
                         $('#current_address').val(data['user'].current_address);
+                        $('#hire_date').val(data['user'].hire_date);
                         $('#rent_per_month').val(data['user'].rent_per_month);
                      $("#date_of_birth").val(data['user'].date_of_birth);
 
@@ -530,20 +571,16 @@
 
                 let ret = true;
 
-                if ($('#name').val() == '') {
-                    $('#name').addClass('is-invalid')
-
+                const inputElements = document.querySelectorAll('.required');
+            inputElements.forEach(inputElement => {
+                if ($(`#${inputElement.id}`).val() == "") {
+                    $(`#${inputElement.id}`).addClass("is-invalid");
+                    ret = false
                 }
-                if ($('#gender').val('') == "") {
 
-                }
-                if ($('#age').val('') == "") {
-
-                }
-                if ($('#phone_no').val('')) {
-
-                }
-                return false;
+            });
+                return ret;
+             
             }
 
             function getName(){
@@ -566,7 +603,15 @@
                 }
                 return ret;
             }
+            $(".required").change(function() {
 
+if ($(`#${this.id}`).val() !== '') {
+    $(`#${this.id}`).removeClass("is-invalid")
+} else {
+
+}
+
+})
             function encodeImageFileAsURL(element) {
                 var file = element.files[0];
                 var reader = new FileReader();
@@ -575,6 +620,7 @@
                     $("#profile_image").attr("src", reader.result);
                     $("#profile_image").attr('height', '162');
                     $("#profile_image").attr('width', '140');
+                    $("#userImage_base64").val(reader.result);
                 }
                 reader.readAsDataURL(file);
             }
