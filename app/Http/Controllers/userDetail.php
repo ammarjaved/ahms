@@ -221,12 +221,34 @@ $id = "";
      */
     public function destroy($id)
     {
+
+         $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_URL, 'https://zkbiocvs.zkteco.com/api/person/delete/'.$id.'?access_token=A3A073EAC2E44EF5D42F207602CA777358FE9E854B4AE76EFD80AF2A650C5D56');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+    
+            $headers = [];
+            $headers[] = 'Content-Type: application/json';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
+            $result = curl_exec($ch);
+            $res = json_decode($result);
+            
+            print_r($result);
+            if (curl_errno($ch) || $res->code != 0) {
+                // return redirect()->route('user.index')->with('error','Something is worng try again later');
+                echo 'Error:' . curl_error($ch);
+            }
+
+        
         // return $id;
         $userDetail = user::find($id);
         if ($userDetail) {
             $workInfo = work_info::where('pd_id', $userDetail->id);
             if ($workInfo) {
                 $workInfo->delete();
+                
             }
 
             $roomInfo = roomInfo::where('pd_id', $userDetail->id);
