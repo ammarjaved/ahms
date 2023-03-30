@@ -269,7 +269,7 @@ $('#greeting').html(greeting)
     setInterval(updateTime, 1000); // Update time every second
 
     function noOfFloors(){
-      let val = parseInt( $('#no_of_floors').html())
+      let val = {{Auth::user()->no_of_floors}}
       $('#floors').find('option').remove().end()
       $('#floors').append(`<option value="" hidden>-- SELECT FLOOR --</option>`)
       for (let index = 0; index < val; index++) {
