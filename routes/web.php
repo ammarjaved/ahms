@@ -12,6 +12,9 @@ use App\Http\Controllers\userDetail;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CCTVController;
 use App\Http\Controllers\CheckInController;
+use App\Http\Controllers\FloorPlan\FloorMapController;
+use App\Http\Controllers\FloorPlan\FloorPlanController;
+use App\Http\Controllers\FloorPlan\FloorPlanImagesController;
 use App\Http\Controllers\UtilityController;
 
 /*
@@ -57,6 +60,14 @@ Route::group(['middleware' => 'auth'], function () {
 
   /// Manage Balacne 
     Route::resource('manage-balance',BalanceController::class);
+
+    //Floor plan
+    Route::resource('floor-plan',FloorPlanController::class);
+    Route::resource('floor-plan-images',FloorPlanImagesController::class);
+    Route::post('update-images/{id}',[FloorPlanImagesController::class,'update']);
+
+    // floor map
+    Route::resource('floor-map',FloorMapController::class);
 
 
 

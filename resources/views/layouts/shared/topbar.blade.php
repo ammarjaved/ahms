@@ -408,13 +408,13 @@
                         </a>
 
 
-                        {{-- 
+                     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    <a href="{{route('floor-plan.index')}}" class="dropdown-item">
                         <i class="fe-bar-chart-line- me-1"></i>
-                        <span>Revenue Report</span>
+                        <span>Manage Floor Plan</span>
                     </a>
-
+   {{-- 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-settings me-1"></i>
