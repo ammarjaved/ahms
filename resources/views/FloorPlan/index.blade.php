@@ -28,7 +28,7 @@
                 <h3>Floor Plan</h3>
             </div>
             <div class="col-md-2">
-                <select name="" class="form-select" id="floors">
+                <select name="" onchange=callAddBaseMap(this.value) class="form-select" id="floors">
                     <option value="" hidden>-- SELECT FLOOR --</option>
                     <option value="">Floor 1</option>
                     <option value="">Floor 1</option>
@@ -147,6 +147,7 @@
         //var center = [0,0];
         var map = '';
         var imgLay = '';
+        var imgData='';
         $(document).ready(function() {
 
             map = L.map('map', {
@@ -158,24 +159,24 @@
                 attributionControl: false
             })
             //.setView(center, 11);
-            var drawnItems = new L.FeatureGroup();
-            map.addLayer(drawnItems);
-            var drawControl = new L.Control.Draw({
-                draw: {
-                    circle: false,
-                    marker: true,
-                    polygon: true,
-                    polyline: {
-                        shapeOptions: {
-                            color: '#f357a1',
-                            weight: 10
-                        }
-                    },
-                    rectangle: true
-                },
-                edit: {
-                    featureGroup: drawnItems
-                }
+            // var drawnItems = new L.FeatureGroup();
+            // map.addLayer(drawnItems);
+            // var drawControl = new L.Control.Draw({
+            //     draw: {
+            //         circle: false,
+            //         marker: true,
+            //         polygon: true,
+            //         polyline: {
+            //             shapeOptions: {
+            //                 color: '#f357a1',
+            //                 weight: 10
+            //             }
+            //         },
+            //         rectangle: true
+            //     },
+            //     edit: {
+            //         featureGroup: drawnItems
+            //     }
 
                 
 
@@ -183,9 +184,9 @@
               
 
 
-            });
+            // });
 
-            map.addControl(drawControl);
+            // map.addControl(drawControl);
 
 
 
@@ -198,15 +199,30 @@
                 type: "GET",
                 url: `/floor-map`,
                 success: function(data) {
-
-                    addBaseMap(data.data[0].image)
+                    imgData=data.data;
+                    addBaseMap(imgData[0].image)
 
                     noOfFloors(data.data)
                     
-            })
+            }
+        })
+        }
+
+        function callAddBaseMap(val){
+           // alert(val);
+           //var floorno= $("#floors").find(":selected").val();
+           var filteredFloor = $.grep(imgData, function(v) {
+            return v.floor_no === parseInt(val) ;
+            });
+
+            addBaseMap(filteredFloor[0].image)
+
         }
 
         function addBaseMap(params) {
+            if(imgLay!=''){
+                map.removeLayer(imgLay);
+            }
             var w = 1280 * 2,
                         h = 806 * 2,
                         url = 'asset/images/FloorImages/' + params;
@@ -232,8 +248,8 @@
 
                    
 
-                }
-        }
+             }
+        
 
         function noOfFloors(data) {
             let val = {{ Auth::user()->no_of_floors }}
@@ -258,7 +274,7 @@
             }).addTo(map);
             console.log(e.latlng);
 
-            newMarker.bindPopup("<b>New Room</b><br>Adventures await");
+          //  newMarker.bindPopup("<b>New Room</b><br>Adventures await");
         }
 
         function onpenModal() {
