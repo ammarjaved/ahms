@@ -145,21 +145,11 @@
 
     <script>
         //var center = [0,0];
+        var map = '';
+        var imgLay = '';
         $(document).ready(function() {
-            
-           
-         
 
-
-            floorMap();
-           
-        })
-function floorMap() {
-     $.ajax({
-                type: "GET",
-                url: `/floor-map`,
-                success: function(data) {
-                    var map = L.map('map', {
+            map = L.map('map', {
                 minZoom: 1,
                 maxZoom: 4,
                 center: [0, 0],
@@ -186,118 +176,64 @@ function floorMap() {
                 edit: {
                     featureGroup: drawnItems
                 }
+
+                
+
+
+              
+
+
             });
 
             map.addControl(drawControl);
 
-            map.on('draw:created', function(e) {
-                var type = e.layerType;
-                layer = e.layer;
-                drawnItems.addLayer(layer);
+
+
+            floorMap();
+
+        })
+
+        function floorMap() {
+            $.ajax({
+                type: "GET",
+                url: `/floor-map`,
+                success: function(data) {
+
+                    addBaseMap(data.data[0].image)
+
+                    noOfFloors(data.data)
+                    
             })
+        }
 
-
+        function addBaseMap(params) {
             var w = 1280 * 2,
-                h = 806 * 2,
-                url = 'asset/images/FloorImages/'+data.data[0].image;
+                        h = 806 * 2,
+                        url = 'asset/images/FloorImages/' + params;
 
-            // calculate the edges of the image, in coordinate space
-            var southWest = map.unproject([0, h], map.getMaxZoom() - 1);
-            var northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
-            var bounds = new L.LatLngBounds(southWest, northEast);
+                    // calculate the edges of the image, in coordinate space
+                    var southWest = map.unproject([0, h], map.getMaxZoom() - 1);
+                    var northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
+                    var bounds = new L.LatLngBounds(southWest, northEast);
 
-            // add the image overlay,
-            // so that it covers the entire map
-            L.imageOverlay(url, bounds).addTo(map);
+                    // add the image overlay,
+                    // so that it covers the entire map
+                  imgLay =   L.imageOverlay(url, bounds).addTo(map);
 
-            map.setMaxBounds(bounds);
-
-
-            // L.tileLayer(
-            // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            //     maxZoom: 18
-            // }).addTo(map);
+                    map.setMaxBounds(bounds);
 
 
-            // var geojson = {
-            //     "type": "FeatureCollection",
-            //     "features": [{
-            //         "type": "Feature",
-            //         "geometry": {
-            //             "type": "Point",
-            //             "coordinates": [31, -41.79999923706055]
-            //         },
-            //         "properties": {
-            //             "Detail": "Mr Ariifien not available",
-            //             "Color": "red"
-            //         }
-            //     }, {
-            //         "type": "Feature",
-            //         "geometry": {
-            //             "type": "Point",
-            //             "coordinates": [178, -42.79999923706055]
-            //         },
-            //         "properties": {
-            //             "Detail": "Mr Ammar  available",
-            //             "Color": "green"
-            //         }
-            //     }, {
-            //         "type": "Feature",
-            //         "geometry": {
-            //             "type": "Point",
-            //             "coordinates": [50.5, -168.29999923706055]
-            //         },
-            //         "properties": {
-            //             "Detail": "Mr Abdul not available",
-            //             "Color": "red"
-            //         }
-            //     }, {
-            //         "type": "Feature",
-            //         "geometry": {
-            //             "type": "Point",
-            //             "coordinates": [240, -166.79999923706055]
-            //         },
-            //         "properties": {
-            //             "Detail": "Mr Rizwan available",
-            //             "Color": "green"
-            //         }
-            //     }],
-            //     "name": "Points",
-            //     "keyField": "map"
-            // };
+                    map.on('draw:created', function(e) {
+                    var type = e.layerType;
+                    layer = e.layer;
+                    drawnItems.addLayer(layer);
+                })
+                map.on('click', addMarker);
 
-            // var geojsonLayer = L.geoJson(geojson, {
-            //     style: function(feature) {
-            //         return {
-            //             color: feature.properties.Color
-            //         };
-            //     },
-            //     pointToLayer: function(feature, latlng) {
-            //         return new L.CircleMarker(latlng, {
-            //             radius: 5,
-            //             fillOpacity: 0.85
-            //         });
-            //     },
-            //     onEachFeature: function(feature, layer) {
-            //         layer.bindPopup(feature.properties.Detail);
-            //     }
-            // });
+                   
 
-            // map.addLayer(geojsonLayer);
-
-
-            noOfFloors(data.data)
-                        map.on('click', addMarker);
-
-              function addMarker(e){
-
-                var newMarker = new L.CircleMarker(e.latlng, {radius: 5, fillOpacity: 0.85,color:'blue'}).addTo(map);
-                console.log(e.latlng);
-
-                newMarker.bindPopup("<b>New Room</b><br>Adventures await");
-            }
-                }})
-}
+                }
+        }
 
         function noOfFloors(data) {
             let val = {{ Auth::user()->no_of_floors }}
@@ -311,6 +247,18 @@ function floorMap() {
 
 
             }
+        }
+
+        function addMarker(e) {
+
+            var newMarker = new L.CircleMarker(e.latlng, {
+                radius: 5,
+                fillOpacity: 0.85,
+                color: 'blue'
+            }).addTo(map);
+            console.log(e.latlng);
+
+            newMarker.bindPopup("<b>New Room</b><br>Adventures await");
         }
 
         function onpenModal() {
