@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\FloorPlan;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\UserDetail;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class FloorPlanController extends Controller
+class AssignRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +18,6 @@ class FloorPlanController extends Controller
     public function index()
     {
         //
-        $id = Auth::user()->id;
-        $data= [];
-        $data['floor_images'] = DB::select("select * from floorplan_images where user_id = $id order by floor_no asc");
-        $data['members']      = UserDetail::all();
-        // return $data['floor_images'];
-        return view('FloorPlan.index',['data'=>$data]);
     }
 
     /**
@@ -45,6 +39,16 @@ class FloorPlanController extends Controller
     public function store(Request $request)
     {
         //
+        try{
+        $id = Auth::user()->id;
+        // DB::table('member_beds_geoms')->insert(array('member_id'=>$request->member_id,'floor_no'=>$request->floorNo,'user_id'=>Auth::user()->id,'geom'=>st_geomfromtext('POINT('||$request->lng||' '||$request->lat||')',4326)));
+        DB::select("INSERT INTO member_beds_geoms (member_id, user_id, floor_no,geom) VALUES($request->member_id ,$id ,$request->floorNo , st_geomfromtext('POINT('|| CAST($request->lng as text)  ||' '||CAST($request->lat as text) ||')',4326))");
+        UserDetail::find($request->member_id)->update(['room_status',true]);
+        }
+        catch(Exception $e){
+            return redirect()->route('floor-plan.index')->with('error', 'Something is worng try again later');
+        }
+        return redirect()->route('floor-plan.index')->with('message','Room Assigned');
     }
 
     /**

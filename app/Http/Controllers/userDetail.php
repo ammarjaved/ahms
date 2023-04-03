@@ -93,6 +93,7 @@ class userDetail extends Controller
 $id = "";
             if ($request->id == '') {
                 $request['created_by'] = Auth::user()->name;
+                $request['room_status'] = false;
 
                 $userDetail = user::create($request->all());
                

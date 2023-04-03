@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\application;
 use App\Http\Controllers\ApplicationGeom;
+use App\Http\Controllers\AssignRoomController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\DashboardController;
@@ -68,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // floor map
     Route::resource('floor-map',FloorMapController::class);
-
+    Route::resource('assign-room',AssignRoomController::class);
 
 
  
