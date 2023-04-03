@@ -74,11 +74,11 @@
       <div class="row d-flex justify-content-between">
      <div class="col-md-2"> <h3>Floor Plan</h3></div>
      <div class="col-md-2">
-     <select name="" class="form-select" id="floors">
-      <option value="" hidden>-- SELECT FLOOR --</option>
-      <option value="">Floor 1</option>
-      <option value="">Floor 1</option>
-     </select>
+        <select name="" onchange=callAddBaseMap(this.value) class="form-select" id="floors">
+            <option value="" hidden>-- SELECT FLOOR --</option>
+            <option value="">Floor 1</option>
+            <option value="">Floor 1</option>
+        </select>
     </div>
     </div>
 <div >
@@ -118,101 +118,189 @@
 
 
 //var center = [0,0];
-    $(document).ready(function(){
-        var map = L.map('map', {
-    minZoom: 1,
-    maxZoom: 4,
-    center: [0, 0],
-    zoom: 0,
-    crs: L.CRS.Simple,
-    attributionControl: false
-})
-        //.setView(center, 11);
+var map = '';
+        var imgLay = '';
+        var imgData = '';
+        var gFloor = '', geojsonLayer = '';
+        $(document).ready(function() {
 
+            map = L.map('map', {
+                minZoom: 1,
+                maxZoom: 4,
+                center: [0, 0],
+                zoom: 0,
+                crs: L.CRS.Simple,
+                attributionControl: false
+            })
 
-      var w = 1280 * 2,
-          h = 806 * 2,
-          url='assets/images/E78.png';
+            floorMap();
 
-      // calculate the edges of the image, in coordinate space
-      var southWest = map.unproject([0, h], map.getMaxZoom()-1);
-      var northEast = map.unproject([w, 0], map.getMaxZoom()-1);
-      var bounds = new L.LatLngBounds(southWest, northEast);
+        })
 
-      // add the image overlay,
-      // so that it covers the entire map
-      L.imageOverlay(url, bounds).addTo(map);
+        function floorMap() {
+            $.ajax({
+                type: "GET",
+                url: `/floor-map`,
+                success: function(data) {
+                    imgData = data.data;
 
-      map.setMaxBounds(bounds);
+                    addBaseMap(imgData[0].image)
+                    noOfFloors(data.data)
+                    callPoints(data.data[0].floor_no)
+                }
+            })
+        }
 
-    
-        // L.tileLayer(
-        // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     maxZoom: 18
-        // }).addTo(map);
-
-
-        var geojson = {
-        "type": "FeatureCollection",
-        "features": [{
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [31, -41.79999923706055]
-            },
-            "properties": {
-                "Detail": "Mr Ariifien not available",
-                "Color": "red"
+        function callPoints(param){
+            if(geojsonLayer){
+                map.removeLayer(geojsonLayer)
             }
-        }, {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [178, -42.79999923706055]
-            },
-            "properties": {
-                "Detail": "Mr Ammar  available",
-                "Color": "green"
-            }
-        }, {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [50.5 ,-168.29999923706055]
-            },
-            "properties": {
-                "Detail": "Mr Abdul not available",
-                "Color": "red"
-            }
-        }, {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [240, -166.79999923706055]
-            },
-            "properties": {
-                "Detail": "Mr Rizwan available",
-                "Color": "green"
-            }
-        }],
-        "name": "Points",
-        "keyField": "map"
-    };
-
-    var geojsonLayer = L.geoJson(geojson, {
+            $.ajax({
+                type: "GET",
+                url: `/floor-map/${param}`,
+                success: function(data) {
+                   
+                    var geojson =JSON.parse(data.data[0].geojson)
+                   console.log(geojson);
+                 geojsonLayer = L.geoJson(geojson, {
         style: function(feature) {
-            return {color: feature.properties.Color};
+            return {color: 'blue'};
         },
         pointToLayer: function(feature, latlng) {
             return new L.CircleMarker(latlng, {radius: 5, fillOpacity: 0.85});
         },
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.Detail);
+            layer.bindPopup(`<table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>${feature.properties.user_id}</td>
+                        </tr>
+                        <tr>
+                        <th>user id</th>
+                        <td>${feature.properties.user_id}</td>
+                        </tr>
+                        <tr>
+                        <th>Member id</th>
+                        <td>${feature.properties.member_id}</td>
+                        </tr>
+                    </tbody>
+                </table>`);
         }
     });
 
     map.addLayer(geojsonLayer);
 
+                }
+        })}
+
+        function callAddBaseMap(val) {
+            gFloor = val
+            callPoints(val)
+            var filteredFloor = $.grep(imgData, function(v) {
+                return v.floor_no === parseInt(val);
+            });
+            addBaseMap(filteredFloor[0].image)
+
+        }
+
+        function addBaseMap(params) {
+            if (imgLay != '') {
+                map.removeLayer(imgLay);
+            }
+            var w = 1280 * 2,
+                h = 806 * 2,
+                url = 'asset/images/FloorImages/' + params;
+
+            // calculate the edges of the image, in coordinate space
+            var southWest = map.unproject([0, h], map.getMaxZoom() - 1);
+            var northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
+            var bounds = new L.LatLngBounds(southWest, northEast);
+
+            // add the image overlay,
+            // so that it covers the entire map
+            imgLay = L.imageOverlay(url, bounds).addTo(map);
+
+            map.setMaxBounds(bounds);
+
+            map.on('draw:created', function(e) {
+                var type = e.layerType;
+                layer = e.layer;
+                drawnItems.addLayer(layer);
+            })
+
+
+        }
+        var newMarker
+
+        function addMarker(e) {
+            if (newMarker) {
+                map.removeLayer(newMarker)
+            }
+            newMarker = new L.CircleMarker(e.latlng, {
+                radius: 5,
+                fillOpacity: 0.85,
+                color: 'blue'
+            }).addTo(map);
+            $('#floorNo').val(gFloor)
+            $('#lat').val(e.latlng.lat)
+            $('#lng').val(e.latlng.lng)
+            $('#assignBed-modal').modal("show")
+            console.log(e.latlng);
+            //  newMarker.bindPopup("<b>New Room</b><br>Adventures await");
+
+        }
+
+
+
+        function noOfFloors(data) {
+            let val = {{ Auth::user()->no_of_floors }}
+            $('#floors').find('option').remove().end()
+            // $('#floors').append(`<option value="" hidden>-- SELECT FLOOR --</option>`)
+            gFloor = data[0].floor_no
+            $('#floors').append(`<option value="${data[0].floor_no}" selected>Floor ${data[0].floor_no}</option>`)
+            for (let index = 1; index < data.length; index++) {
+                $('#floors').append(`<option value="${data[index].floor_no}" >Floor ${data[index].floor_no}</option>`)
+
+            }
+        }
+
+
+
+
+        function editImage(id) {
+            let val = `<form action="update-images/${id}" method="Post" enctype="multipart/form-data">           
+                @csrf
+                <input name="img"  type="file">
+                <button class="btn btn-sm btn-success">submit</button>
+                </form>
+                `;
+            $('#edit-image-' + id).html(val)
+        }
+
+
+        function submitAssign() {
+            let res = $('#member').val() === '' ? false : true;
+            !res ? $('#er_member').html('Select User') : '';
+            return res;
+        }
+
+        function selectPoint(par) {
+            if (par) {
+                $("#for-select-point").html('select point on map')
+                $('#for-assign').css("display", 'none')
+                $("#for-cancel").css("display", 'block')
+                map.on('click', addMarker);
+            } else {
+                $("#for-select-point").html('')
+                $('#for-assign').css("display", 'block')
+                $("#for-cancel").css("display", 'none')
+                map.off('click', addMarker);
+                if (newMarker) {
+                    map.removeLayer(newMarker)
+                }
+            }
+        }
 
 
 //      map.on('click', addMarker);
@@ -228,7 +316,7 @@
 
 
         noOfFloors()
-      })
+    
     function updateTime() {
         const now = new Date();
 

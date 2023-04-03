@@ -267,8 +267,16 @@
             layer.bindPopup(`<table class="table table-bordered">
                 <tbody>
                     <tr>
+                        <th>ID</th>
+                        <td>${feature.properties.user_id}</td>
+                        </tr>
+                        <tr>
                         <th>user id</th>
                         <td>${feature.properties.user_id}</td>
+                        </tr>
+                        <tr>
+                        <th>Member id</th>
+                        <td>${feature.properties.member_id}</td>
                         </tr>
                     </tbody>
                 </table>`);
@@ -282,6 +290,7 @@
 
         function callAddBaseMap(val) {
             gFloor = val
+            callPoints(val)
             var filteredFloor = $.grep(imgData, function(v) {
                 return v.floor_no === parseInt(val);
             });

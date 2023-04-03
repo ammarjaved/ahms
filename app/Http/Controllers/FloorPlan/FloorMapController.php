@@ -53,36 +53,14 @@ class FloorMapController extends Controller
      */
     public function show($id)
     {
+        $aid = Auth::user()->id;
         $geom = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
-        'properties', json_build_object(
-        'user_id', user_id,
-        'floor_no',floor_no,
-        'name',name,
-        'current_address',current_address,	
-        'gender',gender,
-            'age',age,
-            'phone_no',phone_no,
-            'emergency_no',emergency_no,
-            'relegion',relegion,
-            'nationality',nationality,
-            'visa',visa,
-            'created_by',created_by,
-            'passport_expiry',passport_expiry,
-            'visa_expiry',visa_expiry,
-            'user_image',user_image,
-            'availability',availability,
-            'rent_per_month',rent_per_month,
-            'date_of_birth',date_of_birth,
-            'license_plate',license_plate,
-            'hire_date',hire_date,
-            'email',email,
-            'room_status',room_status 
-    )))) as geojson
-    FROM (select a.id , user_id, floor_no,geom,b.name,b.current_address,b.gender, b.age, b.phone_no,
-b.emergency_no, b.relegion, b.nationality, b.passport_no, b.visa, b.created_by, b.passport_expiry,
-b.visa_expiry, b.user_image, b.availability, b.rent_per_month, b.date_of_birth, b.license_plate,
-b.hire_date, b.last_name, b.email, b.room_status from member_beds_geoms a,personal_detail b
-          where a.floor_no = '1' and a.member_id=b.id ) as tbl1");
+            'properties', json_build_object(
+            'user_id', user_id,
+            'floor_no',floor_no
+        
+        )))) as geojson
+        FROM (select id , user_id,member_id, floor_no,geom from member_beds_geoms where floor_no = '$id'	and user_id = $aid) as tbl1");
         return response()->json(['status'=>200,'data'=>$geom]);
     }
 
