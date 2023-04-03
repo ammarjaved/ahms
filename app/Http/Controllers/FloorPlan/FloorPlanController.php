@@ -21,8 +21,9 @@ class FloorPlanController extends Controller
         $id = Auth::user()->id;
         $data= [];
         $data['floor_images'] = DB::select("select * from floorplan_images where user_id = $id order by floor_no asc");
-        $data['members']      = UserDetail::all();
+        // $data['members']      = UserDetail::where('room_status', '')->orwhere('room_status', 'false')->get();
         // return $data['floor_images'];
+        $data['members']      = UserDetail::all();
         return view('FloorPlan.index',['data'=>$data]);
     }
 
