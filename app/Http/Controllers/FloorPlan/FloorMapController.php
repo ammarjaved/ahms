@@ -58,7 +58,7 @@ class FloorMapController extends Controller
             'properties', json_build_object(
             'user_id', user_id,
             'floor_no',floor_no,
-            'member_id',memberid        
+            'member_id',member_id        
         )))) as geojson
         FROM (select id , user_id,member_id, floor_no,geom from member_beds_geoms where floor_no = '$id'	and user_id = $aid) as tbl1");
         return response()->json(['status'=>200,'data'=>$geom]);
