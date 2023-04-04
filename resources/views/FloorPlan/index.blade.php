@@ -270,10 +270,20 @@
                     var geojson = JSON.parse(data.data[0].geojson)
                     console.log(geojson);
                     geojsonLayer = L.geoJson(geojson, {
-                        style: function(feature) {
-                            return {
-                                color: 'blue'
-                            };
+                      
+                        style: function(feature) { 
+                            console.log();
+                             return {
+                            // if(feature.properties.availability=== null || feature.properties.availability === 'unavailable'){
+                           
+                                color: feature.properties.availability === "available"? 'green' : 'red'
+                      
+                        // }esle{
+                            
+                        //         color: 'green'
+                           
+                        // } 
+                         };
                         },
                         pointToLayer: function(feature, latlng) {
                             return new L.CircleMarker(latlng, {
@@ -282,15 +292,11 @@
                             });
                         },
                         onEachFeature: function(feature, layer) {
-                            layer.on({
-                                click: function(e) {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: `/get-member-detail-on-map/${feature.properties.member_id}`,
-                                        success: function(data) {
-                                            console.log(data);
+                           
+    
+                                            // console.log(data);
                                             let avail = ''
-                                            if(data.data.availability === null || data.data.availability === 'unavailable'){
+                                            if(feature.properties.availability === null || feature.properties.availability === 'unavailable'){
                                                 avail = 'Not Available'
                                             }else{
                                                
@@ -300,15 +306,15 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th>First name</th>
-                                                                    <td>${data.data.name}</td>
+                                                                    <td>${feature.properties.name}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Last name</th>
-                                                                    <td>${data.data.last_name}</td>
+                                                                    <td>${feature.properties.last_name}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Room no</th>
-                                                                    <td>${data.data.room_no}</td>
+                                                                    <td>${feature.properties.room_no}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Status</th>
@@ -316,23 +322,20 @@
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Floor no</th>
-                                                                    <td>${data.data.floor}</td>
+                                                                    <td>${feature.properties.floor_no}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Bed no</th>
-                                                                    <td>${data.data.bed_no}</td>
+                                                                    <td>${feature.properties.bed_no}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <th>Detail</th>
-                                                                    <td class="text-center  "><a href="/personal/${data.data.pd_id}" class="btn btn-sm btn-secondary text-white">Detail</a></td>
+                                                                    <td class="text-center  "><a href="/personal/${feature.properties.id}" class="btn btn-sm btn-secondary text-white">Detail</a></td>
                                                                     </tr>
                                                                     
                                                                 </tbody>
-                                                            </table>`).openPopup();
-                                        }
-                                    })
-                                }
-                            })
+                                                            </table>`);
+                                      
                         
                     } });
 

@@ -55,13 +55,38 @@ class FloorMapController extends Controller
     public function show($id)
     {
         $aid = Auth::user()->id;
-        $geom = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
-            'properties', json_build_object(
-            'user_id', user_id,
-            'floor_no',floor_no,
-            'member_id',member_id        
-        )))) as geojson
-        FROM (select id , user_id,member_id, floor_no,geom from member_beds_geoms where floor_no = '$id'	and user_id = $aid) as tbl1");
+        $geom = DB::select("SELECT json_build_object(
+            'type', 'FeatureCollection',
+            'crs', json_build_object(
+                     'type', 'name',
+                     'properties', json_build_object('name', 'EPSG:4326')
+                   ),
+            'features', json_agg(
+                          json_build_object(
+                            'type', 'Feature',
+                            'id', id,
+                            'geometry', ST_AsGeoJSON(geom)::json,
+                            'properties', json_build_object(
+                                            'id',id,
+                                            'floor_no', floor_no,
+                                            'name', name,
+                                            'gender', gender,
+                                            'availability', availability,
+                                            'room_no', room_no,
+                                            'bed_no',bed_no,
+                                            'last_name',last_name
+                                          )
+                          )
+                      )
+          ) AS geojson
+          FROM (
+            SELECT b.id,  a.floor_no, a.geom, b.name, b.gender, b.availability, b.last_name,c.room_no, c.bed_no
+            FROM member_beds_geoms a
+            JOIN personal_detail b ON a.member_id = b.id
+            JOIN room_info c ON a.member_id = c.pd_id
+            WHERE a.floor_no = '$id'
+          ) AS tbl1;
+          ");
         return response()->json(['status'=>200,'data'=>$geom]);
     }
 
