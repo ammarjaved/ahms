@@ -84,7 +84,7 @@ class FloorMapController extends Controller
             FROM member_beds_geoms a
             JOIN personal_detail b ON a.member_id = b.id
             JOIN room_info c ON a.member_id = c.pd_id
-            WHERE a.floor_no = '$id'
+            WHERE a.floor_no = '$id' and user_id = $aid
           ) AS tbl1;
           ");
         return response()->json(['status'=>200,'data'=>$geom]);

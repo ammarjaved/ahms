@@ -163,31 +163,74 @@ var map = '';
                     var geojson =JSON.parse(data.data[0].geojson)
                    console.log(geojson);
                  geojsonLayer = L.geoJson(geojson, {
-        style: function(feature) {
-            return {color: 'blue'};
-        },
-        pointToLayer: function(feature, latlng) {
-            return new L.CircleMarker(latlng, {radius: 5, fillOpacity: 0.85});
-        },
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(`<table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <td>${feature.properties.user_id}</td>
-                        </tr>
-                        <tr>
-                        <th>user id</th>
-                        <td>${feature.properties.user_id}</td>
-                        </tr>
-                        <tr>
-                        <th>Member id</th>
-                        <td>${feature.properties.member_id}</td>
-                        </tr>
-                    </tbody>
-                </table>`);
-        }
-    });
+                    style: function(feature) { 
+                            console.log();
+                             return {
+                            // if(feature.properties.availability=== null || feature.properties.availability === 'unavailable'){
+                           
+                                color: feature.properties.availability === "available"? 'green' : 'red'
+                      
+                        // }esle{
+                            
+                        //         color: 'green'
+                           
+                        // } 
+                         };
+                        },
+                        pointToLayer: function(feature, latlng) {
+                            return new L.CircleMarker(latlng, {
+                                radius: 5,
+                                fillOpacity: 0.85
+                            });
+                        },
+                        onEachFeature: function(feature, layer) {
+                           
+    
+                                            // console.log(data);
+                                            let avail = ''
+                                            if(feature.properties.availability === null || feature.properties.availability === 'unavailable'){
+                                                avail = 'Not Available'
+                                            }else{
+                                               
+                                                avail = 'Available'
+                                            }
+                                            layer.bindPopup(`<table class="table table-bordered">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>First name</th>
+                                                                    <td>${feature.properties.name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Last name</th>
+                                                                    <td>${feature.properties.last_name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Room no</th>
+                                                                    <td>${feature.properties.room_no}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Status</th>
+                                                                    <td>${avail}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Floor no</th>
+                                                                    <td>${feature.properties.floor_no}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Bed no</th>
+                                                                    <td>${feature.properties.bed_no}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Detail</th>
+                                                                    <td class="text-center  "><a href="/personal/${feature.properties.id}" class="btn btn-sm btn-secondary text-white">Detail</a></td>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>`);
+                                      
+                        
+                    } });
+  
 
     map.addLayer(geojsonLayer);
 
@@ -223,34 +266,12 @@ var map = '';
 
             map.setMaxBounds(bounds);
 
-            map.on('draw:created', function(e) {
-                var type = e.layerType;
-                layer = e.layer;
-                drawnItems.addLayer(layer);
-            })
-
+           
 
         }
         var newMarker
 
-        function addMarker(e) {
-            if (newMarker) {
-                map.removeLayer(newMarker)
-            }
-            newMarker = new L.CircleMarker(e.latlng, {
-                radius: 5,
-                fillOpacity: 0.85,
-                color: 'blue'
-            }).addTo(map);
-            $('#floorNo').val(gFloor)
-            $('#lat').val(e.latlng.lat)
-            $('#lng').val(e.latlng.lng)
-            $('#assignBed-modal').modal("show")
-            console.log(e.latlng);
-            //  newMarker.bindPopup("<b>New Room</b><br>Adventures await");
-
-        }
-
+        
 
 
         function noOfFloors(data) {
@@ -315,7 +336,7 @@ var map = '';
 
 
 
-        noOfFloors()
+        // noOfFloors()
     
     function updateTime() {
         const now = new Date();
@@ -356,18 +377,18 @@ $('#greeting').html(greeting)
     
     setInterval(updateTime, 1000); // Update time every second
 
-    function noOfFloors(){
-      let val = {{Auth::user()->no_of_floors}}
-      $('#floors').find('option').remove().end()
-      $('#floors').append(`<option value="" hidden>-- SELECT FLOOR --</option>`)
-      for (let index = 0; index < val; index++) {
+    // function noOfFloors(){
+    //   let val = {{Auth::user()->no_of_floors}}
+    //   $('#floors').find('option').remove().end()
+    //   $('#floors').append(`<option value="" hidden>-- SELECT FLOOR --</option>`)
+    //   for (let index = 0; index < val; index++) {
        
-        $('#floors').append(`<option value="${index+1}">Floor ${index+1}</option>`)
+    //     $('#floors').append(`<option value="${index+1}">Floor ${index+1}</option>`)
         
 
         
-      }
-    }
+    //   }
+    // }
   </script>
 
 
