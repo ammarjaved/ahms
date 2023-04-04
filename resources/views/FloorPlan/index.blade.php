@@ -163,10 +163,22 @@
                                     <option value="{{ $member->id }}">{{ $member->name }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="floorNo" id="floorNo">
+                            
+                            <input type="hidden" name="floor" id="floorNo">
                             <input type="hidden" name="lat" id="lat">
                             <input type="hidden" name="lng" id="lng">
 
+                        </div>
+                        <div class="">
+                            <span class="text-danger" id="er_room"></span>
+                            <label for="room">Room no</label>
+                            <input type="number" name="room_no" id="room" class="form-control">
+                        </div>
+
+                        <div class="">
+                            <span class="text-danger" id="er_bed"></span>
+                            <label for="bed">Bed no</label>
+                            <input type="number" name="bed_no" id="bed" class="form-control">
                         </div>
 
                     </div>
@@ -215,7 +227,8 @@
         var map = '';
         var imgLay = '';
         var imgData = '';
-        var gFloor = '', geojsonLayer = '';
+        var gFloor = '',
+            geojsonLayer = '';
         $(document).ready(function() {
 
             map = L.map('map', {
@@ -245,48 +258,89 @@
             })
         }
 
-        function callPoints(param){
-            if(geojsonLayer){
+        function callPoints(param) {
+            if (geojsonLayer) {
                 map.removeLayer(geojsonLayer)
             }
             $.ajax({
                 type: "GET",
                 url: `/floor-map/${param}`,
                 success: function(data) {
-                   
-                    var geojson =JSON.parse(data.data[0].geojson)
-                   console.log(geojson);
-                 geojsonLayer = L.geoJson(geojson, {
-        style: function(feature) {
-            return {color: 'blue'};
-        },
-        pointToLayer: function(feature, latlng) {
-            return new L.CircleMarker(latlng, {radius: 5, fillOpacity: 0.85});
-        },
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(`<table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <td>${feature.properties.user_id}</td>
-                        </tr>
-                        <tr>
-                        <th>user id</th>
-                        <td>${feature.properties.user_id}</td>
-                        </tr>
-                        <tr>
-                        <th>Member id</th>
-                        <td>${feature.properties.member_id}</td>
-                        </tr>
-                    </tbody>
-                </table>`);
-        }
-    });
 
-    map.addLayer(geojsonLayer);
+                    var geojson = JSON.parse(data.data[0].geojson)
+                    console.log(geojson);
+                    geojsonLayer = L.geoJson(geojson, {
+                        style: function(feature) {
+                            return {
+                                color: 'blue'
+                            };
+                        },
+                        pointToLayer: function(feature, latlng) {
+                            return new L.CircleMarker(latlng, {
+                                radius: 5,
+                                fillOpacity: 0.85
+                            });
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.on({
+                                click: function(e) {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: `/get-member-detail-on-map/${feature.properties.member_id}`,
+                                        success: function(data) {
+                                            console.log(data);
+                                            let avail = ''
+                                            if(data.data.availability === null || data.data.availability === 'unavailable'){
+                                                avail = 'Not Available'
+                                            }else{
+                                               
+                                                avail = 'Available'
+                                            }
+                                            layer.bindPopup(`<table class="table table-bordered">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>First name</th>
+                                                                    <td>${data.data.name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Last name</th>
+                                                                    <td>${data.data.last_name}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Room no</th>
+                                                                    <td>${data.data.room_no}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Status</th>
+                                                                    <td>${avail}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Floor no</th>
+                                                                    <td>${data.data.floor}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Bed no</th>
+                                                                    <td>${data.data.bed_no}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <th>Detail</th>
+                                                                    <td class="text-center  "><a href="/personal/${data.data.pd_id}" class="btn btn-sm btn-secondary text-white">Detail</a></td>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>`).openPopup();
+                                        }
+                                    })
+                                }
+                            })
+                        
+                    } });
+
+                    map.addLayer(geojsonLayer);
 
                 }
-        })}
+            })
+        }
 
         function callAddBaseMap(val) {
             gFloor = val

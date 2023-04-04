@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\FloorPlan;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -96,5 +97,17 @@ class FloorMapController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getMemberDetail($id)
+    {
+     
+       $user = DB::table('personal_detail AS pd')
+       ->where('pd.id', $id)
+       ->join('room_info AS ri', 'pd.id', '=', 'ri.pd_id')
+       ->select('pd.*', 'ri.*')
+       ->first();
+       
+       return response()->json(['status'=>200,'data'=>$user]);
     }
 }

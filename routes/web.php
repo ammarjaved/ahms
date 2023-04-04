@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // floor map
     Route::resource('floor-map',FloorMapController::class);
+    Route::get('get-member-detail-on-map/{id}',[FloorMapController::class,'getMemberDetail']);
     Route::resource('assign-room',AssignRoomController::class);
 
 
