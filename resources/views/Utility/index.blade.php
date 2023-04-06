@@ -111,12 +111,12 @@
                             </button>
                         </div>
 
-                        <div class="col-md-2">
+                        {{-- <div class="col-md-2">
                             <button type="button" class="btn btn-sm bg-primary rounded-0" style="  color:white"
                                 onclick="$('#BalanceModal1').modal('show')">
                                 Make Payment
                             </button>
-                        </div>
+                        </div> --}}
 
 
                     </div>

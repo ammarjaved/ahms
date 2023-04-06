@@ -260,6 +260,7 @@ $id = "";
             DB::select("DELETE FROM payments where personal_detail_id_fk = $id");
             DB::select("DELETE FROM member_account where personal_detail_id_fk = $id");
             DB::select("DELETE FROM utility_usage where pd_id = $id");
+            DB::select("DELETE FROM member_beds_geoms where member_id = $id");
         }
         // return
         return redirect()->route('user.index');
