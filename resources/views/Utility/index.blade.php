@@ -171,7 +171,7 @@
                             {{-- <th>Gender</th> --}}
                             <th>Off TIme</th>
                             <th>Charge Per Min</th>
-                            <th>Toatal Charge</th>
+                            <th>Toatal Charge (RM)</th>
                             {{-- <th class="text-center">Operations </th> --}}
                         </thead>
                         <tbody>

@@ -82,7 +82,7 @@
     </div>
     </div>
 <div >
-      <div id="map"  style="width: 100%;height: 400px;"></div>
+      <div id="map"  style="width: 100%;height: 400px;z-index:0"></div>
     </div>
     </div>
     
@@ -166,27 +166,26 @@ var map = '';
                     style: function(feature) { 
                             console.log();
                              return {
-                            // if(feature.properties.availability=== null || feature.properties.availability === 'unavailable'){
+                      
                            
                                 color: feature.properties.availability === "available"? 'green' : 'red'
-                      
-                        // }esle{
-                            
-                        //         color: 'green'
-                           
-                        // } 
                          };
                         },
                         pointToLayer: function(feature, latlng) {
-                            return new L.CircleMarker(latlng, {
+                            
+                            return  new L.CircleMarker(latlng, {
                                 radius: 5,
                                 fillOpacity: 0.85
                             });
+                            
                         },
                         onEachFeature: function(feature, layer) {
                            
     
-                                            // console.log(data);
+                                            let latlong  = feature.geometry.coordinates
+                                            // console.log(latlong);
+                                            layer.on({
+        click: function (e) { map.setView(new L.LatLng(latlong[1], latlong[0]),3);}})
                                             let avail = ''
                                             if(feature.properties.availability === null || feature.properties.availability === 'unavailable'){
                                                 avail = 'Not Available'
@@ -227,7 +226,8 @@ var map = '';
                                                                     
                                                                 </tbody>
                                                             </table>`);
-                                      
+                                                       
+
                         
                     } });
   
@@ -236,6 +236,9 @@ var map = '';
 
                 }
         })}
+       function setviewe(){
+            map.setView(new L.LatLng(247, -40.890625),8);
+        }
 
         function callAddBaseMap(val) {
             gFloor = val
@@ -267,7 +270,7 @@ var map = '';
             map.setMaxBounds(bounds);
 
            
-
+            // map.on('click', addMarker);
         }
         var newMarker
 
@@ -324,10 +327,10 @@ var map = '';
         }
 
 
-//      map.on('click', addMarker);
+       
 
 //   function addMarker(e){
-
+//     map.panTo(new L.LatLng(247, -40.890625),8);
 //     var newMarker = new L.CircleMarker(e.latlng, {radius: 5, fillOpacity: 0.85,color:'green'}).addTo(map);
 //     console.log(e.latlng);
 

@@ -295,6 +295,10 @@
                            
     
                                             // console.log(data);
+                                            let latlong  = feature.geometry.coordinates
+                                            // console.log(latlong);
+                                            layer.on({
+        click: function (e) { map.setView(new L.LatLng(latlong[1], latlong[0]),3);}})
                                             let avail = ''
                                             if(feature.properties.availability === null || feature.properties.availability === 'unavailable'){
                                                 avail = 'Not Available'
